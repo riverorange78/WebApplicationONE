@@ -1,7 +1,1035 @@
-﻿@page "/"
+﻿@using System.Text.Json.Serialization;
+@using System.IO;
+@using System.Net;
+@using System.Net.Http;
+@using System.Text.Json;
+@using System.Threading;
+@using System.Runtime.Serialization.Formatters.Binary;
+@using System.Text;
+@using System.Linq;
+@using System.Xml;
+@page "/"
+@inject IJSRuntime JSRuntime2;
+@inject Blazored.LocalStorage.ILocalStorageService ls;
 
-<h1>Hello, world!</h1>
+<table border="0" style="width:100%;">
+    @*class="table"*@
+    <tbody>
+        <tr>
+            <td colspan="2" align="left">
+                @**@
+                @*слово поиска 1  solid="red"*@
+                <input id="Text1" type="text" border="5" bordercolor="#FF0099" style="        width: 100%;
+        border: 3px solid red;
+" @bind="@TextFind" />
+                @*<input type="button" id="Button1" style="        color: black;
+                    background-color: lightpink;width: /*35*/ 49%;"value="Поиск" />*@
 
-Welcome to your new app.
+            </td>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+            <td colspan="2" align="left">
+                <input type="button" id="Button17" style="        color: black;
+        background-color: lightpink;
+        width: /*35*/ 100%;"
+                       value="Поиск" @onclick=Find />
+            </td>
+            @*<td align="left">
+                    <input id="Button1"  type="button" style="width: 43%; color: black; background-color: lightpink;" value="Старт" />
+                </td>*@
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                @*<p>*@<h5 style="        width: 100%;
+        color: black;
+        background-color: lightpink;">
+                    Найдено:
+                </h5>@*</p>*@
+
+            </td>
+            <td colspan="2">
+                <input id="Button11" type="button" style="        width: 100%;
+        color: white;background-color: DeepPink /*Crimson*/;"
+                       @onclick=Start value="Старт (Списка воспроизведения)" />
+
+            </td>
+        </tr>
+
+        <tr>
+            @*<td></td>*@
+            <td colspan="2" align="center">
+                @**@
+                @*<hr1>нашли</hr1>*@
+                @*<hr />*@@*height: 100%;*@
+                <select @ref="Fnd" size="15" multiple style="        width: 100%;
+        overflow: auto;
+        border: 0;
+        outline: 0;
+">
+                    @*@onclick="FindListOnClick"width*@
+                    @*@bind="@SelectedCountryID"*@
+                    @*<option disabled style="        color: black;
+                        background-color: lightpink;">
+
+                                        Найдено
+                                    </option>*@
+                    <!--class="NavMenuCssClass2"-->
+                    @*@foreach (var forecast in forecasts)*@@*ggg*@
+                    @for (int i = 0; i < foundList.Count; i++)
+                    {//"()=>FindListOnClick(foundList[localVar])"
+                        int localVar = i;//"@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))"
+
+                        <option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+
+
+
+
+
+
+
+                            @*@onclick="()=>FindListOnClick(forecasts[i])"*@@*s[i]*@
+                            @*FindListOnClick(forecast)*@
+                            @*<option value="@cnt.Id">@cnt.Name</option>*@
+                            @foundList[localVar]  <!--@forecast-->@*.Key*@@*s[i]*@
+                        </option>
+                    }
+                </select>
+
+            </td>
+            <td colspan="2">
+                @*rowspan="3"*@
+                <div id="player"></div>
+                @*<iframe id="player"
+                    src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
+                    frameborder="0"></iframe>*@
+                @*<iframe id="player" src="https://www.youtube.com/embed/@AdrVideo?enablejsapi=1&autoplay=1&loop=1"
+                                    frameborder="0" allow="accelerometer; autoplay;
+                    clipboard-write; encrypted-media; gyroscope;
+                    picture-in-picture" allowfullscreen style="width: 100%;">
+                            </iframe>*@
+
+                @*/*height: 100%; position: absolute; allowfullscreen="1"*/*@
+                @*src="https://www.youtube.com/embed/@AdrVideo?playlist=SinGI1H6VZY,MydEZ4BYb_0&enablejsapi=1&fs=1&autoplay=1&loop=1"*@
+                @*src="https://www.youtube.com/embed/@AdrVideo?playlist=SinGI1H6VZY,MydEZ4BYb_0;enablejsapi=1&amp;fs=1&amp;autoplay=1&amp;loop=1&amp"*@
+                @*&origin=https://localhost:5001*@
+
+                @*<iframe id="playerIFrame" src="https://www.youtube.com/embed/@AdrVideo?playlist=SinGI1H6VZY,MydEZ4BYb_0&enablejsapi=1&fs=1&autoplay=1&loop=1"
+                                        frameborder="0" allow="fullscreen; accelerometer; autoplay;
+                    clipboard-write; encrypted-media; gyroscope;
+                    picture-in-picture" allowfullscreen style="width: 100%;">
+                                </iframe>*@
+
+                <!--<section style="visibility: hidden;">-->
+                @* <button id="myHiddenButton" onclick="$(location).attr('href', "http://www.youtube.com/embed/wtwOZMXCe-c?version=3&amp;start=0&amp;rel=0&amp;fs=1&amp;wmode=transparent;");">View Full Screen</button>*@
+                <!--</section>-->
+                @*<input id="Button1" type="button" value="button" @onclick=Ffull />*@
+            </td>
+            @*<td>ffffffff</td>*@@*="true"
+                mozallowfullscreen="mozallowfullscreen"
+                msallowfullscreen="msallowfullscreen"
+                oallowfullscreen="oallowfullscreen"
+                webkitallowfullscreen="webkitallowfullscreen"*@
+        </tr>
+        <tr>
+            <td align="left">
+                <input id="Button12" type="button" style="        color: black;
+        background-color: lightpink;
+        width: 100%;" @onclick="Save" value="Сохранить (выделив в Найденном)" />
+                @*<button class="c-button" style="
+                    background-color: lightblue;width: 100%;" @onclick="Save">
+                                <span>Сохранить</span><span style="color: red;"> (выделив в Найденном)</span>
+                            </button>*@
+
+                @*<input id="Button1" type="button" style="        color: red;
+                    background-color: lightblue;width: 100%;"
+                     value="Сохранить (выделив в Найденном)" />*@
+
+            </td>
+            <td align="left">
+                <input id="Button13" type="button" style="        color: black;
+        background-color: lightblue;width: 100%;" @onclick="DeleteSavd" value="Удалить (выделив в Сохранённом)" />
+            </td>
+            @*<td colspan="2"></td>*@
+            <td colspan="2" rowspan="6" align="right" style="vertical-align: top;">
+                @*@Result"*@
+                <textarea id="TextArea1" style="        width: 100%;
+        border: none;" rows="20" name="text" @bind="@Opisanie"></textarea>
+            </td>
+
+            @*@bind="@Result"*@@* cols="26"*@
+            @*colspan="2"*@
+        </tr>
+        <tr>
+            <td colspan="2">
+                @*<p>*@<h5 style="        width: 100%;
+        color: black;
+        background-color: lightblue;">
+                    Сохранённое:
+                </h5>@*</p>*@
+
+            </td>
+            @*<td colspan="2"></td>*@
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                @**@
+                @*<hr1>нашли</hr1>*@
+                @*<hr />*@
+                <select @ref="Savd" size="10" multiple style="        width: 100%;
+        overflow: auto;
+        border: 0;
+        outline: 0;
+">
+                    @*@onclick="SavdListOnClick"*@
+                    @*@bind="@SelectedCountryID"*@
+                    @*<option disabled style="        color: black;
+                        background-color: lightpink;">
+
+                                        Найдено
+                                    </option>*@
+                    <!--class="NavMenuCssClass2"-->
+                    @*@foreach (var forecast in saved) {*@
+                    @for (int i = 0; i < savedList.Count; i++)
+                    {
+                        int localVar = i;//"()=>SavdListOnClick(savedList[localVar])"
+                        <option @onclick="@(async () => await rrr(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            @*@onclick="()=>FindListOnClick(forecasts[i])"*@@*s[i]*@
+                            @*FindListOnClick(forecast)*@
+                            @*<option value="@cnt.Id">@cnt.Name</option>*@
+                            @savedList[localVar]  <!--@forecast-->@*.Key*@@*s[i]*@
+                        </option>
+                    }
+                    @*<option>
+
+                            @forecast
+                        </option>*@
+                    }
+                </select>
+
+            </td>
+            @*<td colspan="2"></td>*@
+        </tr>
+        <tr>
+            <td>
+                @*<input id="Button1" type="button" style="        color: blue;
+                            background-color: Silver;
+                            width: 100%; для воспроизведения
+                    " value="Добавить для воспроизведения (выделив в Сохранённом)" />lightblue*@
+                <input id="Button14" type="button" style="        color: black;
+        background-color: lightblue;
+        width: 100%;" @onclick="AddPlay"
+                       value="Добавить (выделив в Сохранённом)" />
+
+                @*<button class="c-button" style="        background-color: Silver;
+                    width: 100%;" @onclick="AddPlay">
+                                <span>Добавить</span><span style="        color: blue;"> (выделив в Сохранённом)</span>
+                            </button>*@
+
+            </td>
+            <td align="left">
+                <input id="Button15" type="button" style="        color: black;
+        background-color: Silver;
+        width: 100%;" @onclick="DeletePlay"
+                       value="Убрать (выделив в Списоке воспроизведения)" />
+            </td>
+            @*<td colspan="2"></td>*@
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                @*<p>*@<h5 style="width: 100%; color: black;  background-color: Silver;">
+                    Список воспроизведения:
+                </h5>@*</p>*@
+
+            </td>
+            @*<td colspan="2"></td>*@
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                @**@
+                @*<hr1>нашли</hr1>*@
+                @*<hr />*@
+                <select @ref="Play" size="10" multiple style="        width: 100%;
+        overflow: auto;border: 0;
+        outline: 0;
+">
+                    @*@onclick="PlayListOnClick"*@
+                    @*@bind="@SelectedCountryID"*@
+                    @*<option disabled style="        color: black;
+                        background-color: lightpink;">
+
+                                        Найдено
+                                    </option>*@
+                    <!--class="NavMenuCssClass2"-->
+                    @*@foreach (var forecast in play) {*@
+                    @for (int i = 0; i < playList.Count; i++)
+                    {
+                        int localVar = i;//"()=>PlayListOnClick(playList[localVar])"
+                        <option @onclick="@(async () => await rrr(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            @*@onclick="()=>FindListOnClick(forecasts[i])"*@@*s[i]*@
+                            @*FindListOnClick(forecast)*@
+                            @*<option value="@cnt.Id">@cnt.Name</option>*@
+                            @playList[localVar]  <!--@forecast-->@*.Key*@@*s[i]*@
+                        </option>
+                    }
+                    @*<option>
+
+                            @forecast
+                        </option>*@
+                    }
+                </select>
+
+            </td>
+            @*<td colspan="2"></td>*@
+        </tr>
+        @*<tr>
+                <td colspan="2">список воспроизведения</td>
+                <td>описание</td>
+            </tr>*@
+    </tbody>
+</table>
+@code {
+    //volatile int i5 = 0;
+    //protected override async Task OnAfterRender(bool firstRender)
+    protected override /*void*/async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //_syncEvent2.Reset();
+
+        try
+        {
+            if (firstRender)
+            {
+                //var  Result2 = /*"rrrr";//*/ await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
+                //Result = string.IsNullOrWhiteSpace(Result2) ? (i5++).ToString() : Result2;
+
+                //if (!await ls.ContainKeyAsync("custId")) { /*_syncEvent2.Set();*/ return; }
+                ///*var Result2*/
+                //forecasts = await ls.GetItemAsync<List<string>>("custId");
+                //ggg = await ls.GetItemAsync<hj>("custId");
+
+                /*"rrrr";//*/ //await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
+                              //Result = string.Join("<rkt>", Result2);
+                              //_syncEvent2.Set();
+            }
+        }
+        catch (Exception e)
+        {
+
+            //Result = "Exception 00 " + e.Message;
+        }
+    }
+    string opisanie;// = "77rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee777";
+
+    string Opisanie
+    {
+        get => opisanie;
+        set
+        {
+            opisanie = value;
+
+        }
+    }
+
+    string textFind;
+
+    string TextFind
+    {
+        get => textFind;
+        set
+        {
+            textFind = value;
+
+        }
+    }
+
+    //string adrVideo;
+
+    //string AdrVideo
+    //{
+    //    get => adrVideo;
+    //    set
+    //    {
+    //        adrVideo = value;// ggg[value].videoId;
+
+    //    }
+    //}
+
+    /**/
+    //private ManualResetEvent _syncEvent2 = new ManualResetEvent(false);
+
+    //public override async Task SetParametersAsync(ParameterView parameters)
+    //{
+    //    //if (parameters.TryGetValue<string>(nameof(Param), out var value))
+    //    //{
+    //    //    if (value is null)
+    //    //    {
+    //    //        message = "The value of 'Param' is null.";
+    //    //    }
+    //    //    else
+    //    //    {
+    //    //        message = $"The value of 'Param' is {value}.";
+    //    //    }
+    //    //}
+    //    //if (!await ls.ContainKeyAsync("custId"))
+    //    //{ await base.SetParametersAsync(parameters); return; }
+
+    //    ///*var Result2*/
+    //    //forecasts = await ls.GetItemAsync<List<string>>("custId");
+
+    //    await base.SetParametersAsync(parameters);
+    //}
+    private ManualResetEvent _syncEvent;
+    private List<string> foundList, savedList, playList;//, forecasts2
+    Dictionary<string, Hj> foundCl, savedCl, playCl;/*= new Dictionary<string, hj>()*/
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _syncEvent = new ManualResetEvent(false);
+            //_syncEvent ;
+            _syncEvent.Reset();
+            foundList = new List<string>();
+            //forecasts2 = new List<string>();
+            savedList = new List<string>();
+            playList = new List<string>();
+            //new string[] { "55555MydEZ4BYb_0", "SinGI1H6VZY", "0ug50Crx-2M" });
+            foundCl = new Dictionary<string, Hj>();
+            savedCl = new Dictionary<string, Hj>();
+            playCl = new Dictionary<string, Hj>();
+            //TextFind
+            /*if () { }*/
+            TextFind = "";
+            //await awaitableStuff();
+            //TextFind = "Запрос";
+            //if (!await ls.ContainKeyAsync("custId")) { return; }
+            //var Result2 = await ls.GetItemAsync<List<string>>("custId");
+            ///*"rrrr";//*/ //await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
+            //Result = string.Join("<rkt>", Result2);
+            //byte[] Result2;
+            if (await ls.ContainKeyAsync("found"))
+            {
+                //try
+                //{
+                var Result2 =
+                    Convert.FromBase64String(await ls.GetItemAsStringAsync("found"));
+
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                using (MemoryStream stream = new MemoryStream(Result2))
+                {
+
+                    //MemoryStream stream = new MemoryStream(Result2);
+                    foundCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;//<>
+                }
+                //foundCl = eee ;
+                foundList = foundCl.Keys.ToList<string>();
+                //await ls.RemoveItemAsync("custId2");
+                #region MyRegion
+                //////forecasts = await ls.GetItemAsync<List<string>>("custId");
+                ////ggg = await ls.GetItemAsync<Dictionary<string, Hj>>("custId2");
+                ////forecasts = ggg.Keys.ToList<string>();
+                //////Opisanie
+                //var Result2 = await ls.GetItemAsStringAsync("custId2");//<List<string>>
+                ///*"rrrr";//*/ //await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
+                //BinaryFormatter formatter = new BinaryFormatter();
+                //byte[] byteArray = Encoding.UTF8.GetBytes(Result2);
+                //MemoryStream stream = new MemoryStream(byteArray);
+                ////MemoryStream stream = SerializeToBinaryStream("ALFKI");
+                ////stream.Seek(0, SeekOrigin.Begin);
+
+                //ggg = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                //
+                #endregion
+                //}
+                //catch //()
+                //{
+                //await ls.RemoveItemAsync("found");
+
+                //    Opisanie = "RemoveItemAsync";
+                //}
+            }
+            if (await ls.ContainKeyAsync("saved"))
+            {
+
+                var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"));
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (MemoryStream stream = new MemoryStream(Result2))
+                {
+                    //MemoryStream stream = new MemoryStream(Result2);
+                    savedCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;//<>
+                }
+                //savedCl = eee;
+                savedList = savedCl.Keys.ToList<string>();
+                //await ls.RemoveItemAsync("saved");
+            }
+            if (await ls.ContainKeyAsync("play"))
+            {
+
+                var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("play"));
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (MemoryStream stream = new MemoryStream(Result2))
+                {
+                    //MemoryStream stream = new MemoryStream(Result2);
+                    playCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;//<>
+                }
+                //playCl = eee;
+                playList = playCl.Keys.ToList<string>();
+                //await ls.RemoveItemAsync("play");
+            }
+            //else { forecasts = new List<string>(); ggg = new Dictionary<string, hj>();  }
+            /*var Result2*/
+
+            var Result5 = await/**/ JSRuntime2.InvokeAsync<string>("loadClient");
+            //var fdg =<string>
+
+            //var output = await JSRuntime2.InvokeAsync<string>("localStorage.getItem", "lastPlay");
+
+            if (!await ls.ContainKeyAsync("lastPlay"))
+            {
+                await JSRuntime2.InvokeVoidAsync("YueeonYouTubeIframeAPIReady");
+            }
+            else { await JSRuntime2.InvokeVoidAsync("YueeonYouTubeIframeAPIReady2", await ls.GetItemAsync<string>("lastPlay")); }
+
+
+
+            _syncEvent.Set();
+
+        }
+        catch (Exception e)
+        {
+            _syncEvent.Set();
+            Opisanie = "Exception 1 " + e.Message;
+        }
+    }
+    //protected override /**/void /*OnInitializedAsync*/OnInitialized()
+    //{
+    //    //var ppage= @Body;
+
+
+    //    forecasts = new List<string>(); forecasts2 = new List<string>();
+    //    //new string[] { "55555MydEZ4BYb_0", "SinGI1H6VZY", "0ug50Crx-2M" });
+    //    var Result = await/**/ JSRuntime2.InvokeAsync<string>("loadClient");
+    //    ggg = new Dictionary<string, hj>();
+    //}
+
+    //private List<string> currentCount;
+
+    //private string NavMenuCssClass2;/* => collapseNavMenu ? "collapse" : null*/
+
+
+
+    private /*void*/async Task Find()
+    {
+        try
+        {
+            _syncEvent.WaitOne();
+            //if () { } _syncEvent2.WaitOne();
+
+            if (TextFind.Replace(" ", "").Length < 2) { /*Opisanie = "llll";*/ return; }
+            //var Result = await JSRuntime2.InvokeAsync<string>("loadClient");
+            /*2MyClassName text*/
+            foundCl.Clear();
+
+            var Resultt = await JSRuntime2.InvokeAsync<string>("execute2", TextFind); /*"мир"*/
+            if (5 > 1)
+            {
+                string[] ddd = Resultt.Replace("  ", " ").Split(
+               new string[] {//"",""id"":{""kind"":""youtube#video""
+                            @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
+                            @"""},""snippet"":{""publishedAt"":""",
+                        @""",""title"":""",
+                        @""",""description"":""",
+                        @""",""thumbnails"":{""default"":"}
+        , StringSplitOptions.None);
+                /*Dictionary<string, hj>*/
+                //ggg = new Dictionary<string, hj>();
+                //string[] ddd2;
+                for (int ie = 0; ie < ddd.Length; ie = ie + 5)
+                {
+                    //foreach (var item in ddd) { }
+
+                    //ddd2 = item.Split("", StringSplitOptions.None);FindBlzWpa
+                    foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
+                new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
+                    if (ie + 5 + 5 > ddd.Length) { break; }
+                }
+                //return; /*var2*/
+                //var ttt9 = foundCl.Keys.ToList<string>();
+                //var ttt91 = string.Join("<rkt>", ttt9/*new string[]{"ggg","hhh","jjj" }*/);/*.GetEnumerator()*///.Join<string>("")
+                //ttt9;/*new String('u', 3000)*/
+                //Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("gfrol"/*new String('u', 3000)*/));//var gggyyy=new char['u', 100];
+                //await ls.SetItemAsync<List<string>>("custId", ttt9);                                                                                            //string.Join("<(-FindBlzWpa-)>", ttt9.GetRange(0, ttt9.Count - 1));
+
+                //77777777777777777777.ToList<Hj>()List<string>
+                //var llistt = "[" + string.Join(",", foundCl.Values.Select/*Many*/(x => x.videoId).ToList()) + "]";/**////*<Hj, string/*List<>*/>*/;//.Values.ToList<Hj>().All<string>((q)=> { });//.AsEnumerable<>().;//..All<string>(q=> { });
+
+                //var llistt2 = foundCl.Values.Select/*Many*/(x => @"""" + x.videoId + @"""").ToArray<string>();//.ToList();/**////*<Hj, string/*List<>*/>*/;//.Values.ToList<Hj>().All<string>((q)=> { });//.AsEnumerable<>().;//..All<string>(q=> { });
+
+                //string[] llistt2 = new string[] { "MydEZ4BYb_0", "SinGI1H6VZY" }; //@"""SinGI1H6VZY"",""MydEZ4BYb_0""";//[]
+                string[] llistt3 = foundCl.Values.Select/*Many*/(x => x.videoId).ToArray();
+                //Opisanie = llistt; return;
+
+                var Resultt33 = await JSRuntime2.InvokeAsync<string>("execute33", llistt3.ToList<string>()); /*2"мир"*/
+
+                //Opisanie = Resultt33; return;
+
+                //if (!Resultt33.Contains(@""",""id"":"""))
+                //{
+                //    Opisanie = Opisanie + " 8888888888888 " + Resultt33; return;
+                //}
+
+                string[] ddd2 = Resultt33.Split(
+       new string[] {//"",""id"":{""kind"":""youtube#video""
+                            @""",""id"":""" ,
+                            @""",""contentDetails"":{""duration"":""",
+                            @""",""dimension"":"""
+                                }
+, StringSplitOptions.None);
+
+                Dictionary<string, string> Cl = new Dictionary<string, string>();
+
+                for (int ir = 0; ir < ddd2.Length; ir = ir + 3)
+                {
+                    //foreach (var item in ddd) { }
+
+                    //ddd2 = item.Split("", StringSplitOptions.None);FindBlzWpa
+                    //    Cl.Add(ddd[i + 3] + "<-rkt->" + ddd[i + 1],
+                    //new Hj() { videoId = ddd[i + 1], description = ddd[i + 4] });
+
+                    Cl.Add(ddd2[ir + 1], Math.Round(XmlConvert.ToTimeSpan(ddd2[ir + 2]).TotalMinutes).ToString());
+
+
+                    if (ir + 3 + 3 > ddd2.Length) { break; }
+                }
+                //int i = 0;
+                //foreach (var item in Cl)
+                //{
+                //    Opisanie = Opisanie+@"<-"""+ i++ +@"""->"+item.Key + "<-->" + item.Value;
+                //}
+                //return;
+
+                #region MyRegion
+                //for (int ia = 0; ia < foundCl.Count; ia++)
+                //{
+                //    foundCl.ElementAt(ia).Key =
+                //        "(" + Cl[foundCl.ElementAt(ia).Value.videoId] + ")" + " "
+                //        + foundCl.ElementAt(ia).Key;
+
+                //        new KeyValuePair<string, Hj>
+                //        (
+                //        "(" + Cl[foundCl.ElementAt(ia).Value.videoId] + ")" + " "
+                //        + foundCl.ElementAt(ia).Key,
+                //        foundCl.ElementAt(ia).Value);
+
+                //    //foundCl.Add(
+                //    //    "(" + Cl[foundCl.ElementAt(ia).Value.videoId] + ")" + " "
+                //    //    + foundCl.ElementAt(ia).Key,
+                //    //    foundCl.ElementAt(ia).Value);
+
+                //    //foundCl.Remove(item);
+                //}
+                #endregion
+
+                var foundCl2 = new Dictionary<string, Hj>();
+                //"(" ++ ")"
+                foreach (var item in foundCl.Keys)
+                {
+                    foundCl2.Add(
+                    Cl[foundCl[item].videoId] + " " + item,
+                    foundCl[item]);
+
+                    //foundCl.Remove(item);
+                    //foundCl[item]/*.Keys*/ = "(" + Cl + ")" + " " + item;
+                }/*foundCl[]*/
+                foundCl = foundCl2;
+                //for (int i = 0; i < foundCl.Count; i = i + 1)
+                //{
+                //    foundCl.Keys[i] = "("+ Cl + ")"+" "+ foundCl.Keys[i];
+                //}
+
+                //77777777777777777777
+
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                //byte[] fff;
+                string res;
+                using (MemoryStream stream1 = new MemoryStream())
+                {
+                    formatter.Serialize(stream1, foundCl);
+                    //fff = stream.ToArray();
+                    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+                }
+
+                await ls.SetItemAsync<string>("found", res);
+                #region MyRegion
+                //               using (FileStream fs = new FileStream("people.dat", FileMode.OpenOrCreate))
+                //               {
+                //                   Person newPerson = (Person)formatter.Deserialize(fs);
+                //}
+
+
+                //await ls.SetItemAsync<Dictionary<string, Hj>>("custId2", ggg);
+
+                //ggg = await ls.GetItemAsync<Dictionary<string, hj>>("custId2");                                                                                                                                          //var test =/*<string>*///return;eraseCookie 3ttt9.Count - 1
+
+                //byte[] textAsBytes = System.Text.Encoding.GetBytes(new String("u", 3000));
+                //ttt91 = System.Convert.ToBase64String(textAsBytes);
+
+                //        await JSRuntime2.InvokeVoidAsync("eraseCookie", "name");
+
+
+                //        await JSRuntime2.InvokeVoidAsync("blazorExtensions.WriteCookie",
+                //"FindBlzWpa", ttt91, 360);
+                #endregion
+                foundList = foundCl.Keys.ToList<string>();
+
+
+
+            }
+        }
+        catch (Exception e)
+        {
+
+            Opisanie = "Exception 2 " + e.Message;
+        }
+        //forecasts =
+        //    new List<string>(new string[] { "55555MydEZ4BYb_0", "SinGI1H6VZY", "0ug50Crx-2M" });
+    }
+    //[Parameter]
+    //private List<string> FilteredStringList { get; set; } = new List<string>();
+    //private List<string> selections = new List<string>();
+
+    //public async Task<List<string>> GetAllSelections()
+    //{
+    //    return (await JSRuntime.InvokeAsync<List<string>>("getSelectedValues", "sel")).ToList();
+    //}
+
+    //private async Task SelectionChanged(UIChangeEventArgs evt)
+    //{
+    //    List<string> localSelections = await GetAllSelections();
+    //    // do something with localSelections.  or wait for some other
+    //    //  event like a button and call GetAllSelections() to get the list later.
+    //}
+    /*ElementRef*/
+    ElementReference Savd, Fnd, Play;
+
+    private /**/async Task Save()
+    {
+        //Opisanie = await/**/ JSRuntime2.InvokeAsync<string>("getSelectedValues2");
+        //return;//"execute2","дом"
+        #region MyRegion
+        ////return;
+        //if (await ls.ContainKeyAsync("found"))
+        //{
+
+
+        //    #region MyRegion
+        //    //var Result2 =  Convert.FromBase64String(await ls.GetItemAsStringAsync("custId2"));
+        //    //BinaryFormatter formatter = new BinaryFormatter();
+        //    //MemoryStream stream = new MemoryStream(Result2);
+        //    //var eee = formatter.Deserialize(stream);//<>
+        //    //ggg = eee as Dictionary<string, Hj>;
+        //    #endregion
+        //    //-----------
+        //    #region MyRegion
+        //    //<List<string>>
+        //    /*"rrrr";//*/ //await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
+
+        //    //byte[] byteArray = Encoding.UTF8.GetBytes(Result2);
+
+        //    //MemoryStream stream = SerializeToBinaryStream("ALFKI");
+        //    //stream.Seek(0, SeekOrigin.Begin);
+
+        //    #endregion
+
+        //    #region MyRegion
+        //    //--------------------
+
+        //    //BinaryFormatter formatter = new BinaryFormatter();
+
+        //    ////byte[] fff;
+        //    //string res;
+        //    //using (MemoryStream stream = new MemoryStream())
+        //    //{
+        //    //    formatter.Deserialize();//(stream, ggg);
+        //    //    //fff = stream.ToArray();
+        //    //    res =
+        //    //        Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
+        //    //}
+
+        //    //await ls.SetItemAsync<string>("custId2", res);
+
+        //    //--------------------------------
+
+        //    //var ggg2 = await ls.GetItemAsync<Dictionary<string, Hj>>("custId2");
+        //    //var forecasts2 = ggg2.Keys.ToList<string>();
+        //    #endregion
+
+        //    List<string> nnn = new List<string>();
+
+        //    foreach (var t in ggg)
+        //    { nnn.Add(t.Value.description/*.Key.videoId*/); }
+
+        //    Opisanie = string.Join("<rkt>", nnn); //string.IsNullOrWhiteSpace(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(Result2))) ? (i5++).ToString() : Result2;
+        //}
+        #endregion
+        List<string> svd = null;
+        try
+        {
+            svd = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Fnd);
+            //Result = string.Join("<------>", saved) + "<000>" + string.Join("<------>", svd);
+
+            //ggg.Add(ddd[i + 3] + "<-rkt->" + ddd[i + 1],
+            //            new Hj() { videoId = ddd[i + 1], description = ddd[i + 4] });
+
+            foreach (var v in svd)
+            {
+                if (!savedCl.Keys.Contains(v)) { savedCl.Add(v, foundCl[v]); }
+            }
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            //byte[] fff;
+            string res;
+            using (MemoryStream stream1 = new MemoryStream())
+            {
+                formatter.Serialize(stream1, savedCl);
+                //fff = stream.ToArray();
+                res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+            }
+
+            await ls.SetItemAsync<string>("saved", res);
+            //await JSRuntime2.InvokeVoidAsync("blazorExtensions.WriteCookie",
+            //            "SavedBlzWpa", string.Join("<(-SavedBlzWpa-)>", saved), 360);
+            svd = savedCl.Keys.ToList<string>();
+            foreach (var v in svd)
+            {
+                if (!savedList.Contains(v)) { savedList.Add(v); }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            StringBuilder sd = new StringBuilder();
+            foreach (var v in foundCl.Keys)
+            {
+                sd.AppendLine(v);
+            }
+            sd.AppendLine("java");
+            foreach (var v in svd)
+            {
+                sd.AppendLine(v);
+            }
+            sd.AppendLine("ex.Message").AppendLine(ex.Message);
+
+            Opisanie = sd.ToString();
+        }
+    }
+
+    private /**/async Task DeleteSavd()
+    {
+        List<string> del = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Savd);
+        //Result = string.Join("<------>", saved) + "<000>"+ string.Join("<------>",vehicles);
+        /*saved = */
+        foreach (var v in del)
+        {
+            if (savedCl.Keys.Contains(v)) { savedCl.Remove(v); }
+        }
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        string res;
+        using (MemoryStream stream1 = new MemoryStream())
+        {
+            formatter.Serialize(stream1, savedCl);
+            //fff = stream.ToArray();
+            res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+        }
+
+        await ls.SetItemAsync<string>("saved", res);
+
+        savedList.RemoveAll(vehicle => del.Contains(vehicle) == true); // await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", sel);
+
+        //await JSRuntime2.InvokeVoidAsync("blazorExtensions.WriteCookie",
+        //            "SavedBlzWpa", string.Join("<(-SavedBlzWpa-)>", saved), 360);
+
+    }
+
+    private /**/async Task AddPlay()
+    {
+        var ply = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Savd);
+
+        //foreach (var v in pl)
+        //{
+        //    if (!playList.Contains(v)) { playList.Add(v); }
+        //}
+        //-------------
+        foreach (var v in ply)
+        {
+            if (!playCl.Keys.Contains(v)) { playCl.Add(v, savedCl[v]); }
+        }
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        //byte[] fff;
+        string res;
+        using (MemoryStream stream1 = new MemoryStream())
+        {
+            formatter.Serialize(stream1, playCl);
+            //fff = stream.ToArray();
+            res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+        }
+
+        await ls.SetItemAsync<string>("play", res);
+        //await JSRuntime2.InvokeVoidAsync("blazorExtensions.WriteCookie",
+        //            "SavedBlzWpa", string.Join("<(-SavedBlzWpa-)>", saved), 360);
+        ply = playCl.Keys.ToList<string>();
+        foreach (var v in ply)
+        {
+            if (!playList.Contains(v)) { playList.Add(v); }
+        }
+
+        //await JSRuntime2.InvokeVoidAsync("blazorExtensions.WriteCookie",
+        //            "PlayBlzWpa", string.Join("<(-PlayBlzWpa-)>", play), 360);
+
+    }
+
+    private /**/async Task DeletePlay()
+    {
+        List<string> del = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Play);
+
+        foreach (var v in del)
+        {
+            if (playCl.Keys.Contains(v)) { playCl.Remove(v); }
+        }
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        string res;
+        using (MemoryStream stream1 = new MemoryStream())
+        {
+            formatter.Serialize(stream1, playCl);
+            //fff = stream.ToArray();
+            res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+        }
+
+        await ls.SetItemAsync<string>("play", res);
+
+        /*saved = */
+        playList.RemoveAll(vehicle => del.Contains(vehicle) == true); // await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", sel);
+
+        //await JSRuntime2.InvokeVoidAsync("blazorExtensions.WriteCookie",
+        //            "PlayBlzWpa", string.Join("<(-PlayBlzWpa-)>", play), 360);
+    }
+
+
+    private /**/async Task Start()
+    {
+        try
+        {
+            if (playCl.Count == 0) { return; }
+            /**/
+            //getSelectedValues2
+            /*Opisanie =*//*int*/
+            //await JSRuntime2
+            /*var Opisanies =<String>*/
+            var dss = playCl.Values.Select/*Many*/(x => x.videoId).ToList<string>();
+            await ls.SetItemAsync<string>("lastPlay", dss[0]);
+            //await JSRuntime2.InvokeAsync<object>("localStorage.setItem", "lastPlay", dss[0]);
+
+            await JSRuntime2.InvokeVoidAsync("ieeonYouTubeIframeAPIReady2", dss);/**/
+
+            //await JSRuntime2.InvokeVoidAsync("fullScreen","ggg");"bHQqvYy5KYo"
+            //var Result53 = await/**/ JSRuntime2.InvokeAsync<string>("fullScreenf", "ggg");
+            //Opisanie = playCl.Values.Select/*Many*/(x => x.videoId).ToArray()[0];//.Length.ToString();/*"Start"*/
+            //Opisanie = Opisanies.ToString();
+        }
+        catch (Exception et)
+        {
+            Opisanie = et.Message + "----" + playCl.Count.ToString();
+        }
+    }
+
+    //private /**/async Task Start()
+    //{
+    //    //play
+    //}
+
+
+
+    //private /*void*/async Task FindListOnClick(string s)
+    //{
+    //    await rrr(foundCl[s].description, foundCl[s].videoId);
+    //    //-----
+    //    //Opisanie = foundCl[s].description;/*s + "  " + "FindListOnClick"*/
+    //    //await JSRuntime2.InvokeVoidAsync/**/("playplay", foundCl[s].videoId);
+    //    ////AdrVideo = foundCl[s].videoId;
+    //}
+
+    //private /**/async Task SavdListOnClick(string s)
+    //{
+    //    await rrr( savedCl[s].description, savedCl[s].videoId);
+    //    //-----
+    //    //Opisanie = savedCl[s].description;/*s + "  " + "FindListOnClick"*/
+    //    //await JSRuntime2.InvokeVoidAsync/**/("playplay", savedCl[s].videoId);
+    //    //// ;AdrVideo = savedCl[s].videoId;
+    //}
+
+    //private /**/async Task PlayListOnClick(string s)
+    //{
+    //    await rrr(playCl[s].description, playCl[s].videoId);
+    //    //-----
+    //    //Opisanie = playCl[s].description;/*s + "  " + "FindListOnClick"*/
+    //    //await JSRuntime2.InvokeVoidAsync/**/("playplay", playCl[s].videoId);
+    //    //// AdrVideo = playCl[s].videoId;
+    //}
+
+    //string last;
+
+    private async Task rrr(string a, string b)
+    {
+        await ls.SetItemAsync<string>("lastPlay", b);//last = b;
+                                                     //await JSRuntime2.InvokeAsync<object>("localStorage.setItem", "lastPlay", b);
+
+        Opisanie = a;/*s + "  " + "FindListOnClick"*/
+        await JSRuntime2.InvokeVoidAsync/**/("playplay", b);
+    }
+
+    protected void HandleSomeEvent()
+    {
+        var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
+        var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
+    }
+}
+
