@@ -12,6 +12,7 @@
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
 </head>
 
+
 <body>
     <app>Loading...</app>
 
@@ -22,6 +23,174 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <script>
+        
+        function authenticate() {
+            return gapi.auth2.getAuthInstance()
+                .signIn({ scope: "https://www.googleapis.com/auth/youtube.force-ssl" })
+                .then(function () { console.log("Sign-in successful"); },
+                    function (err) { console.error("Error signing in", err); });
+        }
+ 
+        var llastPl;
+        function loadClient() {
+
+            llastPl = 'G2CHyuF74R0';
+
+            gapi.client.setApiKey("AIzaSyApxU38Tke7HtXOarFJAP1pR_O0ATRwy-Q");
+          
+            return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")//;
+                                                                            /**/.then(
+                function () {
+                    console.log("GAPI client loaded for API");
+                    return "GAPI client loaded for API" ;
+                },
+                function (err) { console.error("Error loading GAPI client for API", err); return "err"; });
+        }
+
+
+        function execute2(more) {
+            return gapi.client.youtube.search.list({
+                "part": [
+                    "snippet"
+                ],
+                "maxResults": 50,
+                "q": more,
+                "type": [
+                    "video"]
+                ,
+                "videoSyndicated": "true"
+            })
+                .then( 
+                    function (response) {
+                         
+                        return JSON.stringify(response)  ;
+                    } 
+                    ,
+                    function (err) {
+                       
+                        return JSON.stringify(err);
+                    });
+        }
+
+
+
+        function execute33(more) {
+            return gapi.client.youtube.videos.list({
+                "part": [
+                    "contentDetails"
+                ],
+                "id": more
+                 
+            })
+                .then(function (response) {
+                   
+                    return JSON.stringify(response);
+                },
+                    function (err) {
+                        
+                        return JSON.stringify("contentDetails2") ;
+                    });
+        }
+        
+        gapi.load('client',
+            function () { console.log("GAPI uuuuuuuuuuuu"); }
+            
+        ); 
+
+    </script>
+
+    <script>
+        window.getSelectedValues = function (sel) {
+            var results = [];
+            var i;
+            for (i = 0; i < sel.options.length; i++) {
+                if (sel.options[i].selected) {
+                    results[results.length] = sel.options[i].value;
+                }
+            }
+            return results;
+        };
+    </script>
+    <script>
+   
+        window.YueeonYouTubeIframeAPIReady2 = function (pl) {
+
+            llastPl = pl;
+
+            var tag = document.createElement('script');
+
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        };
+        window.YueeonYouTubeIframeAPIReady = function () {
+            var tag = document.createElement('script');
+
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        };
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                
+                videoId: llastPl,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+    
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        var done = false;
+        function onPlayerStateChange(event) {
+           
+            if (event.data === YT.PlayerState.ENDED) {
+                
+                if (index < videos.length - 1) {
+                    index = index + 1;
+                    event.target.loadVideoById(
+                        
+                        videos[index], 0, "large");
+                    
+                };
+
+            }
+        }
+
+        function stopVideo() {
+            player.stopVideo();
+        }
+
+        var index = 0; 
+        var videos = [];
+        
+
+        window.ieeonYouTubeIframeAPIReady2 = function (yyy) {
+            index = 0;
+            videos = yyy;
+            player.loadVideoById(videos[index], 0, "large");
+           
+        }
+
+        window.playplay = function (yyy) {
+            index = 0;
+            videos = [];
+            player.loadVideoById(yyy, 0, "large");
+            
+        }
+
+    </script>
+   
 </body>
 
 </html>
