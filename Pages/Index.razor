@@ -213,11 +213,13 @@
 
                     TextFind = "???";
 
+                    BinaryFormatter formatter = new BinaryFormatter();
+
                     if (await ls.ContainKeyAsync("found"))
                     {
                         var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("found"));
 
-                        BinaryFormatter formatter = new BinaryFormatter();
+                        //BinaryFormatter formatter = new BinaryFormatter();
 
                         using (MemoryStream stream = new MemoryStream(Result2))
                         {
@@ -232,7 +234,7 @@
 
                         var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"));
 
-                        BinaryFormatter formatter = new BinaryFormatter();
+                        //BinaryFormatter formatter = new BinaryFormatter();
 
                         using (MemoryStream stream = new MemoryStream(Result2))
                         {
@@ -247,7 +249,7 @@
 
                         var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("play"));
 
-                        BinaryFormatter formatter = new BinaryFormatter();
+                        //BinaryFormatter formatter = new BinaryFormatter();
 
                         using (MemoryStream stream = new MemoryStream(Result2))
                         {
@@ -257,14 +259,26 @@
                         playList = playCl.Keys.ToList<string>();
 
                     }
+                    var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
-                    var Result5 = await JSRuntime2.InvokeAsync<string>("loadClient");
+                    // Result5 = jsInProcess.Invoke<string>("authenticate");
+                    //var Result5 = jsInProcess.Invoke<string>("loadClient", GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
+
+                    var Result5 = await JSRuntime2.InvokeAsync<string>("loadClient", GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
+
 
                     if (!await ls.ContainKeyAsync("lastPlay"))
                     {
-                        await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReady");
+
+                        //var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
+                        Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReady");
+                        //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReady");
                     }
-                    else { await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay")); }
+                    else
+                    {
+                        Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+                        //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+                    }
 
                     synEvent.Set();
 
