@@ -30,16 +30,16 @@
         function authenticate() {
             return gapi.auth2.getAuthInstance()
                 .signIn({ scope: "https://www.googleapis.com/auth/youtube.force-ssl" })
-                .then(function () { console.log("Sign-in successful"); },
-                    function (err) { console.error("Error signing in", err); });
+                .then(function () { console.log("Sign-in successful"); return "true"; },
+                    function (err) { console.error("Error signing in", err); return "false";});
         }
  
         var lastPl;
-        function loadClient() {
+        function loadClient(f) {
 
             lastPl = 'G2CHyuF74R0';
-
-            gapi.client.setApiKey("AIzaSyApxU38Tke7HtXOarFJAP1pR_O0ATRwy-Q");
+            //"AIzaSyApxU38Tke7HtXOarFJAP1pR_O0ATRwy-Q"
+            gapi.client.setApiKey(f);
           
             return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
                                                                             .then(
@@ -125,6 +125,7 @@
             tag.src = "https://www.youtube.com/iframe_api";
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            return "true";
         };
         window.mkYouTubeIframeAPIReady = function () {
             var tag = document.createElement('script');
@@ -132,6 +133,7 @@
             tag.src = "https://www.youtube.com/iframe_api";
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            return "true";
         };
 
         var player;
@@ -144,6 +146,7 @@
                     'onStateChange': onPlayerStateChange
                 }
             });
+            return "true";
         }
 
     
