@@ -12,344 +12,411 @@
 @inject IJSRuntime JSRuntime2;
 @inject Blazored.LocalStorage.ILocalStorageService ls;
 
-<table border="0" style="width:100%;">
+    <input @ref="Btn" id="Button1" type="button" value="button" />
 
-    <tbody>
-        <tr>
-            <td colspan="2" align="left">
+    <table border="0" style=" width: 100%;">
+        <tbody>
+            <tr>
+                <td colspan="2" align="left">
 
-                <input id="Text1" type="text" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;"
-                       @bind="@TextFind" />
-            </td>
+                    <input id="Text1" type="text" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;"
+                           @bind="@TextFind" />
+                </td>
 
-            <td colspan="2" align="left">
-                <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;"
-                       value="Поиск" @onclick=Find />
-            </td>
-        </tr>
+                <td colspan="2" align="left">
+                    <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;"
+                           value="Поиск" @onclick=Find />
+                </td>
+            </tr>
 
-        <tr>
-            <td colspan="2">
-                <h5 style=" width: 100%;color: black;background-color: lightpink;">
-                    Найдено:
-                </h5>
+            <tr>
+                <td colspan="2">
+                    <h5 style=" width: 100%;color: black;background-color: lightpink;">
+                        Найдено:
+                    </h5>
 
-            </td>
-            <td colspan="2">
-                <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink ;"
-                       @onclick=Start value="Старт (Списка воспроизведения)" />
-            </td>
-        </tr>
+                </td>
+                <td colspan="2">
+                    <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink ;"
+                           @onclick=Start value="Старт (Списка воспроизведения)" />
+                </td>
+            </tr>
 
-        <tr>
+            <tr>
 
-            <td colspan="2" align="center">
-                <select @ref="Fnd" size="15" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
+                <td colspan="2" align="center">
+                    <select @ref="Fnd" size="15" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
 
-                    @for (int i = 0; i < foundList.Count; i++)
-                    {
-                        int localVar = i;
+                        @for (int i = 0; i < foundList.Count; i++)
+                        {
+                            int localVar = i;
 
-                        <option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
-                            @foundList[localVar]
-                        </option>
-                    }
-                </select>
+                            <option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+                                @foundList[localVar]
+                            </option>
+                        }
+                    </select>
 
-            </td>
-            <td colspan="2">
-                <div id="player"></div>
-            </td>
+                </td>
+                <td colspan="2">
+                    <div id="player"></div>
+                </td>
 
-        </tr>
-        <tr>
-            <td align="left">
-                <input id="Button12" type="button" style="color: black;background-color: lightpink;width: 100%;"
-                       @onclick="Save" value="Сохранить (выделив в Найденном)" />
+            </tr>
+            <tr>
+                <td align="left">
+                    <input id="Button12" type="button" style="color: black;background-color: lightpink;width: 100%;"
+                           @onclick="Save" value="Сохранить (выделив в Найденном)" />
 
-            </td>
-            <td align="left">
-                <input id="Button13" type="button" style="        color: black;
+                </td>
+                <td align="left">
+                    <input id="Button13" type="button" style="        color: black;
         background-color: lightblue;width: 100%;"
-                       @onclick="DeleteSavd" value="Удалить (выделив в Сохранённом)" />
-            </td>
+                           @onclick="DeleteSavd" value="Удалить (выделив в Сохранённом)" />
+                </td>
 
-            <td colspan="2" rowspan="6" align="right" style="vertical-align: top;">
-                <textarea id="TextArea1" style="width: 100%;border: none;" rows="20" name="text"
-                          @bind="@Opisanie" />@*><textarea*@
-                    </td>
-                </tr>
+                <td colspan="2" rowspan="6" align="right" style="vertical-align: top;">
+                    <textarea id="TextArea1" style="width: 100%;border: none;" rows="20" name="text"
+                              @bind="@Opisanie" />@*><textarea*@
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td colspan="2">
-                        <h5 style="width: 100%; color: black;background-color: lightblue;">
-                            Сохранённое:
-                        </h5>
-                    </td>
-                </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h5 style="width: 100%; color: black;background-color: lightblue;">
+                                Сохранённое:
+                            </h5>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td colspan="2" align="center">
-                        <select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
 
-                            @for (int i = 0; i < savedList.Count; i++)
+                                @for (int i = 0; i < savedList.Count; i++)
+                                {
+                                    int localVar = i;
+                                    <option @onclick="@(async () => await rrr(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                                        @savedList[localVar]
+                                    </option>
+                                }
+
+                                }
+                            </select>
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="Button14" type="button" style="color: black;background-color: lightblue;width: 100%;"
+                                   @onclick="AddPlay" value="Добавить (выделив в Сохранённом)" />
+
+                        </td>
+                        <td align="left">
+                            <input id="Button15" type="button" style=" color: black;background-color: Silver;width: 100%;"
+                                   @onclick="DeletePlay" value="Убрать (выделив в Списоке воспроизведения)" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h5 style="width: 100%; color: black;  background-color: Silver;">
+                                Список воспроизведения:
+                            </h5>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
+
+                                @for (int i = 0; i < playList.Count; i++)
+                                {
+                                    int localVar = i;
+                                    <option @onclick="@(async () => await rrr(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                                        @playList[localVar]
+                                    </option>
+                                }
+
+                                }
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+            @code {
+                //volatile
+                //protected override async Task OnAfterRender(bool firstRender)
+                protected override /*void*/async Task OnAfterRenderAsync(bool firstRender)
+                {
+                    //_syncEvent2.Reset();
+
+                    try
+                    {
+                        await base.OnAfterRenderAsync(firstRender);
+
+                        if (firstRender)
+                        {
+                            var Result5 = await JSRuntime2.InvokeAsync<string>("loadClient",
+        /*TimeSpan.FromSeconds(3),*/ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
+
+                            var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
+
+                            if (!await ls.ContainKeyAsync("lastPlay"))
                             {
-                                int localVar = i;
-                                <option @onclick="@(async () => await rrr(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
-                                    @savedList[localVar]
-                                </option>
+
+                                //var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
+                                Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReady");
+                                //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReady");
                             }
-
-                            }
-                        </select>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        <input id="Button14" type="button" style="color: black;background-color: lightblue;width: 100%;"
-                               @onclick="AddPlay" value="Добавить (выделив в Сохранённом)" />
-
-                    </td>
-                    <td align="left">
-                        <input id="Button15" type="button" style=" color: black;background-color: Silver;width: 100%;"
-                               @onclick="DeletePlay" value="Убрать (выделив в Списоке воспроизведения)" />
-                    </td>
-
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <h5 style="width: 100%; color: black;  background-color: Silver;">
-                            Список воспроизведения:
-                        </h5>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
-
-                            @for (int i = 0; i < playList.Count; i++)
+                            else
                             {
-                                int localVar = i;
-                                <option @onclick="@(async () => await rrr(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                                    @playList[localVar]
-                                </option>
+                                Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+                                //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
                             }
 
+                            synEvent.Set();
+                            //var  Result2 = /*"rrrr";//*/ await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
+                            //Result = string.IsNullOrWhiteSpace(Result2) ? (i5++).ToString() : Result2;
+
+                            //if (!await ls.ContainKeyAsync("custId")) { /*_syncEvent2.Set();*/ return; }
+                            ///*var Result2*/
+                            //forecasts = await ls.GetItemAsync<List<string>>("custId");
+                            //ggg = await ls.GetItemAsync<hj>("custId");
+
+                            /*"rrrr";//*/ //await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
+                                          //Result = string.Join("<rkt>", Result2);
+                                          //_syncEvent2.Set();
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+
+                        Opisanie = "Exception 00 " + e.Message;
+                    }
+                }
+
+                string opisanie;
+
+                string Opisanie
+                {
+                    get => opisanie; set { opisanie = value; }
+                }
+
+                string textFind;
+
+                string TextFind
+                {
+                    get => textFind; set { textFind = value; }
+                }
+
+                private ManualResetEvent synEvent;
+                private List<string> foundList, savedList, playList;
+                Dictionary<string, Hj> foundCl, savedCl, playCl;
+
+                protected override async Task OnInitializedAsync()
+                {
+                    if (true)
+                    {
+                        try
+                        {
+                            synEvent = new ManualResetEvent(false);
+                            synEvent.Reset();
+
+                            foundList = new List<string>();
+                            savedList = new List<string>();
+                            playList = new List<string>();
+
+                            foundCl = new Dictionary<string, Hj>();
+                            savedCl = new Dictionary<string, Hj>();
+                            playCl = new Dictionary<string, Hj>();
+
+                            TextFind = "???";
+
+                            BinaryFormatter formatter = new BinaryFormatter();
+
+                            if (await ls.ContainKeyAsync("found"))
+                            {
+                                var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("found"));
+
+
+
+                                using (MemoryStream stream = new MemoryStream(Result2))
+                                {
+                                    foundCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                                }
+
+                                foundList = foundCl.Keys.ToList<string>();
+
                             }
-                        </select>
+                            if (await ls.ContainKeyAsync("saved"))
+                            {
 
-                    </td>
+                                var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"));
 
-                </tr>
 
-            </tbody>
-        </table>
-        @code {
-            //volatile
-            //protected override async Task OnAfterRender(bool firstRender)
-            protected override /*void*/async Task OnAfterRenderAsync(bool firstRender)
-            {
-                //_syncEvent2.Reset();
 
-                try
-                {
-                    if (firstRender)
-                    {
-                        //var  Result2 = /*"rrrr";//*/ await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
-                        //Result = string.IsNullOrWhiteSpace(Result2) ? (i5++).ToString() : Result2;
+                                using (MemoryStream stream = new MemoryStream(Result2))
+                                {
+                                    savedCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                                }
 
-                        //if (!await ls.ContainKeyAsync("custId")) { /*_syncEvent2.Set();*/ return; }
-                        ///*var Result2*/
-                        //forecasts = await ls.GetItemAsync<List<string>>("custId");
-                        //ggg = await ls.GetItemAsync<hj>("custId");
+                                savedList = savedCl.Keys.ToList<string>();
 
-                        /*"rrrr";//*/ //await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
-                                      //Result = string.Join("<rkt>", Result2);
-                                      //_syncEvent2.Set();
-                    }
-                }
-                catch (Exception e)
-                {
+                            }
+                            if (await ls.ContainKeyAsync("play"))
+                            {
 
-                    //Result = "Exception 00 " + e.Message;
-                }
-            }
+                                var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("play"));
 
-            string opisanie;
 
-            string Opisanie
-            {
-                get => opisanie; set { opisanie = value; }
-            }
 
-            string textFind;
+                                using (MemoryStream stream = new MemoryStream(Result2))
+                                {
+                                    playCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                                }
 
-            string TextFind
-            {
-                get => textFind; set { textFind = value; }
-            }
+                                playList = playCl.Keys.ToList<string>();
 
-            private ManualResetEvent synEvent;
-            private List<string> foundList, savedList, playList;
-            Dictionary<string, Hj> foundCl, savedCl, playCl;
+                            }
+                            //var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
-            protected override async Task OnInitializedAsync()
-            {
-                try
-                {
-                    synEvent = new ManualResetEvent(false);
-                    synEvent.Reset();
+                            // Result5 = jsInProcess.Invoke<string>("authenticate");
+                            //var Result5 = jsInProcess.Invoke<string>("loadClient", GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
 
-                    foundList = new List<string>();
-                    savedList = new List<string>();
-                    playList = new List<string>();
+                            //                        var Result5 = await JSRuntime2.InvokeAsync<string>("loadClient",
+                            ///*TimeSpan.FromSeconds(3),*/ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
 
-                    foundCl = new Dictionary<string, Hj>();
-                    savedCl = new Dictionary<string, Hj>();
-                    playCl = new Dictionary<string, Hj>();
 
-                    TextFind = "???";
+                            //                        if (!await ls.ContainKeyAsync("lastPlay"))
+                            //                        {
 
-                    BinaryFormatter formatter = new BinaryFormatter();
+                            //                            //var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
+                            //                            Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReady");
+                            //                            //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReady");
+                            //                        }
+                            //                        else
+                            //                        {
+                            //                            Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+                            //                            //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+                            //                        }
 
-                    if (await ls.ContainKeyAsync("found"))
-                    {
-                        var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("found"));
+                            //                        synEvent.Set();
 
-                        
-
-                        using (MemoryStream stream = new MemoryStream(Result2))
-                        {
-                            foundCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                            await base.OnInitializedAsync();
                         }
-
-                        foundList = foundCl.Keys.ToList<string>();
-
-                    }
-                    if (await ls.ContainKeyAsync("saved"))
-                    {
-
-                        var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"));
-
-                        
-
-                        using (MemoryStream stream = new MemoryStream(Result2))
+                        catch (Exception e)
                         {
-                            savedCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                            synEvent.Set();
+                            Opisanie = "Exception 1 " + e.Message;
                         }
-
-                        savedList = savedCl.Keys.ToList<string>();
-
                     }
-                    if (await ls.ContainKeyAsync("play"))
+                }
+
+                private async Task Find()
+                {
+                    try
                     {
+                        synEvent.WaitOne();
 
-                        var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("play"));
+                        if (TextFind.Replace(" ", "").Length < 2) { return; }
 
-                       
+                        foundCl.Clear();
 
-                        using (MemoryStream stream = new MemoryStream(Result2))
+                        var Resultt = await JSRuntime2.InvokeAsync<string>("execute2", TextFind);
+
+                        if (5 > 1)
                         {
-                            playCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-                        }
-
-                        playList = playCl.Keys.ToList<string>();
-
-                    }
-                    var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
-
-                    // Result5 = jsInProcess.Invoke<string>("authenticate");
-                    //var Result5 = jsInProcess.Invoke<string>("loadClient", GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
-
-                    var Result5 = await JSRuntime2.InvokeAsync<string>("loadClient", GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
-
-
-                    if (!await ls.ContainKeyAsync("lastPlay"))
-                    {
-
-                        //var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
-                        Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReady");
-                        //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReady");
-                    }
-                    else
-                    {
-                        Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
-                        //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
-                    }
-
-                    synEvent.Set();
-
-                }
-                catch (Exception e)
-                {
-                    synEvent.Set();
-                    Opisanie = "Exception 1 " + e.Message;
-                }
-            }
-
-            private async Task Find()
-            {
-                try
-                {
-                    synEvent.WaitOne();
-
-                    if (TextFind.Replace(" ", "").Length < 2) { return; }
-
-                    foundCl.Clear();
-
-                    var Resultt = await JSRuntime2.InvokeAsync<string>("execute2", TextFind);
-
-                    if (5 > 1)
-                    {
-                        string[] ddd = Resultt.Replace("  ", " ").Split(
-                       new string[] {
+                            string[] ddd = Resultt.Replace("  ", " ").Split(
+                           new string[] {
                             @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
                             @"""},""snippet"":{""publishedAt"":""",
                         @""",""title"":""",
                         @""",""description"":""",
                         @""",""thumbnails"":{""default"":"}
-                , StringSplitOptions.None);
+                    , StringSplitOptions.None);
 
-                        for (int ie = 0; ie < ddd.Length; ie = ie + 5)
-                        {
-                            foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
-                        new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
-                            if (ie + 5 + 5 > ddd.Length) { break; }
-                        }
+                            for (int ie = 0; ie < ddd.Length; ie = ie + 5)
+                            {
+                                foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
+                            new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
+                                if (ie + 5 + 5 > ddd.Length) { break; }
+                            }
 
-                        string[] llistt3 = foundCl.Values.Select(x => x.videoId).ToArray();
+                            string[] llistt3 = foundCl.Values.Select(x => x.videoId).ToArray();
 
-                        var Resultt33 = await JSRuntime2.InvokeAsync<string>("execute33", llistt3.ToList<string>());
+                            var Resultt33 = await JSRuntime2.InvokeAsync<string>("execute33", llistt3.ToList<string>());
 
-                        string[] ddd2 = Resultt33.Split(
-               new string[] {
+                            string[] ddd2 = Resultt33.Split(
+                   new string[] {
                             @""",""id"":""" ,
                             @""",""contentDetails"":{""duration"":""",
                             @""",""dimension"":"""}
-        , StringSplitOptions.None);
+            , StringSplitOptions.None);
 
-                        Dictionary<string, string> Cl = new Dictionary<string, string>();
+                            Dictionary<string, string> Cl = new Dictionary<string, string>();
 
-                        for (int ir = 0; ir < ddd2.Length; ir = ir + 3)
-                        {
-                            Cl.Add(ddd2[ir + 1], Math.Round(XmlConvert.ToTimeSpan(ddd2[ir + 2]).TotalMinutes).ToString());
+                            for (int ir = 0; ir < ddd2.Length; ir = ir + 3)
+                            {
+                                Cl.Add(ddd2[ir + 1], Math.Round(XmlConvert.ToTimeSpan(ddd2[ir + 2]).TotalMinutes).ToString());
 
-                            if (ir + 3 + 3 > ddd2.Length) { break; }
+                                if (ir + 3 + 3 > ddd2.Length) { break; }
+                            }
+
+                            var foundCl2 = new Dictionary<string, Hj>();
+
+                            foreach (var item in foundCl.Keys)
+                            {
+                                foundCl2.Add(
+                                Cl[foundCl[item].videoId] + " " + item,
+                                foundCl[item]);
+                            }
+
+                            foundCl = foundCl2;
+
+                            BinaryFormatter formatter = new BinaryFormatter();
+
+                            string res;
+
+                            using (MemoryStream stream1 = new MemoryStream())
+                            {
+                                formatter.Serialize(stream1, foundCl);
+
+                                res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+                            }
+
+                            await ls.SetItemAsync<string>("found", res);
+
+                            foundList = foundCl.Keys.ToList<string>();
+
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        Opisanie = "Exception 2 " + e.Message;
+                    }
 
-                        var foundCl2 = new Dictionary<string, Hj>();
+                }
 
-                        foreach (var item in foundCl.Keys)
+                ElementReference Savd, Fnd, Play, Btn;
+
+                private async Task Save()
+                {
+                    List<string> svd = null;
+
+                    try
+                    {
+                        svd = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Fnd);
+
+                        foreach (var v in svd)
                         {
-                            foundCl2.Add(
-                            Cl[foundCl[item].videoId] + " " + item,
-                            foundCl[item]);
+                            if (!savedCl.Keys.Contains(v)) { savedCl.Add(v, foundCl[v]); }
                         }
-
-                        foundCl = foundCl2;
 
                         BinaryFormatter formatter = new BinaryFormatter();
 
@@ -357,43 +424,54 @@
 
                         using (MemoryStream stream1 = new MemoryStream())
                         {
-                            formatter.Serialize(stream1, foundCl);
+                            formatter.Serialize(stream1, savedCl);
 
                             res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
                         }
 
-                        await ls.SetItemAsync<string>("found", res);
+                        await ls.SetItemAsync<string>("saved", res);
 
-                        foundList = foundCl.Keys.ToList<string>();
+                        svd = savedCl.Keys.ToList<string>();
 
+                        foreach (var v in svd)
+                        {
+                            if (!savedList.Contains(v)) { savedList.Add(v); }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        #region MyRegion
+                        //StringBuilder sd = new StringBuilder();
+                        //foreach (var v in foundCl.Keys)
+                        //{
+                        //    sd.AppendLine(v);
+                        //}
+                        //sd.AppendLine("java");
+                        //foreach (var v in svd)
+                        //{
+                        //    sd.AppendLine(v);
+                        //}
+                        //sd.AppendLine("ex.Message").AppendLine(ex.Message);
+                        /*sd*/
+                        #endregion
+
+                        Opisanie = "Exception 3 " + ex.ToString();
                     }
                 }
-                catch (Exception e)
+
+                private async Task DeleteSavd()
                 {
-                    Opisanie = "Exception 2 " + e.Message;
-                }
+                    List<string> del = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Savd);
 
-            }
-
-            ElementReference Savd, Fnd, Play;
-
-            private async Task Save()
-            {
-                List<string> svd = null;
-
-                try
-                {
-                    svd = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Fnd);
-
-                    foreach (var v in svd)
+                    foreach (var v in del)
                     {
-                        if (!savedCl.Keys.Contains(v)) { savedCl.Add(v, foundCl[v]); }
+                        if (savedCl.Keys.Contains(v)) { savedCl.Remove(v); }
                     }
 
                     BinaryFormatter formatter = new BinaryFormatter();
 
                     string res;
-
                     using (MemoryStream stream1 = new MemoryStream())
                     {
                         formatter.Serialize(stream1, savedCl);
@@ -403,145 +481,117 @@
 
                     await ls.SetItemAsync<string>("saved", res);
 
-                    svd = savedCl.Keys.ToList<string>();
+                    savedList.RemoveAll(vehicle => del.Contains(vehicle) == true);
 
-                    foreach (var v in svd)
+                }
+
+                private async Task AddPlay()
+                {
+                    var ply = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Savd);
+
+                    foreach (var v in ply)
                     {
-                        if (!savedList.Contains(v)) { savedList.Add(v); }
+                        if (!playCl.Keys.Contains(v)) { playCl.Add(v, savedCl[v]); }
+                    }
+
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    string res;
+                    using (MemoryStream stream1 = new MemoryStream())
+                    {
+                        formatter.Serialize(stream1, playCl);
+
+                        res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+                    }
+
+                    await ls.SetItemAsync<string>("play", res);
+
+                    ply = playCl.Keys.ToList<string>();
+                    foreach (var v in ply)
+                    {
+                        if (!playList.Contains(v)) { playList.Add(v); }
+                    }
+
+                }
+
+                private async Task DeletePlay()
+                {
+                    List<string> del = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Play);
+
+                    foreach (var v in del)
+                    {
+                        if (playCl.Keys.Contains(v)) { playCl.Remove(v); }
+                    }
+
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    string res;
+                    using (MemoryStream stream1 = new MemoryStream())
+                    {
+                        formatter.Serialize(stream1, playCl);
+
+                        res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+                    }
+
+                    await ls.SetItemAsync<string>("play", res);
+
+                    playList.RemoveAll(vehicle => del.Contains(vehicle) == true);
+
+                }
+
+                private async Task Start()
+                {
+
+                    //overscroll-behavior-y: contain
+                    //bool confirmed = await JSRuntime2.InvokeAsync<bool>("confirm", "Are you sure?");
+                    //string prompted = await JSRuntime2.InvokeAsync<string>("prompt", "Take some input:");
+                    //await JSRuntime2.InvokeVoidAsync("alert", "Warning!");
+                    //return;
+                    try
+                    {
+                        if (playCl.Count == 0) { return; }
+
+                        var dss = playCl.Values.Select(x => x.videoId).ToList<string>();
+                        await ls.SetItemAsync<string>("lastPlay", dss[0]);
+
+                        await JSRuntime2.InvokeVoidAsync("playMany", dss);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        //Opisanie = et.Message + "----" + playCl.Count.ToString();
+                        Opisanie = "Exception 4 " + ex.ToString();
                     }
                 }
-                catch (Exception ex)
+
+                private async Task rrr(string a, string b)
                 {
+                    await ls.SetItemAsync<string>("lastPlay", b);
 
-                    #region MyRegion
-                    //StringBuilder sd = new StringBuilder();
-                    //foreach (var v in foundCl.Keys)
-                    //{
-                    //    sd.AppendLine(v);
-                    //}
-                    //sd.AppendLine("java");
-                    //foreach (var v in svd)
-                    //{
-                    //    sd.AppendLine(v);
-                    //}
-                    //sd.AppendLine("ex.Message").AppendLine(ex.Message);
-                    /*sd*/
-                    #endregion
-
-                    Opisanie = "Exception 3 " + ex.ToString();
+                    Opisanie = a;
+                    await JSRuntime2.InvokeVoidAsync("playOne", b);
                 }
+
+                protected void HandleSomeEvent()
+                {
+                    var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
+                    var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
+                }
+
+                //protected void HandleSomeEvent2()
+                //{
+
+
+                //    var results =new string[5];
+                //    int i=0;
+                //    for (i = 0; i < Fnd.options.length; i++)
+                //    {
+                //        if (sel.options[i].selected)
+                //        {
+                //            results[results.length] = sel.options[i].value;
+                //        }
+                //    }
+
+                //}
             }
-
-            private async Task DeleteSavd()
-            {
-                List<string> del = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Savd);
-
-                foreach (var v in del)
-                {
-                    if (savedCl.Keys.Contains(v)) { savedCl.Remove(v); }
-                }
-
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                string res;
-                using (MemoryStream stream1 = new MemoryStream())
-                {
-                    formatter.Serialize(stream1, savedCl);
-
-                    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-                }
-
-                await ls.SetItemAsync<string>("saved", res);
-
-                savedList.RemoveAll(vehicle => del.Contains(vehicle) == true);
-
-            }
-
-            private async Task AddPlay()
-            {
-                var ply = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Savd);
-
-                foreach (var v in ply)
-                {
-                    if (!playCl.Keys.Contains(v)) { playCl.Add(v, savedCl[v]); }
-                }
-
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                string res;
-                using (MemoryStream stream1 = new MemoryStream())
-                {
-                    formatter.Serialize(stream1, playCl);
-
-                    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-                }
-
-                await ls.SetItemAsync<string>("play", res);
-
-                ply = playCl.Keys.ToList<string>();
-                foreach (var v in ply)
-                {
-                    if (!playList.Contains(v)) { playList.Add(v); }
-                }
-
-            }
-
-            private async Task DeletePlay()
-            {
-                List<string> del = await JSRuntime2.InvokeAsync<List<string>>("getSelectedValues", Play);
-
-                foreach (var v in del)
-                {
-                    if (playCl.Keys.Contains(v)) { playCl.Remove(v); }
-                }
-
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                string res;
-                using (MemoryStream stream1 = new MemoryStream())
-                {
-                    formatter.Serialize(stream1, playCl);
-
-                    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-                }
-
-                await ls.SetItemAsync<string>("play", res);
-
-                playList.RemoveAll(vehicle => del.Contains(vehicle) == true);
-
-            }
-
-            private async Task Start()
-            {
-                try
-                {
-                    if (playCl.Count == 0) { return; }
-
-                    var dss = playCl.Values.Select(x => x.videoId).ToList<string>();
-                    await ls.SetItemAsync<string>("lastPlay", dss[0]);
-
-                    await JSRuntime2.InvokeVoidAsync("playMany", dss);
-
-                }
-                catch (Exception ex)
-                {
-                    //Opisanie = et.Message + "----" + playCl.Count.ToString();
-                    Opisanie = "Exception 4 " + ex.ToString();
-                }
-            }
-
-            private async Task rrr(string a, string b)
-            {
-                await ls.SetItemAsync<string>("lastPlay", b);
-
-                Opisanie = a;
-                await JSRuntime2.InvokeVoidAsync("playOne", b);
-            }
-
-            protected void HandleSomeEvent()
-            {
-                var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
-                var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
-            }
-        }
 
