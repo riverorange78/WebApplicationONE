@@ -184,17 +184,17 @@
         };
 
         var player;
-        //function onYouTubeIframeAPIReady() {
-        //    player = new YT.Player('player', {
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
 
-        //        videoId: lastPl,
-        //        events: {
-        //            'onReady': onPlayerReady,
-        //            'onStateChange': onPlayerStateChange
-        //        }
-        //    });
-        //    return "true";
-        //}
+                videoId: lastPl,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+            return "true";
+        }
 
 
         function onPlayerReady(event) {
