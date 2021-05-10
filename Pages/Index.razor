@@ -196,18 +196,18 @@
 
                         var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
-                        //if (!await ls.ContainKeyAsync("lastPlay"))
-                        //{
+                        if (!await ls.ContainKeyAsync("lastPlay"))
+                        {
 
-                        //    //var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
-                        //    Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReady");
-                        //    //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReady");
-                        //}
-                        //else
-                        //{
-                        //    Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
-                        //    //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
-                        //}
+                            //var value = jsInProcess.Invoke<string>("javascriptFunctionIdentifier");
+                            Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReady");
+                            //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReady");
+                        }
+                        else
+                        {
+                            Result5 = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+                            //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+                        }
 
                         synEvent.Set();
                         //var  Result2 = /*"rrrr";//*/ await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
@@ -362,7 +362,7 @@
 
 
                     if (TextFind.Replace(" ", "").Length < 2) { return; }
-
+                  
                     foundList.Clear();
                     foundCl.Clear();
 
