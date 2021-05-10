@@ -23,31 +23,77 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+
     <script src="https://apis.google.com/js/api.js"></script>
+    
+    <!--<script>
+        window.installinged = function () {
+            //DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
+            window.PWADeferredPrompt.prompt();
+        };
+    </script>-->
 
     <script>
         
+        self.addEventListener('beforeinstallprompt', function (e) {
+
+        //    //document.getElementById('TextArea1').innerText = "welcomeMessage";
+
+        //    e.preventDefault();
+        //    // Stash the event so it can be triggered later.
+        //    // where you store it is up to you
+        //    window.PWADeferredPrompt = e;
+        //    // Notify C# Code that it can show an alert
+        //    // MyBlazorInstallMethod must be [JSInvokable]
+           DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
+        //    //.then(data => {
+
+        //    //    //document.getElementById('TextArea1').innerText = data;
+
+
+        });
+
+        //window.addEventListener('beforeinstallprompt', function (e) {
+
+        //    //document.getElementById('TextArea1').innerText = "welcomeMessage";
+
+        //    e.preventDefault();
+        //    // Stash the event so it can be triggered later.
+        //    // where you store it is up to you
+        //    window.PWADeferredPrompt = e;
+        //    // Notify C# Code that it can show an alert
+        //    // MyBlazorInstallMethod must be [JSInvokable]
+        //    DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
+        //    //.then(data => {
+
+        //    //    //document.getElementById('TextArea1').innerText = data;
+
+
+        //});
+
+
+
         function authenticate() {
             return gapi.auth2.getAuthInstance()
                 .signIn({ scope: "https://www.googleapis.com/auth/youtube.force-ssl" })
                 .then(function () { console.log("Sign-in successful"); return "true"; },
-                    function (err) { console.error("Error signing in", err); return "false";});
+                    function (err) { console.error("Error signing in", err); return "false"; });
         }
- 
+
         var lastPl;
         function loadClient(f) {
 
             lastPl = 'G2CHyuF74R0';
             //"AIzaSyApxU38Tke7HtXOarFJAP1pR_O0ATRwy-Q"
             gapi.client.setApiKey(f);
-          
+
             return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-                                                                            .then(
-                function () {
-                    console.log("GAPI client loaded for API");
-                    return "GAPI client loaded for API" ;
-                },
-                function (err) { console.error("Error loading GAPI client for API", err); return "err"; });
+                .then(
+                    function () {
+                        console.log("GAPI client loaded for API");
+                        return "GAPI client loaded for API";
+                    },
+                    function (err) { console.error("Error loading GAPI client for API", err); return "err"; });
         }
 
 
@@ -63,14 +109,14 @@
                 ,
                 "videoSyndicated": "true"
             })
-                .then( 
+                .then(
                     function (response) {
-                         
-                        return JSON.stringify(response)  ;
-                    } 
+
+                        return JSON.stringify(response);
+                    }
                     ,
                     function (err) {
-                       
+
                         return JSON.stringify(err);
                     });
         }
@@ -83,27 +129,28 @@
                     "contentDetails"
                 ],
                 "id": more
-                 
+
             })
                 .then(function (response) {
-                   
+
                     return JSON.stringify(response);
                 },
                     function (err) {
-                        
-                        return JSON.stringify("contentDetails2") ;
+
+                        return JSON.stringify("contentDetails2");
                     });
         }
-        
+
         gapi.load('client',
             function () { console.log("GAPI uuuuuuuuuuuu"); }
-            
-        ); 
+
+        );
 
     </script>
 
     <script>
         window.getSelectedValues = function (sel) {
+            //DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
             var results = [];
             var i;
             for (i = 0; i < sel.options.length; i++) {
@@ -115,7 +162,7 @@
         };
     </script>
     <script>
-   
+
         window.mkYouTubeIframeAPIReadyLast = function (pl) {
 
             lastPl = pl;
@@ -139,7 +186,7 @@
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                
+
                 videoId: lastPl,
                 events: {
                     'onReady': onPlayerReady,
@@ -149,22 +196,22 @@
             return "true";
         }
 
-    
+
         function onPlayerReady(event) {
             event.target.playVideo();
         }
 
         var done = false;
         function onPlayerStateChange(event) {
-           
+
             if (event.data === YT.PlayerState.ENDED) {
-                
+
                 if (index < videos.length - 1) {
                     index = index + 1;
                     event.target.loadVideoById(
-                        
+
                         videos[index], 0, "large");
-                    
+
                 };
 
             }
@@ -174,26 +221,41 @@
             player.stopVideo();
         }
 
-        var index = 0; 
+        var index = 0;
         var videos = [];
-        
+
 
         window.playMany = function (yyy) {
             index = 0;
             videos = yyy;
             player.loadVideoById(videos[index], 0, "large");
-           
+
         }
 
         window.playOne = function (yyy) {
+            //DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
             index = 0;
             videos = [];
             player.loadVideoById(yyy, 0, "large");
-            
+
         }
 
+        /*BlazorPWA*/
+                //window.installPWA =
+                //    function () {
+                //        if (window.PWADeferredPrompt) {
+                //            // Use the stashed event to continue the install process
+                //            window.PWADeferredPrompt.prompt();
+                //            window.PWADeferredPrompt.userChoice
+                //                .then(function (choiceResult) {
+                //                    window.PWADeferredPrompt = null;
+                //                });
+                //        }
+
+                //};
+
     </script>
-   
+
 </body>
 
 </html>
