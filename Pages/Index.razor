@@ -362,11 +362,14 @@
 
 
                     if (TextFind.Replace(" ", "").Length < 2) { return; }
-                  
+
                     foundList.Clear();
                     foundCl.Clear();
 
                     var Resultt = await JSRuntime2.InvokeAsync<string>("execute2", TextFind);
+
+                    Opisanie = Resultt;
+                    return;
 
                     if (5 > 1)
                     {
