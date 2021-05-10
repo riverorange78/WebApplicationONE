@@ -35,23 +35,23 @@
 
     <script>
         
-        self.addEventListener('beforeinstallprompt', function (e) {
+        //self.addEventListener('beforeinstallprompt', function (e) {
 
-        //    //document.getElementById('TextArea1').innerText = "welcomeMessage";
+        ////    //document.getElementById('TextArea1').innerText = "welcomeMessage";
 
-        //    e.preventDefault();
-        //    // Stash the event so it can be triggered later.
-        //    // where you store it is up to you
-        //    window.PWADeferredPrompt = e;
-        //    // Notify C# Code that it can show an alert
-        //    // MyBlazorInstallMethod must be [JSInvokable]
-           DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
-        //    //.then(data => {
+        ////    e.preventDefault();
+        ////    // Stash the event so it can be triggered later.
+        ////    // where you store it is up to you
+        ////    window.PWADeferredPrompt = e;
+        ////    // Notify C# Code that it can show an alert
+        ////    // MyBlazorInstallMethod must be [JSInvokable]
+        //   DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
+        ////    //.then(data => {
 
-        //    //    //document.getElementById('TextArea1').innerText = data;
+        ////    //    //document.getElementById('TextArea1').innerText = data;
 
 
-        });
+        //});
 
         //window.addEventListener('beforeinstallprompt', function (e) {
 
@@ -184,17 +184,17 @@
         };
 
         var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
+        //function onYouTubeIframeAPIReady() {
+        //    player = new YT.Player('player', {
 
-                videoId: lastPl,
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-            return "true";
-        }
+        //        videoId: lastPl,
+        //        events: {
+        //            'onReady': onPlayerReady,
+        //            'onStateChange': onPlayerStateChange
+        //        }
+        //    });
+        //    return "true";
+        //}
 
 
         function onPlayerReady(event) {
