@@ -267,7 +267,7 @@
                         savedCl = new Dictionary<string, Hj>();
                         playCl = new Dictionary<string, Hj>();
 
-                        TextFind = "Resultt";
+                        TextFind = "???";
 
                         //await  ls.ClearAsync();
 
@@ -371,74 +371,74 @@
 
                     var Resultt = await JSRuntime2.InvokeAsync<string>("execute2", TextFind);
 
-                    Opisanie = Resultt;
-                    return;
+                    //Opisanie = Resultt;
+                    //return;
 
-                    //            if (5 > 1)
-                    //            {
-                    //                string[] ddd = Resultt.Replace("  ", " ").Split(
-                    //               new string[] {
-                    //                    @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
-                    //                    @"""},""snippet"":{""publishedAt"":""",
-                    //                @""",""title"":""",
-                    //                @""",""description"":""",
-                    //                @""",""thumbnails"":{""default"":"}
-                    //        , StringSplitOptions.None);
+                    if (5 > 1)
+                    {
+                        string[] ddd = Resultt.Replace("  ", " ").Split(
+                       new string[] {
+                                        @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
+                                        @"""},""snippet"":{""publishedAt"":""",
+                                    @""",""title"":""",
+                                    @""",""description"":""",
+                                    @""",""thumbnails"":{""default"":"}
+                , StringSplitOptions.None);
 
-                    //                for (int ie = 0; ie < ddd.Length; ie = ie + 5)
-                    //                {
-                    //                    foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
-                    //                new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
-                    //                    if (ie + 5 + 5 > ddd.Length) { break; }
-                    //                }
+                        for (int ie = 0; ie < ddd.Length; ie = ie + 5)
+                        {
+                            foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
+                        new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
+                            if (ie + 5 + 5 > ddd.Length) { break; }
+                        }
 
-                    //                string[] llistt3 = foundCl.Values.Select(x => x.videoId).ToArray();
+                        string[] llistt3 = foundCl.Values.Select(x => x.videoId).ToArray();
 
-                    //                var Resultt33 = await JSRuntime2.InvokeAsync<string>("execute33", llistt3.ToList<string>());
+                        var Resultt33 = await JSRuntime2.InvokeAsync<string>("execute33", llistt3.ToList<string>());
 
-                    //                string[] ddd2 = Resultt33.Split(
-                    //       new string[] {
-                    //                    @""",""id"":""" ,
-                    //                    @""",""contentDetails"":{""duration"":""",
-                    //                    @""",""dimension"":"""}
-                    //, StringSplitOptions.None);
+                        string[] ddd2 = Resultt33.Split(
+               new string[] {
+                                        @""",""id"":""" ,
+                                        @""",""contentDetails"":{""duration"":""",
+                                        @""",""dimension"":"""}
+        , StringSplitOptions.None);
 
-                    //                Dictionary<string, string> Cl = new Dictionary<string, string>();
+                        Dictionary<string, string> Cl = new Dictionary<string, string>();
 
-                    //                for (int ir = 0; ir < ddd2.Length; ir = ir + 3)
-                    //                {
-                    //                    Cl.Add(ddd2[ir + 1], Math.Round(XmlConvert.ToTimeSpan(ddd2[ir + 2]).TotalMinutes).ToString());
+                        for (int ir = 0; ir < ddd2.Length; ir = ir + 3)
+                        {
+                            Cl.Add(ddd2[ir + 1], Math.Round(XmlConvert.ToTimeSpan(ddd2[ir + 2]).TotalMinutes).ToString());
 
-                    //                    if (ir + 3 + 3 > ddd2.Length) { break; }
-                    //                }
+                            if (ir + 3 + 3 > ddd2.Length) { break; }
+                        }
 
-                    //                var foundCl2 = new Dictionary<string, Hj>();
+                        var foundCl2 = new Dictionary<string, Hj>();
 
-                    //                foreach (var item in foundCl.Keys)
-                    //                {
-                    //                    foundCl2.Add(
-                    //                    Cl[foundCl[item].videoId] + " " + item,
-                    //                    foundCl[item]);
-                    //                }
+                        foreach (var item in foundCl.Keys)
+                        {
+                            foundCl2.Add(
+                            Cl[foundCl[item].videoId] + " " + item,
+                            foundCl[item]);
+                        }
 
-                    //                foundCl = foundCl2;
+                        foundCl = foundCl2;
 
-                    //                BinaryFormatter formatter = new BinaryFormatter();
+                        BinaryFormatter formatter = new BinaryFormatter();
 
-                    //                string res;
+                        string res;
 
-                    //                using (MemoryStream stream1 = new MemoryStream())
-                    //                {
-                    //                    formatter.Serialize(stream1, foundCl);
+                        using (MemoryStream stream1 = new MemoryStream())
+                        {
+                            formatter.Serialize(stream1, foundCl);
 
-                    //                    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-                    //                }
+                            res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+                        }
 
-                    //                await ls.SetItemAsync<string>("found", res);
+                        await ls.SetItemAsync<string>("found", res);
 
-                    //                foundList = foundCl.Keys.ToList<string>();
+                        foundList = foundCl.Keys.ToList<string>();
 
-                    //            }
+                    }
                 }
                 catch (Exception e)
                 {
