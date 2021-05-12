@@ -50,9 +50,10 @@
                     {
                         int localVar = i;
 
-                        <option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
-                            @foundList[localVar]
-                        </option>
+                        @foundList[localVar]
+                        @*<option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+                @foundList[localVar]
+            </option>*@
                     }
                 </select>
 
@@ -328,7 +329,7 @@
                         //}
 
                         foundList = new List<string>() { "1", "8" }; return;
-                        
+
                         #region MyRegion
                         //var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
@@ -392,7 +393,7 @@
                     //Opisanie = Resultt;
                     //return;
 
-                    foundList = new List<string>() { "110", "880" };return;
+                    //foundList = new List<string>() { "110", "880" };return;
 
                     if (5 > 1)
                     {
