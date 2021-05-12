@@ -177,6 +177,7 @@
                 //}
             }
 
+            volatile bool bob;
             //volatile
             //protected override async Task OnAfterRender(bool firstRender)
             protected override /*void*/async Task OnAfterRenderAsync(bool firstRender)
@@ -189,10 +190,10 @@
 
                     action = () => { TextFind = "8889"; };
 
-                    if (firstRender)
+                    if (firstRender)//1 > 5
                     {
                         var Result5 = await JSRuntime2.InvokeAsync<string>("loadClient",
-/*TimeSpan.FromSeconds(3),*/ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
+    /*TimeSpan.FromSeconds(3),*/ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
 
                         var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
@@ -209,7 +210,8 @@
                             //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
                         }
 
-                        synEvent.Set();
+                        #region MyRegion
+                        //synEvent.Set();
                         //var  Result2 = /*"rrrr";//*/ await JSRuntime2.InvokeAsync<string>("ReadCookie.ReadCookie", "FindBlzWpa");
                         //Result = string.IsNullOrWhiteSpace(Result2) ? (i5++).ToString() : Result2;
 
@@ -222,7 +224,12 @@
                                       //Result = string.Join("<rkt>", Result2);
                                       //_syncEvent2.Set();
                                       //await JSRuntime2.InvokeVoidAsync("installinged");
+
+                        #endregion
+
+                        bob = true;
                     }
+
 
                 }
                 catch (Exception e)
@@ -246,7 +253,7 @@
                 get => textFind; set { textFind = value; }
             }
 
-            private ManualResetEvent synEvent;
+            //private ManualResetEvent synEvent;
             private List<string> foundList, savedList, playList;
             Dictionary<string, Hj> foundCl, savedCl, playCl;
 
@@ -256,8 +263,10 @@
                 {
                     try
                     {
-                        synEvent = new ManualResetEvent(false);
-                        synEvent.Reset();
+                        bob = false;
+
+                        //synEvent = new ManualResetEvent(false);
+                        //synEvent.Reset();
 
                         foundList = new List<string>();
                         savedList = new List<string>();
@@ -347,7 +356,7 @@
                     }
                     catch (Exception e)
                     {
-                        synEvent.Set();
+                        //synEvent.Set();
                         Opisanie = "Exception 1 " + e.Message;
                     }
                 }
@@ -357,14 +366,18 @@
             {
                 try
                 {
-                    synEvent.WaitOne();
+                    //var ggh12 = synEvent.WaitOne();
+                    if (!bob) { Opisanie = "ups1"; return; }
+                    else { Opisanie = "ups2";
 
-                    //var yujk= await Task.FromResult<string>("rre4");// .rezult 
+                        foundList = new List<string>() { "11", "88" };
+
+                        return; }   //var yujk= await Task.FromResult<string>("rre4");// .rezult
 
                     //Opisanie = yujk;
                     //return;
 
-                    if (TextFind.Replace(" ", "").Length < 2) { return; }
+                    if (TextFind.Replace(" ", "").Length < 2) { Opisanie = "ups2"; return; }
 
                     foundList.Clear();
                     foundCl.Clear();
@@ -391,12 +404,12 @@
                         new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
                             if (ie + 5 + 5 > ddd.Length) { break; }
                         }
-                       
+
                         //------------
-                        foundList = foundCl.Keys.ToList<string>();
+                        foundList = new List<string>() { "11", "88" }; //foundCl.Keys.ToList<string>();
                         return;
                         //------------
-                        
+
                         string[] llistt3 = foundCl.Values.Select(x => x.videoId).ToArray();
 
                         var Resultt33 = await JSRuntime2.InvokeAsync<string>("execute33", llistt3.ToList<string>());
