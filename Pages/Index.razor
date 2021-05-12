@@ -280,52 +280,56 @@
 
                         //await  ls.ClearAsync();
 
-                        BinaryFormatter formatter = new BinaryFormatter();
+                        //BinaryFormatter formatter = new BinaryFormatter();
 
-                        if (await ls.ContainKeyAsync("found"))
-                        {
-                            var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("found"));
-
-
-
-                            using (MemoryStream stream = new MemoryStream(Result2))
-                            {
-                                foundCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-                            }
-
-                            foundList = foundCl.Keys.ToList<string>();
-
-                        }
-                        if (await ls.ContainKeyAsync("saved"))
-                        {
-
-                            var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"));
+                        //if (await ls.ContainKeyAsync("found"))
+                        //{
+                        //    var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("found"));
 
 
 
-                            using (MemoryStream stream = new MemoryStream(Result2))
-                            {
-                                savedCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-                            }
+                        //    using (MemoryStream stream = new MemoryStream(Result2))
+                        //    {
+                        //        foundCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                        //    }
 
-                            savedList = savedCl.Keys.ToList<string>();
+                        //    foundList = foundCl.Keys.ToList<string>();
 
-                        }
-                        if (await ls.ContainKeyAsync("play"))
-                        {
+                        //}
+                        //if (await ls.ContainKeyAsync("saved"))
+                        //{
 
-                            var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("play"));
+                        //    var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"));
 
 
 
-                            using (MemoryStream stream = new MemoryStream(Result2))
-                            {
-                                playCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-                            }
+                        //    using (MemoryStream stream = new MemoryStream(Result2))
+                        //    {
+                        //        savedCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                        //    }
 
-                            playList = playCl.Keys.ToList<string>();
+                        //    savedList = savedCl.Keys.ToList<string>();
 
-                        }
+                        //}
+                        //if (await ls.ContainKeyAsync("play"))
+                        //{
+
+                        //    var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("play"));
+
+
+
+                        //    using (MemoryStream stream = new MemoryStream(Result2))
+                        //    {
+                        //        playCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                        //    }
+
+                        //    playList = playCl.Keys.ToList<string>();
+
+                        //}
+
+                        foundList = new List<string>() { "1", "8" }; return;
+                        
+                        #region MyRegion
                         //var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
                         // Result5 = jsInProcess.Invoke<string>("authenticate");
@@ -348,7 +352,8 @@
                         //                            //await JSRuntime2.InvokeVoidAsync("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
                         //                        }
 
-                        //                        synEvent.Set();
+                        //                        synEvent.Set(); 
+                        #endregion
 
                         await base.OnInitializedAsync();
 
@@ -386,6 +391,8 @@
 
                     //Opisanie = Resultt;
                     //return;
+
+                    foundList = new List<string>() { "110", "880" };return;
 
                     if (5 > 1)
                     {
