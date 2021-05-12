@@ -44,20 +44,21 @@
         <tr>
 
             <td colspan="2" align="center">
-                <select @ref="Fnd" size="15" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
+                @*multiple*@
+                        <select @ref="Fnd" size="15" style=" width: 100%;overflow: auto;border: 0;outline: 0;">
 
-                    @for (int i = 0; i < foundList.Count; i++)
-                    {
-                        int localVar = i;
+                            @for (int i = 0; i < foundList.Count; i++)
+                            {
+                                int localVar = i;
 
-                    <option>@foundList[localVar]</option>
-                        @*<option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
-                @foundList[localVar]
-            </option>*@
-                    }
-                </select>
+                                <option>@foundList[localVar]</option>
+                                @*<option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+                            @foundList[localVar]
+                        </option>*@
+                            }
+                        </select>
 
-            </td>
+                    </td>
             <td colspan="2">
                 <div id="player"></div>
             </td>
