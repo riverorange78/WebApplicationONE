@@ -25,7 +25,7 @@
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 
     <script src="https://apis.google.com/js/api.js"></script>
-    
+
     <!--<script>
         window.installinged = function () {
             //DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
@@ -34,7 +34,7 @@
     </script>-->
 
     <script>
-        
+
         //self.addEventListener('beforeinstallprompt', function (e) {
 
         ////    //document.getElementById('TextArea1').innerText = "welcomeMessage";
@@ -162,6 +162,19 @@
         };
     </script>
     <script>
+        window.getSelectedValues2 = function (sel) {
+            //DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
+            var results = [];
+            var i;
+            for (i = 0; i < sel.options.length; i++) {
+                if (sel.options[i].selected) {
+                    results[results.length] = sel.options[i].value;
+                }
+            }
+            return results;
+        };
+    </script>
+    <script>
 
         window.mkYouTubeIframeAPIReadyLast = function (pl) {
 
@@ -241,18 +254,18 @@
         }
 
         /*BlazorPWA*/
-                //window.installPWA =
-                //    function () {
-                //        if (window.PWADeferredPrompt) {
-                //            // Use the stashed event to continue the install process
-                //            window.PWADeferredPrompt.prompt();
-                //            window.PWADeferredPrompt.userChoice
-                //                .then(function (choiceResult) {
-                //                    window.PWADeferredPrompt = null;
-                //                });
-                //        }
+                    //window.installPWA =
+                    //    function () {
+                    //        if (window.PWADeferredPrompt) {
+                    //            // Use the stashed event to continue the install process
+                    //            window.PWADeferredPrompt.prompt();
+                    //            window.PWADeferredPrompt.userChoice
+                    //                .then(function (choiceResult) {
+                    //                    window.PWADeferredPrompt = null;
+                    //                });
+                    //        }
 
-                //};
+                    //};
 
     </script>
 
