@@ -8,11 +8,34 @@ using System.Threading.Tasks;
 namespace WebApplicationONE
 {
     [Serializable]
-	class Hj
-	{
-		public string videoId { get; set; }
-		public string  description { get; set; }
-	}
+    class Hj
+    {
+        public Hj Get()
+        { /*checkedA=false;*/
+            return new Hj()
+            {
+                videoId = this.videoId,
+                description = this.description
+            };
+        }
+
+        public string videoId { get; set; }
+        public string description { get; set; }
+
+        private bool checkedA = false;
+        public bool CheckedA
+        {
+            get
+            {
+                return checkedA;
+            }
+            set
+            {
+                checkedA = value;
+            }
+        }
+
+    }
 
     internal static class GrinFc
     {

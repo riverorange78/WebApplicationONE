@@ -17,7 +17,7 @@ namespace WebApplicationONE
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
-
+            
             builder.Services.AddScoped(
                 sp => new HttpClient
                 {
@@ -25,7 +25,7 @@ namespace WebApplicationONE
                 })
                 .AddBlazoredLocalStorage(config =>
         config.JsonSerializerOptions.WriteIndented = true);
-            
+
             //if (env.IsDevelopment())
             //{
             //    app.UseDeveloperExceptionPage();
@@ -44,6 +44,7 @@ namespace WebApplicationONE
             //})
             //    .AddBlazoredLocalStorage();
             //------------
+           var d= builder.HostEnvironment.Environment;
             await builder.Build().RunAsync();
         }
     }

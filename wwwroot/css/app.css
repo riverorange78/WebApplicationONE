@@ -20,6 +20,131 @@ app {
     flex-direction: column;
 }
 
+/*.foundlst {}*/
+
+/*.foundlst*/ .lstul {
+        float: left;
+        height: 25vh; /*fit-content()5 %100px1fr*/
+        overflow: auto;
+        width: 100%; /*auto*/ /*100px*/
+        /*border: 1px solid #000;*/
+        margin: 0;
+        padding: 0;
+        overflow-x: scroll;
+        /*: hidden*/
+    }
+
+/*.foundlst*/ .lstli {
+    float: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/*.foundlst*/ .lstlabel {
+    float: left;
+    display: block;
+    color:WindowText /*red*/;
+    background-color: Window;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+    /*.foundlst*/ .lstlabel:hover {
+        float: left;
+        background-color: Highlight;
+        color: HighlightText;
+        /*float: left; style="float:left;"*/
+        /*color: red;*//*
+        background-color: red;*/
+    }
+
+
+
+/*.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 3% 3% 27% 3% 3% 27% 3% 3% 27%;
+    gap: 2% 2%;*/ /*vmin vh vmin vw rem*/
+    /*grid-template-areas: "search search search search find find" "foundopis foundopis foundopis foundopis run run" "found found found found you you" "savef savef delf delf you you" "savedopis savedopis savedopis savedopis opis opis" "saved saved saved saved opis opis" "saveds saveds dels dels opis opis" "playopis playopis playopis playopis opis opis" "play play play play opis opis";
+}
+
+.find {
+    grid-area: find;
+}
+
+.run {
+    grid-area: run;
+}
+
+.search {
+    grid-area: search;
+}
+
+.foundopis {
+    grid-area: foundopis;
+}
+
+.found {
+    grid-area: found;
+}
+
+.savef {
+    grid-area: savef;
+}
+
+.delf {
+    grid-area: delf;
+}
+
+.savedopis {
+    grid-area: savedopis;
+}
+
+.saved {
+    grid-area: saved;
+}
+
+.saveds {
+    grid-area: saveds;
+}
+
+.dels {
+    grid-area: dels;
+}
+
+.playopis {
+    grid-area: playopis;
+}
+
+.play {
+    grid-area: play;
+}
+
+.you {
+    grid-area: you;
+}
+
+.opis {
+    grid-area: opis;
+}*/
+
+/*.container {
+    border: 2px solid #ccc;
+    width: 300px;
+    height: 100px;
+    overflow-y: scroll;
+}*/
+
+/*.container3 {*/
+    /*border: 2px solid #ccc;*/
+    /*width: 50px;
+    height: 50px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}*/
+
 .top-row {
     height: 3.5rem;
     display: flex;

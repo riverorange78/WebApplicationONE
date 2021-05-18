@@ -1,0 +1,226 @@
+﻿
+<table border="0" style=" width: 100%;">
+    <tbody>
+        <tr>
+            <td colspan="2" align="left">
+
+                <input id="Text1" type="text" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;"
+                       @bind="@TextFind" />
+            </td>
+
+            <td colspan="2" align="left">
+                <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;"
+                       value="Поиск" @onclick=Find />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <h5 style=" width: 100%;color: black;background-color: lightpink;">
+                    Найдено:
+                </h5>
+
+            </td>
+            <td colspan="2">
+                <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink ;"
+                       @onclick=Start value="Старт (Списка воспроизведения)" />
+            </td>
+        </tr>
+
+        <tr>
+
+            <td colspan="2" align="center">
+                @*multiple*@
+
+                <style type="text/css">
+
+                    /*select,*/
+                    ul {
+                        float: left;
+                        height: 100px;/*fit-content()5 %*/
+                        overflow: auto;
+                        width: 100% ;/*auto*/ /*100px*/
+                        /*border: 1px solid #000;*/
+                    }
+
+            /**/
+                    ul {
+                        margin: 0;
+                        padding: 0;
+                        overflow-x: scroll;
+                        /*: hidden*/
+                    }
+
+                    li {
+                        float: left;
+                        list-style-type: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    label {
+                        float: left;
+                        display: block;
+                        color: WindowText;
+                        background-color: Window;
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                    }
+
+                        label:hover {
+                            float: left;
+                            background-color: Highlight;
+                            color: HighlightText;
+                            /*float: left; style="float:left;"*/
+                        }
+        </style>
+                <ul>
+   <li><label for="chk1"><input type="checkbox" name="chk1" id="chk1">First</label></li><br />
+   <li><label for="chk2"><input type="checkbox" name="chk2" id="chk2">Second</label></li><br />
+   <li><label for="chk3"><input type="checkbox" name="chk3" id="chk3">Third</label></li><br />
+   <li><label for="chk4"><input type="checkbox" name="chk4" id="chk4">Fourth</label></li><br />
+   <li><label for="chk5"><input type="checkbox" name="chk5" id="chk5">Fifth</label></li><br />
+   <li><label for="chk6"><input type="checkbox" name="chk6" id="chk6">Sixth</label></li><br />
+   <li><label for="chk7"><input type="checkbox" name="chk7" id="chk7">Seventh</label></li><br />
+  </ul>
+                @*<style type="text/css">
+                    container3 {
+                        /*border: 2px solid #ccc;*/
+                        width: 100%;
+                        height: 50px;
+                        overflow-y: scroll;
+                        overflow-x: scroll;
+                    }
+                </style>*@
+
+                @*<div style="width: 100%; height: 100px; overflow-y: scroll; overflow-x: scroll; float: left;">
+                    <label style="float:left;"><input type="checkbox" style="float:left;" /> описание</label><p>&nbsp;</p>
+                    <label style="float:left;"><input type="checkbox" style="float:left;" /> описание</label><p>&nbsp;</p>
+                    <label style="float:left;"><input type="checkbox" style="float:left;" /> описание</label><p>&nbsp;</p>
+                    <label style="float:left;"><input type="checkbox" style="float:left;" /> описание</label><br />
+                    <input type="checkbox" /> This is checkbox <br />
+                    <input type="checkbox" /> This is checkbox <br />
+                    <input type="checkbox" /> This is checkbox <br />
+                    <input type="checkbox" /> This is checkbox <br />
+                    <input type="checkbox" /> This is checkbox <br />
+                    <input type="checkbox" /> This is checkbox <br />
+                </div>*@
+
+                @*<fieldset  size="2">
+
+            <legend>Choose your interests</legend>
+            @foreach (var item in foundList)
+            {
+                <div>
+                    <input type="checkbox" id="@item" name="interest" value="@item">
+                    <label for="@item">@item</label>
+                </div>
+            }
+
+        </fieldset>*@
+
+                <!--<select @ref="Fnd" multiple size="15" style=" width: 100%;overflow: auto;border: 0;outline: 0;">-->
+                @*@for (int i = 0; i < foundList.Count; i++)*@
+                @*{*@
+                @*int localVar = i;*@
+
+                @*<option value=@foundList[localVar]> @foundList[localVar]</option>*@
+
+                @*<option @onclick="@(async () => await rrr(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+                @foundList[localVar]
+                </option>*@
+                @*}*@
+                @*</select>*@
+
+            </td>
+<td colspan="2">
+                <div id="player"></div>
+            </td>
+
+        </tr>
+        <tr>
+            <td align="left">
+                 <input id="Button12" type="button" style="color: black;background-color: lightpink;width: 100%;"
+                   @onclick="Save" value="Сохранить (выделив в Найденном)" />
+            </td>
+            <td align="left">
+                <input id="Button13" type="button" style="        color: black;
+        background-color: lightblue;width: 100%;"
+                       @onclick="DeleteSavd" value="Удалить (выделив в Сохранённом)" />
+            </td>
+
+            <td colspan="2" rowspan="6" align="right" style="vertical-align: top;">
+                <textarea id="TextArea1" style="width: 100%;border: none;" rows="20" name="text"
+                          @bind="@Opisanie" />@*><textarea*@
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <h5 style="width: 100%; color: black;background-color: lightblue;">
+                            Сохранённое:
+                        </h5>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
+
+                            @for (int i = 0; i < savedList.Count; i++)
+                            {
+                                int localVar = i;
+                                <option @onclick="@(async () => await rrr(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                                    @savedList[localVar]
+                                </option>
+                            }
+
+                            }
+                        </select>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <input id="Button14" type="button" style="color: black;background-color: lightblue;width: 100%;"
+                               @onclick="AddPlay" value="Добавить (выделив в Сохранённом)" />
+
+                    </td>
+                    <td align="left">
+                        <input id="Button15" type="button" style=" color: black;background-color: Silver;width: 100%;"
+                               @onclick="DeletePlay" value="Убрать (выделив в Списоке воспроизведения)" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h5 style="width: 100%; color: black;  background-color: Silver;">
+                            Список воспроизведения:
+                        </h5>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
+
+                            @for (int i = 0; i < playList.Count; i++)
+                            {
+                                int localVar = i;
+                                <option @onclick="@(async () => await rrr(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                                    @playList[localVar]
+                                </option>
+                            }
+
+                            }
+                        </select>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+       
