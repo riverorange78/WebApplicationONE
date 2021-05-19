@@ -147,10 +147,27 @@
         );
 
     </script>
+    
+    <script>
+        function chacds(cha) {
+            //alert(cha.length);
+            for (i = 0; i < cha.length; i++) {  /*var element =*/
+                //alert(cha[i]);
+                document.getElementById("ds" + cha[i]).checked = false;
+            }
+        };
+        function chacps(cha) {
+            //alert(cha.length);
+            for (i = 0; i < cha.length; i++) {  /*var element =*/
+                //alert(cha[i]);
+                document.getElementById("ps" + cha[i]).checked = false;
+            }
+        };
+    </script>
 
     <script>
         window.getSelectedValues = function (sel) {
-            //DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
+            // DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
             var results = [];
             var i;
             for (i = 0; i < sel.options.length; i++) {
@@ -254,18 +271,18 @@
         }
 
         /*BlazorPWA*/
-                    //window.installPWA =
-                    //    function () {
-                    //        if (window.PWADeferredPrompt) {
-                    //            // Use the stashed event to continue the install process
-                    //            window.PWADeferredPrompt.prompt();
-                    //            window.PWADeferredPrompt.userChoice
-                    //                .then(function (choiceResult) {
-                    //                    window.PWADeferredPrompt = null;
-                    //                });
-                    //        }
+                                    //window.installPWA =
+                                    //    function () {
+                                    //        if (window.PWADeferredPrompt) {
+                                    //            // Use the stashed event to continue the install process
+                                    //            window.PWADeferredPrompt.prompt();
+                                    //            window.PWADeferredPrompt.userChoice
+                                    //                .then(function (choiceResult) {
+                                    //                    window.PWADeferredPrompt = null;
+                                    //                });
+                                    //        }
 
-                    //};
+                                    //};
 
     </script>
 

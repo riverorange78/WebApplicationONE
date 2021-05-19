@@ -194,7 +194,8 @@
             <ul class="lstul">
                 @for (int i = 0; i < foundList.Count; i++)
                 {
-                    int localVar = i; var yyy = "fchk" + i;@*async*@@*await*@
+                    int localVar = i;/**/@*@attributes="Chec"*@
+                    var yyy = "fchk" + i /*foundList[localVar]*/;@*async*@@*await*@
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
                             <input type="checkbox" name=@yyy id=@yyy
@@ -203,6 +204,7 @@
                                    @onclick="@(async () => await playOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
                             @foundList[localVar]
                         </label>
+                        @*g17(@yyy);*@
                     </li>
                     <br />
                 }
@@ -226,34 +228,36 @@
         </div>
 
         <div class="savedlst">
+            <ul class="lstul">
+                @for (int i = 0; i < savedList.Count; i++)
+                {
+                    int localVar = i; var yyy = "ds" + savedList[localVar];/*"schk" + i*/
+                    <li class="lstli">
+                        <label class="lstlabel" for=@yyy>
+                            @*disabled=@IsTaskRunning*@@*@attributes="Chec"*@
+                            <input type="checkbox" name=@yyy id=@yyy
+                                   @onchange="@((args) => {
+                                              savedCl[savedList[localVar]].CheckedA=(bool)args.Value;} )"
+                                   @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                            @savedList[localVar]
+                        </label>
+                    </li>
+                    <br />
+                }
+            </ul>
+                @*<select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
+
             @for (int i = 0; i < savedList.Count; i++)
             {
-                int localVar = i; var yyy = "schk" + i;
-                <li class="lstli">
-                    <label class="lstlabel" for=@yyy>
-                        @*disabled=@IsTaskRunning*@
-                                        <input type="checkbox" name=@yyy id=@yyy
-                                               @onchange="@((args) => {
-                                              savedCl[savedList[localVar]].CheckedA=(bool)args.Value;} )"
-                                               @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
-                                        @savedList[localVar]
-                                    </label>
-                </li>
-                <br />
+                int localVar = i;
+                <option @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                    @savedList[localVar]
+                </option>
             }
-            @*<select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
 
-                    @for (int i = 0; i < savedList.Count; i++)
-                    {
-                        int localVar = i;
-                        <option @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
-                            @savedList[localVar]
-                        </option>
-                    }
-
-                    }
-                </select>*@
-        </div>
+            }
+        </select>*@
+</div>
 
         <div class="savesvd">
             <input id="Button14" type="button" style="color: black;background-color: lightblue;width: 100%;" @onclick="AddPlay" value="Добавить (выделив в Сохранённом)" />
@@ -269,33 +273,36 @@
 
         <div class="playlst">
             @*unchecked*@
+            <ul class="lstul">
+                @for (int i = 0; i < playList.Count; i++)
+                {
+                    int localVar = i; var yyy = "ps" + savedList[localVar]; /*"pchk" + i*/;
+                    <li class="lstli">
+                        <label class="lstlabel" for=@yyy>
+                            @*@attributes="Chec"*@
+                                                <input type="checkbox" name=@yyy id=@yyy
+                                                       @onchange="@((args) => {
+                                              playCl[playList[localVar]].CheckedA=(bool)args.Value;} )"
+                                                       @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                                                @playList[localVar]
+                                            </label>
+                    </li>
+                    <br />
+                }
+            </ul>
+                @*<select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
+
             @for (int i = 0; i < playList.Count; i++)
             {
-                int localVar = i; var yyy = "pchk" + i;
-                <li class="lstli">
-                    <label class="lstlabel" for=@yyy>
-                        <input type="checkbox" name=@yyy id=@yyy
-                               @onchange="@((args) => {
-                                              playCl[playList[localVar]].CheckedA=(bool)args.Value;} )"
-                               @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                        @playList[localVar]
-                    </label>
-                </li>
-                <br />
+                int localVar = i;
+                <option @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                    @playList[localVar]
+                </option>
             }
-            @*<select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
 
-                    @for (int i = 0; i < playList.Count; i++)
-                    {
-                        int localVar = i;
-                        <option @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                            @playList[localVar]
-                        </option>
-                    }
-
-                    }
-                </select>*@
-        </div>
+            }
+        </select>*@
+</div>
 
     </div>
     <div class="second">
@@ -319,6 +326,12 @@
 </div>
 
 @code {
+
+    public Dictionary<string, object> Chec { get; set; } =
+        new Dictionary<string, object>()
+        {
+            {"checked", "checked" }
+        };
 
     private static Action action;
 
@@ -760,7 +773,12 @@
 
         await ls.SetItemAsync<string>("saved", res);
 
+        await JSRuntime2.InvokeVoidAsync("chacds", savedList);
+
         savedList.RemoveAll(vehicle => del.Contains(vehicle) == true);//
+
+
+
 
         //var lio = savedList.ToList<string>();
         //savedList.Clear();
@@ -781,15 +799,15 @@
         //this.
 
         // Update the UI
-        InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
+        //InvokeAsync(() =>
+        //{
+        //    StateHasChanged();
+        //});
 
-        InvokeAsync(() =>
-        {
-            ShouldRender();
-        });
+        //InvokeAsync(() =>
+        //{
+        //    ShouldRender();
+        //});
         //StateHasChanged(); ShouldRender();
     }
 
@@ -861,7 +879,8 @@
 
         //var lio = playList.ToList<string>();
         //playList.Clear(); playList = null; 
-
+        await JSRuntime2.InvokeVoidAsync("chacps", playList);
+        
         playList.RemoveAll(vehicle => del.Contains(vehicle) == true);
 
         //playList = new List<string>() { "ref" };
@@ -878,15 +897,15 @@
         //await OnAfterRenderAsync(false);
 
         // Update the UI
-        InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
+        //InvokeAsync(() =>
+        //{
+        //    StateHasChanged();
+        //});
 
-        InvokeAsync(() =>
-        {
-            ShouldRender();
-        });
+        //InvokeAsync(() =>
+        //{
+        //    ShouldRender();
+        //});
 
         //StateHasChanged(); ShouldRender();
     }
