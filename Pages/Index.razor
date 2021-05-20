@@ -18,11 +18,15 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 1fr;
-        gap: 0px 0px;
+        gap: 5px 5px;
         grid-template-areas:
-            "first first first first second second";
-        /* overflow-x: scroll;hidden
-        overflow-y: scroll;*/
+            "second second second second second second"
+            "first first first first first first";
+        /*"second second second second"
+            "first first first first";*/
+        /*"first first first first second second";*/
+        overflow: auto;
+        /*overflow-y: scroll; overflow-x: scroll;hidden*/
         /*height: 100vh;*/
         /*overflow-x: no-display;*/
         /*overflow-y: no-display;*/
@@ -33,7 +37,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        gap: 1px 1px;
+        gap: 5px 5px;
         grid-template-areas:
             "searchtxt searchtxt"
             "foundops foundops"
@@ -45,10 +49,10 @@
             "playopis playopis"
             "playlst playlst";
         grid-area: first;
-        /*overflow: auto;*/
+        overflow: auto;
         /*overflow-x: scroll;*/
         /*overflow-y: scroll;*/
-        height: 100vh;
+        height: 95vh;
     }
 
     .searchtxt {
@@ -99,7 +103,7 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        gap: 1px 1px;
+        gap: 5px 5px;
         grid-template-areas:
             "find"
             "play"
@@ -107,9 +111,9 @@
             "opis";
         grid-area: second;
         /*overflow-x: scroll;*/
-        /*overflow: auto;*/
+        overflow: auto;
         /*overflow-y: scroll;*/
-        height: 100vh;
+        height: 95vh;
     }
 
     .find {
@@ -311,15 +315,15 @@
         </div>
 
         <div class="play">
-            <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink ;" @onclick=Start value="Старт (Списка воспроизведения)" />
+            <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink;" @onclick=Start value="Старт (Списка воспроизведения)" />
         </div>
 
         <div class="you">
-            <div id="player"></div>
+            <div id="player" style="width: 100%;" ></div>
         </div>
 
         <div class="opis">
-            <textarea id="TextArea1" style="width: 100%;border: none;" rows="20" name="text" @bind="@Opisanie" />
+            <textarea id="TextArea1" style="width: 100%;border: none;" rows="10" name="text" @bind="@Opisanie" />
         </div>
 
     </div>
