@@ -30,7 +30,8 @@
         /*height: 100vh;*/
         /*overflow-x: no-display;*/
         /*overflow-y: no-display;*/
-        /*overflow:no-display;*/
+        /*overflow:no-display;*/ 
+        border: 3px solid green;
     }
 
     .first {
@@ -52,7 +53,8 @@
         overflow: auto;
         /*overflow-x: scroll;*/
         /*overflow-y: scroll;*/
-        height: 95vh;
+        height: 50vh;
+        border: 3px solid blue;
     }
 
     .searchtxt {
@@ -102,7 +104,7 @@
     .second {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr /**/;
         gap: 5px 5px;
         grid-template-areas:
             "find"
@@ -113,7 +115,8 @@
         /*overflow-x: scroll;*/
         overflow: auto;
         /*overflow-y: scroll;*/
-        height: 95vh;
+        height: 50vh;
+        border: 3px solid red;
     }
 
     .find {
@@ -249,19 +252,19 @@
                     <br />
                 }
             </ul>
-                @*<select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
+            @*<select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
 
-            @for (int i = 0; i < savedList.Count; i++)
-            {
-                int localVar = i;
-                <option @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
-                    @savedList[localVar]
-                </option>
-            }
+                    @for (int i = 0; i < savedList.Count; i++)
+                    {
+                        int localVar = i;
+                        <option @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                            @savedList[localVar]
+                        </option>
+                    }
 
-            }
-        </select>*@
-</div>
+                    }
+                </select>*@
+        </div>
 
         <div class="savesvd">
             <input id="Button14" type="button" style="color: black;background-color: lightblue;width: 100%;" @onclick="AddPlay" value="Добавить (выделив в Сохранённом)" />
@@ -284,29 +287,29 @@
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
                             @*@attributes="Chec"*@
-                                                <input type="checkbox" name=@yyy id=@yyy
-                                                       @onchange="@((args) => {
+                            <input type="checkbox" name=@yyy id=@yyy
+                                   @onchange="@((args) => {
                                               playCl[playList[localVar]].CheckedA=(bool)args.Value;} )"
-                                                       @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                                                @playList[localVar]
-                                            </label>
+                                   @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                            @playList[localVar]
+                        </label>
                     </li>
                     <br />
                 }
             </ul>
-                @*<select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
+            @*<select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
 
-            @for (int i = 0; i < playList.Count; i++)
-            {
-                int localVar = i;
-                <option @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                    @playList[localVar]
-                </option>
-            }
+                    @for (int i = 0; i < playList.Count; i++)
+                    {
+                        int localVar = i;
+                        <option @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                            @playList[localVar]
+                        </option>
+                    }
 
-            }
-        </select>*@
-</div>
+                    }
+                </select>*@
+        </div>
 
     </div>
     <div class="second">
@@ -319,11 +322,12 @@
         </div>
 
         <div class="you">
-            <div id="player" style="width: 100%;" ></div>
+            <div id="player" style="width: 100%;"></div>
         </div>
 
         <div class="opis">
-            <textarea id="TextArea1" style="width: 100%;border: none;" rows="10" name="text" @bind="@Opisanie" />
+            <textarea id="TextArea1" style=" width: 100%; border: none; overflow: auto;"
+                      rows="5" name="text" @bind="@Opisanie" />
         </div>
 
     </div>
@@ -335,7 +339,7 @@
         new Dictionary<string, object>()
         {
             {"checked", "checked" }
-        };
+            };
 
     private static Action action;
 
@@ -787,7 +791,7 @@
         //var lio = savedList.ToList<string>();
         //savedList.Clear();
         //savedList = new List<string>() { "ref" };
-        ////savedList = null; 
+        ////savedList = null;
         //savedList = lio;
         //lio.RemoveAll(vehicle => del.Contains(vehicle) == true);
         //savedList = lio;
@@ -882,9 +886,9 @@
         await ls.SetItemAsync<string>("play", res);
 
         //var lio = playList.ToList<string>();
-        //playList.Clear(); playList = null; 
+        //playList.Clear(); playList = null;
         await JSRuntime2.InvokeVoidAsync("chacps", playList);
-        
+
         playList.RemoveAll(vehicle => del.Contains(vehicle) == true);
 
         //playList = new List<string>() { "ref" };
