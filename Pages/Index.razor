@@ -36,23 +36,23 @@
 
     .first {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr; /*1fr*/
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 5px 5px;
         grid-template-areas:
-            "searchtxt searchtxt"
-            "foundops foundops"
-            "foundlst foundlst"
-            "savefnd delsvd"
-            "savedopis savedopis"
-            "savedlst savedlst"
-            "savesvd delpay"
-            "playopis playopis"
-            "playlst playlst";
+            "searchtxt" /* searchtxt*/
+            "foundops" /* foundops*/
+            "foundlst" /* foundlst*/
+            "savefnd" /* delsvd*/
+            "delsvd" /* savefnd*/
+            "savedopis" /* savedopis*/
+            "savedlst" /* savedlst*/
+            "savesvd" /* delpay*/
+            "delpay" /*savesvd */
+            "playopis" /* playopis*/
+            "playlst"; /* playlst*/
         grid-area: first;
-        overflow: auto;
-        /*overflow-x: scroll;*/
-        /*overflow-y: scroll;*/
+        overflow: auto; /*overflow-x: scroll;*/ /*overflow-y: scroll;*/
         height: 50vh;
         border: 3px solid blue;
     }
