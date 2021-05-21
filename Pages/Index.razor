@@ -22,37 +22,71 @@
         grid-template-areas:
             "second second second second second second"
             "first first first first first first";
-    
-    overflow: auto; overflow-x: scroll;
-        overflow-y: scroll;   
-    
-    height: 100vh;
-    
+        /*overflow: auto;*/
+        overflow-x: scroll;
+        overflow-y: scroll;
+        height: 100vh;
+        /*:: -webkit-scrollbar { width: 40px;}*/
+        /*scrollbar-face-color: red;*/
     }
+
+        /* Размеры скроллбара */
+        .grid-container::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        /* Трек поле скроллбара */
+        .grid-container::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px blue;
+            background: white;
+        }
+
+        /* Ползунок скроллбара */
+        .grid-container::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px green;
+            background: rgb(174, 182, 191); /*lightpink*/
+        }
 
     .first {
         display: grid;
-        grid-template-columns: 1fr; 1fr
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
+        1fr grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 5px 5px;
         grid-template-areas:
-            "searchtxt"  
-    "foundops"  
-    "foundlst"  
-    "savefnd"  
-    "delsvd"  
-    "savedopis"  
-    "savedlst"  
-    "savesvd"  
-    "delpay"  
-    "playopis"  
-    "playlst";  
-    grid-area: first;
-        overflow: auto; overflow-x: scroll;
-        overflow-y: scroll;   
-    height: 50vh;
-    
+            "searchtxt"
+            "foundops"
+            "foundlst"
+            "savefnd"
+            "delsvd"
+            "savedopis"
+            "savedlst"
+            "savesvd"
+            "delpay"
+            "playopis"
+            "playlst";
+        grid-area: first;
+        /*overflow: auto;*/ overflow-x: scroll;
+        overflow-y: scroll;
+        height: 50vh;
+        scrollbar-face-color: red;
     }
+
+        /* Размеры скроллбара */
+        .first::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        /* Трек поле скроллбара */
+        .first::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px blue;
+            background: white;
+        }
+
+        /* Ползунок скроллбара */
+        .first::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px green;
+            background: rgb(174, 182, 191);
+        }
 
     .searchtxt {
         grid-area: searchtxt;
@@ -101,7 +135,7 @@
     .second {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr  ;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 5px 5px;
         grid-template-areas:
             "find"
@@ -109,12 +143,30 @@
             "you"
             "opis";
         grid-area: second;
-        overflow: auto; 
-    overflow-x: scroll;
-        overflow-y: scroll;   
-    height: 50vh;
-    
+        /*overflow: auto; */
+        overflow-x: scroll;
+        overflow-y: scroll;
+        height: 50vh;
+        scrollbar-face-color: red;
     }
+
+
+        /* Размеры скроллбара */
+        .second::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        /* Трек поле скроллбара */
+        .second::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px blue;
+            background: white;
+        }
+
+        /* Ползунок скроллбара */
+        .second::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px green;
+            background: rgb(174, 182, 191);
+        }
 
     .find {
         grid-area: find;
@@ -185,7 +237,7 @@
             <ul class="lstul">
                 @for (int i = 0; i < savedList.Count; i++)
                 {
-                    int localVar = i; 
+                    int localVar = i;
                     var yyy = "svd" + savedList[localVar];
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
@@ -217,7 +269,7 @@
             <ul class="lstul">
                 @for (int i = 0; i < playList.Count; i++)
                 {
-                    int localVar = i; 
+                    int localVar = i;
                     var yyy = "play" + playList[localVar];
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
@@ -261,7 +313,7 @@
         new Dictionary<string, object>()
         {
             {"checked", "checked" }
-                };
+                        };
 
     private static Action action;
 
@@ -306,6 +358,7 @@
 
             if (firstRender)//1 > 5
             {
+                //return;
                 var Result5 = await JSRuntime2.InvokeAsync<string>("loadClient",
 /*TimeSpan.FromSeconds(3),*/ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
 
@@ -792,7 +845,9 @@
 
         foreach (var v in del)
         {
-            if (playCl.Keys.Contains(v)) { playCl.Remove(v);
+            if (playCl.Keys.Contains(v))
+            {
+                playCl.Remove(v);
                 //Opisanie = Opisanie + "====" + v;
             }
         }

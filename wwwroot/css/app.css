@@ -4,6 +4,10 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+    /*body::-webkit-scrollbar {
+        width: 40px;*/ /* ширина scrollbar */
+    /*}*/
+
 a, .btn-link {
     color: #0366d6;
 }
@@ -22,13 +26,18 @@ app {
 
 .lstul {
     float: left;
-    height: 25vh; 
+    height: 25vh;
     overflow: auto;
-    width: 100%; 
+    width: 100%;
     margin: 0;
     padding: 0;
     overflow-x: scroll;
+    scrollbar-base-color: red;
 }
+
+/*::-webkit-scrollbar {
+    width: 40px;
+}*/
 
  .lstli {
     float: left;
@@ -52,7 +61,6 @@ app {
         float: left;
         background-color: Highlight;
         color: HighlightText;
-        
     }
 
 .top-row {
