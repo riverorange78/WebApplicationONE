@@ -1,0 +1,80 @@
+﻿<style type="text/css">
+            
+                  select, ul {
+                      float: left;
+                      height: 25vh;
+                      overflow: auto;
+                      width: 100%;
+                      
+                  }
+            
+            ul {
+                margin: 0;
+                padding: 0;
+                overflow-x: scroll;
+            }
+
+            li {
+                float: left;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            label {
+                float: left;
+                display: block;
+                color: WindowText;
+                background-color: Window;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+
+                label:hover {
+                    float: left;
+                    background-color: Highlight;
+                    color: HighlightText;
+                    
+                }
+        </style>
+
+//-----------------------------------------------------------------------------
+
+/*.foundlst*/ .lstul {
+        float: left;
+        height: 25vh; /*fit-content()5 %100px1fr*/
+        overflow: auto;
+        width: 100%; /*auto*/ /*100px*/
+        /*border: 1px solid #000;*/
+        margin: 0;
+        padding: 0;
+        overflow-x: scroll;
+        /*: hidden*/
+    }
+
+/*.foundlst*/ .lstli {
+    float: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/*.foundlst*/ .lstlabel {
+    float: left;
+    display: block;
+    color:WindowText /*red*/;
+    background-color: Window;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+    /*.foundlst*/ .lstlabel:hover {
+        float: left;
+        background-color: Highlight;
+        color: HighlightText;
+        /*float: left; style="float:left;"*/
+        /*color: red;*//*
+        background-color: red;*/
+    }

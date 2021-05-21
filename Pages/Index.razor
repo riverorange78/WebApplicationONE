@@ -11,7 +11,7 @@
 @page "/"
 @inject IJSRuntime JSRuntime2;
 @inject Blazored.LocalStorage.ILocalStorageService ls;
-@*<input @ref="Btn" id="Button1" type="button" value="button" />*@
+
 
 <style type="text/css">
     .grid-container {
@@ -22,41 +22,36 @@
         grid-template-areas:
             "second second second second second second"
             "first first first first first first";
-        /*"second second second second"
-            "first first first first";*/
-        /*"first first first first second second";*/
-        overflow: auto; /*overflow-x: scroll;
-        overflow-y: scroll;*/ /**/ /**/ /**/
-        /*overflow-y: scroll; overflow-x: scroll;hidden*/
-        /*height: 100vh;*/
-        /*overflow-x: no-display;*/
-        /*overflow-y: no-display;*/
-        /*overflow:no-display;*/
-        /*border: 3px solid green;*/
+    
+    overflow: auto; overflow-x: scroll;
+        overflow-y: scroll;   
+    
+    height: 100vh;
+    
     }
 
     .first {
         display: grid;
-        grid-template-columns: 1fr; /*1fr*/
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr; 1fr
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 5px 5px;
         grid-template-areas:
-            "searchtxt" /* searchtxt*/
-            "foundops" /* foundops*/
-            "foundlst" /* foundlst*/
-            "savefnd" /* delsvd*/
-            "delsvd" /* savefnd*/
-            "savedopis" /* savedopis*/
-            "savedlst" /* savedlst*/
-            "savesvd" /* delpay*/
-            "delpay" /*savesvd */
-            "playopis" /* playopis*/
-            "playlst"; /* playlst*/
-        grid-area: first;
-        overflow: auto; /*overflow-x: scroll;
-        overflow-y: scroll;*/ /**/ /**/ /**/
-        height: 50vh;
-        /*border: 3px solid blue;*/
+            "searchtxt"  
+    "foundops"  
+    "foundlst"  
+    "savefnd"  
+    "delsvd"  
+    "savedopis"  
+    "savedlst"  
+    "savesvd"  
+    "delpay"  
+    "playopis"  
+    "playlst";  
+    grid-area: first;
+        overflow: auto; overflow-x: scroll;
+        overflow-y: scroll;   
+    height: 50vh;
+    
     }
 
     .searchtxt {
@@ -106,7 +101,7 @@
     .second {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr /**/;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr  ;
         gap: 5px 5px;
         grid-template-areas:
             "find"
@@ -114,12 +109,11 @@
             "you"
             "opis";
         grid-area: second;
-        overflow: auto; /*overflow-x: scroll;*/
-        /*overflow-x: scroll;
-        overflow-y: scroll;*/ /**/ /**/ /**/
-        /*overflow-y: scroll;*/
-        height: 50vh;
-        /*border: 3px solid red;*/
+        overflow: auto; 
+    overflow-x: scroll;
+        overflow-y: scroll;   
+    height: 50vh;
+    
     }
 
     .find {
@@ -152,69 +146,19 @@
         </div>
 
         <div class="foundlst">
-            @*<style type="text/css">
-
-                    /*select,*/
-                    ul {
-                        float: left;
-                        height: 25vh; /*fit-content()5 %100px1fr*/
-                        overflow: auto;
-                        width: 100%; /*auto*/ /*100px*/
-                        /*border: 1px solid #000;*/
-                        margin: 0;
-                        padding: 0;
-                        overflow-x: scroll;
-                    }
-
-                    /**/
-                    /*ul {
-                        margin: 0;
-                        padding: 0;
-                        overflow-x: scroll;*/
-                        /*: hidden*/
-                    /*}*/
-
-                    li {
-                        float: left;
-                        list-style-type: none;
-                        margin: 0;
-                        padding: 0;
-                    }
-
-                    label {
-                        float: left;
-                        display: block;
-                        color: WindowText;
-                        background-color: Window;
-                        margin: 0;
-                        padding: 0;
-                        width: 100%;
-                    }
-
-                        label:hover {
-                            float: left;
-                            background-color: Highlight;
-                            color: HighlightText;
-                            /*float: left; style="float:left;"*/
-                        }
-                </style>*@
-            @*@onchange="@((args) => {
-                                  row.Selected = (bool)args.Value;
-                Console.WriteLine(row.Selected.ToString());} )" @ref="Fnd"@*autocomplete="off"*@
             <ul class="lstul">
                 @for (int i = 0; i < foundList.Count; i++)
                 {
-                    int localVar = i;/**/@*@attributes="Chec"*@
-                    var yyy = "fchk" + i /*foundList[localVar]*/;@*async*@@*await*@
+                    int localVar = i;
+                    var yyy = "fnd" + localVar;
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
                             <input type="checkbox" name=@yyy id=@yyy
                                    @onchange="@((args) => {
-                                              foundCl[foundList[localVar]].CheckedA=(bool)args.Value;} )"
+                                      foundCl[foundList[localVar]].CheckedA=(bool)args.Value;} )"
                                    @onclick="@(async () => await playOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
                             @foundList[localVar]
                         </label>
-                        @*g17(@yyy);*@
                     </li>
                     <br />
                 }
@@ -241,10 +185,10 @@
             <ul class="lstul">
                 @for (int i = 0; i < savedList.Count; i++)
                 {
-                    int localVar = i; var yyy = "ds" + savedList[localVar];/*"schk" + i*/
+                    int localVar = i; 
+                    var yyy = "svd" + savedList[localVar];
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
-                            @*disabled=@IsTaskRunning*@@*@attributes="Chec"*@
                             <input type="checkbox" name=@yyy id=@yyy
                                    @onchange="@((args) => {
                                               savedCl[savedList[localVar]].CheckedA=(bool)args.Value;} )"
@@ -255,18 +199,6 @@
                     <br />
                 }
             </ul>
-            @*<select @ref="Savd" size="10" multiple style="width: 100%;overflow: auto;border: 0;outline: 0;">
-
-                    @for (int i = 0; i < savedList.Count; i++)
-                    {
-                        int localVar = i;
-                        <option @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
-                            @savedList[localVar]
-                        </option>
-                    }
-
-                    }
-                </select>*@
         </div>
 
         <div class="savesvd">
@@ -282,14 +214,13 @@
         </div>
 
         <div class="playlst">
-            @*unchecked*@
             <ul class="lstul">
                 @for (int i = 0; i < playList.Count; i++)
                 {
-                    int localVar = i; var yyy = "ps" + savedList[localVar]; /*"pchk" + i*/;
+                    int localVar = i; 
+                    var yyy = "play" + playList[localVar];
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
-                            @*@attributes="Chec"*@
                             <input type="checkbox" name=@yyy id=@yyy
                                    @onchange="@((args) => {
                                               playCl[playList[localVar]].CheckedA=(bool)args.Value;} )"
@@ -300,18 +231,6 @@
                     <br />
                 }
             </ul>
-            @*<select @ref="Play" size="10" multiple style=" width: 100%;overflow: auto;border: 0;outline: 0;">
-
-                    @for (int i = 0; i < playList.Count; i++)
-                    {
-                        int localVar = i;
-                        <option @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                            @playList[localVar]
-                        </option>
-                    }
-
-                    }
-                </select>*@
         </div>
 
     </div>
@@ -342,7 +261,7 @@
         new Dictionary<string, object>()
         {
             {"checked", "checked" }
-            };
+                };
 
     private static Action action;
 
@@ -784,7 +703,7 @@
 
         await ls.SetItemAsync<string>("saved", res);
 
-        await JSRuntime2.InvokeVoidAsync("chacds", savedList);
+        await JSRuntime2.InvokeVoidAsync("delsvd", savedList);
 
         savedList.RemoveAll(vehicle => del.Contains(vehicle) == true);//
 
@@ -873,7 +792,9 @@
 
         foreach (var v in del)
         {
-            if (playCl.Keys.Contains(v)) { playCl.Remove(v); }
+            if (playCl.Keys.Contains(v)) { playCl.Remove(v);
+                //Opisanie = Opisanie + "====" + v;
+            }
         }
 
         BinaryFormatter formatter = new BinaryFormatter();
@@ -888,11 +809,17 @@
 
         await ls.SetItemAsync<string>("play", res);
 
+        //Opisanie = Opisanie + "====" + "SetItemAsync";
+
         //var lio = playList.ToList<string>();
         //playList.Clear(); playList = null;
-        await JSRuntime2.InvokeVoidAsync("chacps", playList);
+        await JSRuntime2.InvokeVoidAsync("delply", playList);
+
+        //Opisanie = Opisanie + "====" + "delply";
 
         playList.RemoveAll(vehicle => del.Contains(vehicle) == true);
+
+        //Opisanie = Opisanie + "====" + "RemoveAll";
 
         //playList = new List<string>() { "ref" };
         //lio.RemoveAll(vehicle => del.Contains(vehicle) == true);
