@@ -187,8 +187,8 @@ app {
         margin-left: 0;
     }
 }*/
-
-@media (min-width: 1360px) /*and (min-height: 1281px)*/ {
+ /*and (min-height: 1281px)*/ 
+/*@media (min-width: 1360px){*/
     .grid-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -302,7 +302,7 @@ app {
     .opis {
         grid-area: opis;
     }
-}
+/*}*/
 
 
 /*@media (max-width: 1359px)*/  /*and(max-height: 1280px)*/ /*{
