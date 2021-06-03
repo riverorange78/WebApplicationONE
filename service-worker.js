@@ -12,9 +12,6 @@ const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
 const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/ ];
 const offlineAssetsExclude = [ /^service-worker\.js$/ ];
 
-//async function onInstall22(event) {
-//    DotNet.invokeMethodAsync/**/('WebApplicationONE', 'MyBlazorInstallMethod');
-//}
 
 async function onInstall(event) {
     console.info('Service worker: Install');
@@ -51,4 +48,4 @@ async function onFetch(event) {
 
     return cachedResponse || fetch(event.request);
 }
-/* updated 2021-05-23 22:23 *//* Manifest version: NaFQ/xFQ */
+/* updated 2021-06-01 00:31 *//* Manifest version: nugVnUmR */
