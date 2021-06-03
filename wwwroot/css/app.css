@@ -4,10 +4,6 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-    /*body::-webkit-scrollbar {
-        width: 40px;*/ /* ширина scrollbar */
-    /*}*/
-
 a, .btn-link {
     color: #0366d6;
 }
@@ -31,11 +27,10 @@ app {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-x: scroll;
-    /*scrollbar-base-color: red;*/
+    /*overflow-x: scroll;*/
 }
 
- .lstli {
+.lstli {
     float: left;
     list-style-type: none;
     margin: 0;
@@ -45,14 +40,14 @@ app {
 .lstlabel {
     float: left;
     display: block;
-    color: WindowText /*red*/;
+    color: WindowText;
     background-color: Window;
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
-     .lstlabel:hover {
+    .lstlabel:hover {
         float: left;
         background-color: Highlight;
         color: HighlightText;
@@ -187,27 +182,21 @@ app {
         margin-left: 0;
     }
 }*/
- /*and (min-height: 1281px)*/ 
-@media (min-width: 1360px){/**/
+
+@media (min-width: 1360px) {
     .grid-container {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: repeat(6, 1fr) ;
         grid-template-rows: 1fr;
         gap: 0px 0px;
         grid-template-areas:
             "first first first first second second";
-        /* overflow-x: scroll;hidden
-        overflow-y: scroll;*/
-        /*height: 100vh;*/
-        /*overflow-x: no-display;*/
-        /*overflow-y: no-display;*/
-        /*overflow:no-display;*/
     }
 
     .first {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(9, 1fr);
         gap: 1px 1px;
         grid-template-areas:
             "searchtxt searchtxt"
@@ -220,9 +209,6 @@ app {
             "playopis playopis"
             "playlst playlst";
         grid-area: first;
-        /*overflow: auto;*/
-        /*overflow-x: scroll;*/
-        /*overflow-y: scroll;*/
         height: 100vh;
     }
 
@@ -273,7 +259,7 @@ app {
     .second {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(9, 1fr) ;
         gap: 1px 1px;
         grid-template-areas:
             "find"
@@ -281,9 +267,6 @@ app {
             "you"
             "opis";
         grid-area: second;
-        /*overflow-x: scroll;*/
-        /*overflow: auto;*/
-        /*overflow-y: scroll;*/
         height: 100vh;
     }
 
@@ -302,47 +285,43 @@ app {
     .opis {
         grid-area: opis;
     }
-}/**/
+}
 
-
-@media (max-width: 1359px)  /*and(max-height: 1280px)*/ {
+@media (max-width: 1359px) {
     .grid-container {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: repeat(6, 1fr);
         grid-template-rows: 1fr;
         gap: 5px 5px;
         grid-template-areas:
             "second second second second second second"
             "first first first first first first";
-        /*overflow: auto;*/
-        overflow-x: scroll;
+        /*overflow-x: scroll;*/
         overflow-y: scroll;
         height: 100vh;
-       /* :: -webkit-scrollbar { width: 40px;}
-        scrollbar-face-color: red;*/
     }
 
-         /*Размеры скроллбара */
+        /*Размеры скроллбара */
         .grid-container::-webkit-scrollbar {
             width: 15px;
         }
 
-         /*Трек поле скроллбара*/ 
+        /*Трек поле скроллбара*/
         .grid-container::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px blue;
             background: white;
         }
 
-         /*Ползунок скроллбара */
+        /*Ползунок скроллбара */
         .grid-container::-webkit-scrollbar-thumb {
             -webkit-box-shadow: inset 0 0 6px green;
-            background: rgb(255, 255, 224); /*rgb(204, 206, 208) lightpink*/
+            background: rgb(255, 255, 224);
         }
 
     .first {
         display: grid;
         grid-template-columns: 1fr;
-        1fr grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        1fr grid-template-rows: repeat(11, 1fr);
         gap: 5px 5px;
         grid-template-areas:
             "searchtxt"
@@ -357,13 +336,12 @@ app {
             "playopis"
             "playlst";
         grid-area: first;
-        /*overflow: auto;*/ overflow-x: scroll;
+        /*overflow-x: scroll;*/
         overflow-y: scroll;
         height: 50vh;
-         /*scrollbar-face-color: red;*/
     }
 
-         /*Размеры скроллбара */
+        /*Размеры скроллбара */
         .first::-webkit-scrollbar {
             width: 15px;
         }
@@ -374,7 +352,7 @@ app {
             background: white;
         }
 
-         /*Ползунок скроллбара */
+        /*Ползунок скроллбара */
         .first::-webkit-scrollbar-thumb {
             -webkit-box-shadow: inset 0 0 6px green;
             background: rgb(255, 255, 224);
@@ -427,7 +405,7 @@ app {
     .second {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(9, 1fr);
         gap: 5px 5px;
         grid-template-areas:
             "find"
@@ -435,26 +413,24 @@ app {
             "you"
             "opis";
         grid-area: second;
-        /*overflow: auto; */
-        overflow-x: scroll;
+        /*overflow-x: scroll;*/
         overflow-y: scroll;
         height: 50vh;
-        /* scrollbar-face-color: red;*/
     }
 
 
-         /*Размеры скроллбара */
+        /*Размеры скроллбара */
         .second::-webkit-scrollbar {
             width: 15px;
         }
 
-         /*Трек поле скроллбара*/ 
+        /*Трек поле скроллбара*/
         .second::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px blue;
             background: white;
         }
 
-         /*Ползунок скроллбара*/ 
+        /*Ползунок скроллбара*/
         .second::-webkit-scrollbar-thumb {
             -webkit-box-shadow: inset 0 0 6px green;
             background: rgb(255, 255, 224);

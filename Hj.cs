@@ -19,10 +19,10 @@ namespace WebApplicationONE
             };
         }
 
-        public string videoId { get; set; }
-        public string description { get; set; }
+        public volatile string videoId;/* { get; set; }*/
+        public volatile string description; /*{ get; set; }*/
 
-        private bool checkedA = false;
+        private volatile bool checkedA = false;
         public bool CheckedA
         {
             get
