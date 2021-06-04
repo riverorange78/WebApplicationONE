@@ -489,7 +489,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             var foundCl2 = new Dictionary<string, Hj>();//
 
-            string resulto = "!!!false Запросов Не Отправлен.";
+            string resulto = ""; /*"!!!false Запросов Не Отправлен."*/
 
             int bv = 0;
 
@@ -508,10 +508,10 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             //Opisanie ="===>" ; return;
 
-            if (!StopBob(resulto))
-            {
-                Opisanie = bv.ToString() + "1===>" + resulto; return;
-            }
+            //if (!StopBob(resulto))
+            //{
+            Opisanie = /*bv.ToString() + "1===>" +*/ resulto; //return;
+            //}
 
 
             if (resulto.Contains(@"""nextPageToken"":"""))
