@@ -84,14 +84,16 @@
 
         /*nextVideoSearch*/
         /*"nextPageToken": string*/
+        //window.mkYouTubeIframeAPIReadyLast = function (pl)
+        /*function nextVideoS(mo)*/
 
-        function nextVideoSearch(more) {
+        window.nextVideoS = function (mo)  {
             return gapi.client.youtube.search.list({
                 "part": [
                     "snippet"
                 ],
-                "maxResults": 50,
-                "qnextPageToken": more,
+                "maxResults": 30,
+                "q": mo,
                 "type": [
                     "video"]
                 ,
@@ -104,7 +106,7 @@
                     ,
                     function (err) {
                         console.error("Error loading videoSearch", err);
-                        return loadErr("Поиск выдал ошибку.", err);/*"!!!" +confirm("Поиск выдал ошибку. Перезагрузить?").toString() + "--->" + err;*//*JSON.stringify(err);*/
+                        return loadErr("Поиск next выдал ошибку.", err);/*"!!!" +confirm("Поиск выдал ошибку. Перезагрузить?").toString() + "--->" + err;*//*JSON.stringify(err);*/
                     });
         }
 
