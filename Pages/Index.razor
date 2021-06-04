@@ -485,9 +485,9 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             if (TextFind == "???") { return; }
 
             //foundList.Clear();
-            //foundCl.Clear();
+            foundCl.Clear();
 
-            var foundCl2 = new Dictionary<string, Hj>();
+            var foundCl2 = new Dictionary<string, Hj>();//
 
             string resulto = "!!!false Запросов Не Отправлен.";
 
@@ -502,13 +502,15 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             }
             else if (nextPage.Length != 0)
             {
-                resulto = await JSRuntime2.InvokeAsync<string>("videoSearchNext", nextPage);
+                resulto = await JSRuntime2.InvokeAsync<string>("nextVideoSearch", nextPage);
                 bv = 2;
             }
 
+            //Opisanie ="===>" ; return;
+
             if (!StopBob(resulto))
             {
-                Opisanie = bv + "===>" + resulto; return;
+                Opisanie = bv.ToString() + "1===>" + resulto; return;
             }
 
 
@@ -518,7 +520,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             .Split(@""",""")[0];
             }
             else { nextPage = ""; }
-            ///
+
             string[] ddd = resulto.Replace("  ", " ").Split(new string[] {
                                         @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
                                         @"""},""snippet"":{""publishedAt"":""",
@@ -531,19 +533,19 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             for (int ie = 0; ie < ddd.Length; ie = ie + 5)
             {
-                foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
-            new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
+                foundCl/*2*/.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
+    new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
                 if (ie + 5 + 5 > ddd.Length) { break; }
             }
 
             //string[] lli = foundCl.Values.Select(x => x.videoId).ToArray();
 
             resulto = await JSRuntime2.InvokeAsync<string>("videoDetails",
-                foundCl.Values.Select(x => x.videoId).ToArray().ToList<string>());
+                foundCl/*2*/.Values.Select(x => x.videoId).ToArray().ToList<string>());
 
             if (!StopBob(resulto))
             {
-                Opisanie = resulto; return;
+                Opisanie = bv.ToString() + "2===>" + resulto; return;
             }
 
             string[] d2 = resulto.Split(new string[] {
@@ -560,9 +562,6 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 if (ir + 3 + 3 > d2.Length) { break; }
             }
 
-            /*var*/
-            //foundCl2 = new Dictionary<string, Hj>();
-
             foreach (var item in foundCl.Keys)
             {
                 foundCl2.Add(
@@ -570,6 +569,38 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 foundCl[item]);
             }
 
+            #region MyRegion
+            /*var*/
+            //foundCl2 = new Dictionary<string, Hj>();
+
+            //foreach (var item in foundCl2.Keys)
+            //{
+            //    foundCl2.Add(
+            //    Cl[foundCl2[item].videoId] + " " + item,
+            //    foundCl2[item]);
+            //}
+            //foundCl.Clear();
+            //===============================
+            //for (int i = 0; i < foundCl2.Count; i = i + 1)
+            ////for (var i=0; in foundCl2.Keys)
+            //{
+
+            //    /*var kkk*/
+            //    var cc = foundCl2.ElementAt(i).Key.Split(new string[] {
+            //                            @"<-rkt->"}, StringSplitOptions.None);
+
+            //    foundCl.Add(
+            //        Cl[cc[0]] + " " + foundCl2.ElementAt(i).Key,
+            //        foundCl2.ElementAt(i).Value);
+            //    //        //--------------------
+            //    //        foundCl2[Cl[cc[0]]]
+            //    //        =new  foundCl2.ElementAt(i);/*.Key =""*/
+            //    //        //-------------------------
+            //    //        foundCl2.Add(
+            //    //Cl[foundCl2[item].videoId] + " " + item,
+            //    //foundCl2[item]);
+            //} 
+            #endregion
             //-------------------------------------------------
 
             #region MyRegion
@@ -785,7 +816,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             #endregion
 
             foundList.Clear();
-            foundCl.Clear();
+            //foundCl.Clear();
 
             foundCl = foundCl2;
 
@@ -802,11 +833,10 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
     }
 
-    void NextPage(string s)
-    {
+    //void NextPage(string s)
+    //{
 
-
-    }
+    //}
 
     private async void Serializ(string s, /*BinaryFormatter formatter,*/
         Dictionary<string, Hj> dict/*, List<string> lis*/)
