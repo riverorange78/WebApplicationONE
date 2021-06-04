@@ -493,7 +493,10 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             string resulto = ""; /*"!!!false Запросов Не Отправлен."*/
 
-            int bv = 0; string vbc = "#####";
+            int bv = 0;
+
+            string vbc = "#####";
+
 
             if (prevSearch != TextFind)
             {
@@ -505,7 +508,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             else if (prevSearch == TextFind & nextPage.Length != 0)
             {
                 vbc = nextPage;
-                resulto = await JSRuntime2.InvokeAsync<string>("nextVideoS", nextPage);
+                resulto = await JSRuntime2.InvokeAsync<string>("nextVideoS", TextFind, nextPage);
                 bv = 2;
             }
 
@@ -523,7 +526,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 nextPage = resulto.Replace("  ", " ").Split(@"""nextPageToken"":""")[1]
             .Split(@""",""")[0];
             }
-            else { nextPage = ""; }
+            else { /*Opisanie = resulto;*/ nextPage = ""; }
 
             string[] ddd = resulto.Replace("  ", " ").Split(new string[] {
                                         @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
@@ -534,7 +537,9 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
 
             if (ddd.Length == 1) { Opisanie = "Поиск не дал результатов. --->"
-                    + nextPage+"--------"+ vbc + "<---"+ resulto; return; }
+                    + nextPage+"--------"+ vbc +
+                    "--------" + TextFind +
+                    "--------" + prevSearch+" "+ bv + "<---" + resulto; return; }
 
             for (int ie = 0; ie < ddd.Length; ie = ie + 5)
             {

@@ -87,17 +87,18 @@
         //window.mkYouTubeIframeAPIReadyLast = function (pl)
         /*function nextVideoS(mo)*/
 
-        window.nextVideoS = function (mo)  {
+        window.nextVideoS = function (more,mo)  {
             return gapi.client.youtube.search.list({
                 "part": [
                     "snippet"
                 ],
                 "maxResults": 50,
-                "nextPageToken": mo,
+                "q": more,
                 "type": [
                     "video"]
                 ,
-                "videoSyndicated": "true"
+                "videoSyndicated": true,
+                "nextPageToken": mo
             })
                 .then(
                     function (response) {
@@ -120,7 +121,7 @@
                 "type": [
                     "video"]
                 ,
-                "videoSyndicated": "true"
+                "videoSyndicated": true
             })
                 .then(
                     function (response) {
