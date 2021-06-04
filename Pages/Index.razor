@@ -485,8 +485,10 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             if (TextFind == "???") { return; }
 
             //foundList.Clear();
-            foundCl.Clear();
+            //var ctt = foundCl;
+            //foundCl.Clear();
 
+            var foundCl1 = new Dictionary<string, Hj>();
             var foundCl2 = new Dictionary<string, Hj>();//
 
             string resulto = ""; /*"!!!false Запросов Не Отправлен."*/
@@ -495,7 +497,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             if (prevSearch != TextFind)
             {
-                prevSearch = TextFind;
+                prevSearch = TextFind; nextPage = "";
 
                 resulto = await JSRuntime2.InvokeAsync<string>("videoSearch", TextFind);
                 bv = 1;
@@ -529,11 +531,11 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                                     @""",""thumbnails"":{""default"":"}, StringSplitOptions.None);
 
 
-            if (ddd.Length == 1) { Opisanie = "Поиск не дал результатов."; return; }
+            if (ddd.Length == 1) { Opisanie = "Поиск не дал результатов."+ nextPage; return; }
 
             for (int ie = 0; ie < ddd.Length; ie = ie + 5)
             {
-                foundCl/*2*/.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
+                foundCl1/*2*/.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
     new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
                 if (ie + 5 + 5 > ddd.Length) { break; }
             }
@@ -541,7 +543,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             //string[] lli = foundCl.Values.Select(x => x.videoId).ToArray();
 
             resulto = await JSRuntime2.InvokeAsync<string>("videoDetails",
-                foundCl/*2*/.Values.Select(x => x.videoId).ToArray().ToList<string>());
+                foundCl1/*2*/.Values.Select(x => x.videoId).ToArray().ToList<string>());
 
             if (!StopBob(resulto))
             {
@@ -562,11 +564,11 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 if (ir + 3 + 3 > d2.Length) { break; }
             }
 
-            foreach (var item in foundCl.Keys)
+            foreach (var item in foundCl1.Keys)
             {
                 foundCl2.Add(
-                Cl[foundCl[item].videoId] + " " + item,
-                foundCl[item]);
+                Cl[foundCl1[item].videoId] + " " + item,
+                foundCl1[item]);
             }
 
             #region MyRegion
@@ -815,13 +817,13 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             //}
             #endregion
 
-            foundList.Clear();
             //foundCl.Clear();
 
             foundCl = foundCl2;
 
             Serializ("found", foundCl/*, foundList*/); /*BinaryFormatter formatter,*//*, List<string> lis*/
 
+            foundList.Clear();
             foundList = foundCl.Keys.ToList<string>();
 
             //}
