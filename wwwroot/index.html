@@ -54,7 +54,7 @@
             return confirm( st + " Перезагрузить ?" + "\n" + "--->" + JSON.stringify(ex));
         }
         function loadErr(st, ex) {
-            return "!!!" +confirm( st + " Перезагрузить ?").toString() + "--->" + JSON.stringify(ex);
+            return "!!!" + confirm(st + " Перезагрузить ?").toString() + "--->" + JSON.stringify(ex.error.message);
         }
 
         function loadClient(f) {
@@ -62,7 +62,7 @@
             lastPl = 'G2CHyuF74R0';
             //"AIzaSyApxU38Tke7HtXOarFJAP1pR_O0ATRwy-Q"
             try {
-                gapi.client.setApiKey(f);
+                gapi.client.setApiKey('G2CHyuF74R0');/**/
                 /*throw new Error('something went wrong');*/
                 return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
                     .then(
@@ -71,21 +71,34 @@
                             return "";
                         },
                         function (err) {
+                            //https://stackoverflow.com/questions/24563863/catch-error-from-gapi-client-load
+                            //https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md
                             console.error("Error loading GAPI client for API 1", err/*.message*/);
-                            return loadErr("Отсутствие связи 1.", err);
-                            /*confirm("Отсутствие связи. Перезагрузить?").toString() + "--->" + JSON.stringify(err);*/
+                            return loadErr("Отсутствие связи 1.", err/*.error.message*/);
+                            /*err.result.error.message*/  /*confirm("Отсутствие связи. Перезагрузить?").toString() + "--->" + JSON.stringify(err);*/
                         });
             } catch (err) {
                 console.error("Error loading GAPI client for API 0", err/*.message*/);
-                return loadErr("Отсутствие связи 2.", err);
+                return loadErr("Отсутствие связи 2.", err/*.result.error.message*/);
                 /*return JSON.stringify(e); *//*e.message"e!!!"*/
             }
         }
 
+        //return gapi.client.language.translations.list({
+        //    q: 'hello world',
+        //    source: 'en',
+        //    target: 'de',
+        //});
+        //}).then(function (response) {
+        //    console.log(response.result.data.translations[0].translatedText);
+        //}, function (reason) {
+        //    console.log('Error: ' + reason.result.error.message);
+        //});
+
         /*nextVideoSearch*/
         /*"nextPageToken": string*/
         //window.mkYouTubeIframeAPIReadyLast = function (pl)
-        /*function nextVideoS(mo)*/
+        /*function nextVideoS(mo)next*/
 
         window.nextVideoS = function (more,mo)  {
             return gapi.client.youtube.search.list({
@@ -97,8 +110,8 @@
                 "type": [
                     "video"]
                 ,
-                "videoSyndicated": true,
-                "nextPageToken": mo
+                "videoEmbeddable": true, "videoSyndicated": true,
+                "PageToken": mo
             })
                 .then(
                     function (response) {
@@ -120,6 +133,8 @@
                 "q": more,
                 "type": [
                     "video"]
+                ,
+                "videoEmbeddable": true
                 ,
                 "videoSyndicated": true
             })
