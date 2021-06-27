@@ -21,7 +21,8 @@
         </div>
 
         <div class="foundops">
-            <h5 style=" width: 100%;color: black;background-color: lightpink;">Найдено:</h5>
+            @*label*@
+            <h5 style=" width: 100%;color: black;background-color: lightpink;" @onclick="playOne">Найдено(Нажми здесь=запусти выбранное последним):</h5>
         </div>
 
         <div class="foundlst">
@@ -30,15 +31,15 @@
                 {
                     int localVar = i;
                     var yyy = "fnd" + foundList[localVar];/*localVar*/
-                    <li class="lstli">
-                        <label class="lstlabel" for=@yyy>
-                            <input type="checkbox" name=@yyy id=@yyy
-                                   @onchange="@((args) => {
+                <li class="lstli">
+                    <label class="lstlabel" for=@yyy>
+                        <input type="checkbox" name=@yyy id=@yyy
+                               @onchange="@((args) => {
                                       foundCl[foundList[localVar]].CheckedA=(bool)args.Value;} )"
-                                   @onclick="@(async () => await playOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
-                            @foundList[localVar]
-                        </label>
-                    </li>
+                               @onclick="@(async () => await setPlayOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+                        @foundList[localVar]
+                    </label>@*onclick*@@*@(async () => await playOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))*@
+                </li>
                     <br />
                 }
             </ul>
@@ -55,8 +56,8 @@
         </div>
 
         <div class="savedopis">
-            <h5 style="width: 100%; color: black;background-color: lightblue;">
-                Сохранённое:
+            <h5 style="width: 100%; color: black;background-color: lightblue;" @onclick="playOne">
+                Сохранённое(Нажми здесь=запусти выбранное последним):
             </h5>
         </div>
 
@@ -66,15 +67,15 @@
                 {
                     int localVar = i;
                     var yyy = "svd" + savedList[localVar];
-                    <li class="lstli">
-                        <label class="lstlabel" for=@yyy>
-                            <input type="checkbox" name=@yyy id=@yyy
-                                   @onchange="@((args) => {
+                <li class="lstli">
+                    <label class="lstlabel" for=@yyy>
+                        <input type="checkbox" name=@yyy id=@yyy
+                               @onchange="@((args) => {
                                               savedCl[savedList[localVar]].CheckedA=(bool)args.Value;} )"
-                                   @onclick="@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
-                            @savedList[localVar]
-                        </label>
-                    </li>
+                               @onclick="@(async () => await setPlayOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                        @savedList[localVar]
+                    </label>@*onclick*@@*@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))*@
+                </li>
                     <br />
                 }
             </ul>
@@ -89,7 +90,7 @@
         </div>
 
         <div class="playopis">
-            <h5 style="width: 100%; color: black;  background-color: Silver;"> Список воспроизведения:</h5>
+            <h5 style="width: 100%; color: black;  background-color: Silver;" @onclick="playOne"> Список воспроизведения(Нажми здесь=запусти выбранное последним):</h5>
         </div>
 
         <div class="playlst">
@@ -98,15 +99,15 @@
                 {
                     int localVar = i;
                     var yyy = "play" + playList[localVar];
-                    <li class="lstli">
-                        <label class="lstlabel" for=@yyy>
-                            <input type="checkbox" name=@yyy id=@yyy
-                                   @onchange="@((args) => {
+                <li class="lstli">
+                    <label class="lstlabel" for=@yyy>
+                        <input type="checkbox" name=@yyy id=@yyy
+                               @onchange="@((args) => {
                                               playCl[playList[localVar]].CheckedA=(bool)args.Value;} )"
-                                   @onclick="@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                            @playList[localVar]
-                        </label>
-                    </li>
+                               @onclick="@(async () => await setPlayOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                        @playList[localVar]
+                    </label>@*onclick*@@*@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))*@
+                </li>
                     <br />
                 }
             </ul>
@@ -135,6 +136,11 @@
 </div>
 
 @code {
+
+    private void DoubleClick()
+    {
+        Opisanie = "Double-click";
+    }
 
     volatile bool bob = false;
 
@@ -216,8 +222,11 @@
             prevSearch = "";
             nextPage = "";
 
+            pl = "";
+
             BinaryFormatter formatter = new BinaryFormatter();
 
+            #region MyRegion
             //Action< string, BinaryFormatter, Dictionary<string, Hj>, List<string>> ty
             //    = /*await*/async ( s,  forma,  dict,   lis) => {
 
@@ -241,7 +250,8 @@
             /*Deserial*/
             //Dictionary<string, Hj> dic
 
-            //await ls.ClearAsync(); return;+-
+            //await ls.ClearAsync(); return;+- 
+            #endregion
 
             foundCl = await Deserial("found", formatter/*, foundCl, foundList*/);
             foundList = foundCl.Count == 0 ? new List<string>() : foundCl.Keys.ToList<string>();
@@ -336,15 +346,15 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             //var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
-            //if (!await ls.ContainKeyAsync("lastPlay"))
-            //{
-            resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReady");
-            //    }
-            //else
-            //    {
-            //        //resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReady");
-            //        resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
-            //    }
+            if (!await ls.ContainKeyAsync("lastPlay"))
+            {
+                resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReady");
+            }
+            else
+            {
+                //resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReady");
+                resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
+            }
 
             if (!StopBob(resulto))
             {
@@ -532,9 +542,9 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             {
                 nextPage = resulto.Replace("  ", " ").Split(@"""nextPageToken"":""")[1]
             .Split(@""",""")[0];
-                //Opisanie = "nextPageToken";
+                Opisanie = nextPage;/*"nextPageToken"*/
             }
-            else { /*Opisanie = resulto;*/ nextPage = ""; }
+            else { Opisanie = "resulto 0"; nextPage = ""; }
 
             string[] ddd = resulto.Replace("  ", " ").Split(new string[] {
                                         @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
@@ -1161,15 +1171,17 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
         }
     }
 
-    private async Task playOne(string a, string b)
+    private async Task playOne(/*string a, string b*/)
     {
         try
         {
-            await ls.SetItemAsync<string>("lastPlay", b);
+            if (pl.Length==0) { return; }
 
-            Opisanie = a;
+            await ls.SetItemAsync<string>("lastPlay", pl);
 
-            var resulto = await JSRuntime2.InvokeAsync<string>("playOne", b);
+            //Opisanie = a;
+
+            var resulto = await JSRuntime2.InvokeAsync<string>("playOne", pl);
 
             if (!StopBob(resulto))
             {
@@ -1179,9 +1191,32 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
         catch (Exception ex)
         {
 
-            Opisanie = "Exception 8 " + ex.ToString();
+            Opisanie = "Exception 9 " + ex.ToString();
         }
     }
 
+    string pl;
+
+    private async Task setPlayOne(string opis, string adr)
+    {
+        try
+        {
+            pl = adr;//await ls.SetItemAsync<string>("lastPlay", b);
+
+            Opisanie = opis;
+
+            //var resulto = await JSRuntime2.InvokeAsync<string>("playOne", b);
+
+            //if (!StopBob(resulto))
+            //{
+            //    Opisanie = resulto; return;
+            //}
+        }
+        catch (Exception ex)
+        {
+
+            Opisanie = "Exception 8 " + ex.ToString();
+        }
+    }
 }
 
