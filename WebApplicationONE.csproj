@@ -5,6 +5,10 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
     <SignAssembly>true</SignAssembly>
+    <Product>WebApplicationONE</Product>
+    <PackageId>WebApplicationONE</PackageId>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <AssemblyName>WebApplicationONE</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

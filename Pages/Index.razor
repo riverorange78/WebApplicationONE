@@ -17,11 +17,11 @@
     <div class="first">
 
         <div class="searchtxt">
-            <input id="Text1" type="text" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" />
+            <input id="Text1" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind" />
         </div>
 
         <div class="foundops">
-            @*label*@
+
             <h5 style=" width: 100%;color: black;background-color: lightpink;" @onclick="playOne">Найдено(Нажми здесь=запусти выбранное последним):</h5>
         </div>
 
@@ -31,15 +31,15 @@
                 {
                     int localVar = i;
                     var yyy = "fnd" + foundList[localVar];/*localVar*/
-                <li class="lstli">
-                    <label class="lstlabel" for=@yyy>
-                        <input type="checkbox" name=@yyy id=@yyy
-                               @onchange="@((args) => {
+                    <li class="lstli">
+                        <label class="lstlabel" for=@yyy>
+                            <input type="checkbox" name=@yyy id=@yyy
+                                   @onchange="@((args) => {
                                       foundCl[foundList[localVar]].CheckedA=(bool)args.Value;} )"
-                               @onclick="@(async () => await setPlayOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
-                        @foundList[localVar]
-                    </label>@*onclick*@@*@(async () => await playOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))*@
-                </li>
+                                   @onclick="@(async () => await setPlayOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+                            @foundList[localVar]
+                        </label>
+                    </li>
                     <br />
                 }
             </ul>
@@ -67,15 +67,15 @@
                 {
                     int localVar = i;
                     var yyy = "svd" + savedList[localVar];
-                <li class="lstli">
-                    <label class="lstlabel" for=@yyy>
-                        <input type="checkbox" name=@yyy id=@yyy
-                               @onchange="@((args) => {
+                    <li class="lstli">
+                        <label class="lstlabel" for=@yyy>
+                            <input type="checkbox" name=@yyy id=@yyy
+                                   @onchange="@((args) => {
                                               savedCl[savedList[localVar]].CheckedA=(bool)args.Value;} )"
-                               @onclick="@(async () => await setPlayOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
-                        @savedList[localVar]
-                    </label>@*onclick*@@*@(async () => await playOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))*@
-                </li>
+                                   @onclick="@(async () => await setPlayOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                            @savedList[localVar]
+                        </label>
+                    </li>
                     <br />
                 }
             </ul>
@@ -99,15 +99,15 @@
                 {
                     int localVar = i;
                     var yyy = "play" + playList[localVar];
-                <li class="lstli">
-                    <label class="lstlabel" for=@yyy>
-                        <input type="checkbox" name=@yyy id=@yyy
-                               @onchange="@((args) => {
+                    <li class="lstli">
+                        <label class="lstlabel" for=@yyy>
+                            <input type="checkbox" name=@yyy id=@yyy
+                                   @onchange="@((args) => {
                                               playCl[playList[localVar]].CheckedA=(bool)args.Value;} )"
-                               @onclick="@(async () => await setPlayOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
-                        @playList[localVar]
-                    </label>@*onclick*@@*@(async () => await playOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))*@
-                </li>
+                                   @onclick="@(async () => await setPlayOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                            @playList[localVar]
+                        </label>
+                    </li>
                     <br />
                 }
             </ul>
@@ -137,12 +137,12 @@
 
 @code {
 
-    private void DoubleClick()
+    private void ClearTextFind()
     {
-        Opisanie = "Double-click";
+        TextFind = "";
     }
 
-    volatile bool bob = false;
+    volatile bool errStop = false;
 
     string Opisanie { get; set; }
     string TextFind { get; set; }
@@ -150,40 +150,39 @@
     private List<string> foundList, savedList, playList;
     Dictionary<string, Hj> foundCl, savedCl, playCl;
 
-    static Action a, b;
-    static Action<string> c; //
+    static Action SetErrStop, NavigateToBaseUri;
+    static Action<string> SetErrOpis;
 
     [JSInvokable]
-    public static void ReloadMkS(string h)
+    public static void NoReloadAppSetErrOpis(string h)
     {
-        c(h)/*.Invoke()*/;
+        SetErrOpis(h);
+        SetErrStop();
     }
 
     [JSInvokable]
-    public static void ReloadMk()
+    public static void ReloadApp()
     {
-        b.Invoke();
+        NavigateToBaseUri();
     }
 
-    [JSInvokable]
-    public static void BobTrue()
-    {
-        a.Invoke();
-    }
+    //[JSInvokable]
+    //public static void JsSetErrStop()
+    //{
+    //    SetErrStop();
+    //}
 
-    private bool StopBob(string s)
+    private bool ErrCheckReload(string s)
     {
-        if (s.Length != 0)// false
+        if (s.Length != 0)
         {
-            /**/
-            if (s.Substring(0, 7) == "!!!true")// false
+
+            if (s.Substring(0, 7) == "!!!true")
             {
                 uriHelper.NavigateTo(uriHelper.BaseUri, forceLoad: true);
             }
             else if (s.Substring(0, 7) == "!!!fals")
             {
-
-                //Opisanie = resulto;
                 return false;
             }
             return true;
@@ -199,15 +198,14 @@
         try
         {
 
+            errStop = false;
 
-            bob = false;
-
-            a = () => { bob = true; };
-            b = () =>
+            SetErrStop = () => { errStop = true; };
+            NavigateToBaseUri = () =>
             {
                 uriHelper.NavigateTo(uriHelper.BaseUri, forceLoad: true);
             };
-            c = (h) => { Opisanie = h; };
+            SetErrOpis = (h) => { Opisanie = h; };
 
             foundList = new List<string>();
             savedList = new List<string>();
@@ -217,134 +215,35 @@
             savedCl = new Dictionary<string, Hj>();
             playCl = new Dictionary<string, Hj>();
 
-            TextFind = "???";
+            TextFind = "текст поиска";
 
             prevSearch = "";
             nextPage = "";
 
-            pl = "";
+            playAdr = "";
 
             BinaryFormatter formatter = new BinaryFormatter();
 
-            #region MyRegion
-            //Action< string, BinaryFormatter, Dictionary<string, Hj>, List<string>> ty
-            //    = /*await*/async ( s,  forma,  dict,   lis) => {
-
-            //        if (await ls.ContainKeyAsync(s))
-            //        {
-
-            //            using (MemoryStream stream = new MemoryStream(
-            //                Convert.FromBase64String(await ls.GetItemAsStringAsync(s))))
-            //            {
-            //                /*return*/
-            //                dict =  formatter.Deserialize(stream) as Dictionary<string, Hj>;
-            //            }
-
-            //            lis = dict.Keys.ToList<string>();
-
-            //            //Opisanie = Opisanie + " \n " + s+ " \n " +string.Join("+", foundList) + " \n ";
-            //        }
-
-            //        ; };
-
-            /*Deserial*/
-            //Dictionary<string, Hj> dic
-
-            //await ls.ClearAsync(); return;+- 
-            #endregion
-
-            foundCl = await Deserial("found", formatter/*, foundCl, foundList*/);
+            foundCl = await Deserial("found", formatter);
             foundList = foundCl.Count == 0 ? new List<string>() : foundCl.Keys.ToList<string>();
-            //if (foundCl.Count == 0) { foundList = new List<string>(); }
-            //else { foundList = foundCl.Keys.ToList<string>(); }
 
 
-            savedCl = await Deserial("saved", formatter/*, savedCl, savedList*/);
+
+            savedCl = await Deserial("saved", formatter);
             savedList = savedCl.Count == 0 ? new List<string>() : savedCl.Keys.ToList<string>();
-            //if (savedCl.Count == 0) { savedList = new List<string>(); }
-            //else { savedList = savedCl.Keys.ToList<string>(); }
 
-            playCl = await Deserial("play", formatter/*, playCl, playList*/);
+
+            playCl = await Deserial("play", formatter);
             playList = playCl.Count == 0 ? new List<string>() : playCl.Keys.ToList<string>();
-            //if (playCl.Count == 0) { playList = new List<string>(); }
-            //else { playList = playCl.Keys.ToList<string>(); }
 
-
-            //Dictionary<string, Hj>
-
-            //Deser("play", formatter, playCl, playList);
-            //Deser("play", formatter, playCl, playList);
-
-            //await JSRuntime2.InvokeVoidAsync("alert", "Произошла ошибка, смотрите описание!");
-            #region MyRegion
-            //if (await ls.ContainKeyAsync("found"))
-            //{
-            //    //var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("found"));
-
-            //    using (MemoryStream stream = new MemoryStream(
-            //        Convert.FromBase64String(await ls.GetItemAsStringAsync("found"))))
-            //    {
-            //        foundCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-            //    }
-
-            //    foundList = foundCl.Keys.ToList<string>();
-
-            //}
-            //if (await ls.ContainKeyAsync("saved"))
-            //{
-            //    //var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"));
-
-            //    using (MemoryStream stream = new MemoryStream(
-            //        Convert.FromBase64String(await ls.GetItemAsStringAsync("saved"))))
-            //    {
-            //        savedCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-            //    }
-
-            //    savedList = savedCl.Keys.ToList<string>();
-
-            //}
-            //if (await ls.ContainKeyAsync("play"))
-            //{
-            //    //var Result2 = Convert.FromBase64String(await ls.GetItemAsStringAsync("play"));
-
-            //    using (MemoryStream stream = new MemoryStream(Convert.FromBase64String(await ls.GetItemAsStringAsync("play"))))
-            //    {
-            //        playCl = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-            //    }
-
-            //    playList = playCl.Keys.ToList<string>();
-
-            //}
-            #endregion
-
-            //Opisanie = "resulto" ;
-            //base.StateHasChanged();
-            var resulto = await JSRuntime2.InvokeAsync<string>("loadClient", //"dw39shuhdw39");
+            var resulto = await JSRuntime2.InvokeAsync<string>("loadClient",
 GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
-            //b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
-            //b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
-            //Opisanie = resulto;/*""*/
-            //return;
 
-            if (!StopBob(resulto))
+
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
             }
-
-            //if (resulto.Length != 0)// false
-            //{
-            //    if (resulto.Substring(0, 7) == "!!!true")// false
-            //    {
-            //        uriHelper.NavigateTo(uriHelper.BaseUri, forceLoad: true);
-            //    }
-            //    else if (resulto.Substring(0, 7) == "!!!fals")
-            //    {
-            //        Opisanie = resulto;
-            //        return;
-            //    }
-            //}
-
-            //var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
 
             if (!await ls.ContainKeyAsync("lastPlay"))
             {
@@ -352,135 +251,44 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             }
             else
             {
-                //resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReady");
                 resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
             }
 
-            if (!StopBob(resulto))
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
             }
 
-            //if (resulto.Length != 0)// false
-            //{
-            //    if (resulto.Substring(0, 7) == "!!!true")// false
-            //    {
-            //        uriHelper.NavigateTo(uriHelper.BaseUri, forceLoad: true);
-            //    }
-            //    else if (resulto.Substring(0, 7) == "!!!fals")
-            //    {
-            //        Opisanie = resulto;
-            //        return;
-            //    }
-            //}
-            //Opisanie = resulto;
             await base.OnInitializedAsync();
-            //bob = true;
+
         }
         catch (Exception e)
         {
-            //await JSRuntime2.InvokeVoidAsync("alert", "Произошла ошибка, смотрите описание!"); // Alert
-
-            //bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
-            //string prompted = await JsRuntime.InvokeAsync<string>("prompt", "Take some input:"); // Prompt
-
             Opisanie = "Exception 1: " + e.Message;
         }
         //}
     }
 
-    private async Task<Dictionary<string, Hj>>/*void*/ Deserial(string s, BinaryFormatter formatter/*, Dictionary<string, Hj> dict, List<string> lis*//**/)
+    private async Task<Dictionary<string, Hj>> Deserial(string s, BinaryFormatter formatter)
     {
-        if (/**/await ls.ContainKeyAsync(s))
+        if (await ls.ContainKeyAsync(s))
         {
 
             using (MemoryStream stream = new MemoryStream(
                 Convert.FromBase64String(await ls.GetItemAsStringAsync(s))))
             {
-                /*dict =*/
+
                 return formatter.Deserialize(stream) as Dictionary<string, Hj>;
             }
-
-            //lis = dict.Keys.ToList<string>();
-
-            //Opisanie = Opisanie + " \n " + s+ " \n " +string.Join("+", foundList) + " \n ";
         }
-        return new Dictionary<string, Hj>();//
+        return new Dictionary<string, Hj>();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        //Opisanie = "rrresulto";
-        //try
-        //{
-        await base.OnAfterRenderAsync(firstRender);
+        //try{}catch (Exception e){}
 
-        if (firstRender)
-        {
-            #region MyRegion
-            //            var resulto = await JSRuntime2.InvokeAsync<string>("loadClient",
-            //GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
-
-
-            //            if (resulto.Length != 0)// false
-            //            {
-            //                if (resulto.Substring(0, 4) == "true")// false
-            //                {
-            //                    uriHelper.NavigateTo(uriHelper.BaseUri, forceLoad: true);
-            //                }
-            //                else if (resulto.Substring(0, 4) == "fals")
-            //                {
-            //                    Opisanie = resulto;
-            //                    return;
-            //                }
-            //            }
-
-            //            //var jsInProcess = (IJSInProcessRuntime)JSRuntime2;
-
-            //            if (!await ls.ContainKeyAsync("lastPlay"))
-            //            {
-            //                resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReady");
-            //            }
-            //            else
-            //            {
-            //                resulto = await JSRuntime2.InvokeAsync<string>("mkYouTubeIframeAPIReady");
-            //                //resulto = jsInProcess.Invoke<string>("mkYouTubeIframeAPIReadyLast", await ls.GetItemAsync<string>("lastPlay"));
-            //            }
-            //            if (resulto.Length != 0)// false
-            //            {
-            //                if (resulto.Substring(0, 4) == "true")// false
-            //                {
-            //                    uriHelper.NavigateTo(uriHelper.BaseUri, forceLoad: true);
-            //                }
-            //                else if (resulto.Substring(0, 4) == "fals")
-            //                {
-            //                    Opisanie = resulto;
-            //                    return;
-            //                }
-            //            }
-            //            bob = true;
-
-            //await JSRuntime2.InvokeVoidAsync("alert", "Произошла ошибка, смотрите описание!");
-            /*//*///
-                  //Opisanie = "esultorrr";/*string.IsNullOrWhiteSpace(resulto) ? "iii":"vvv"*/
-            /*base.*/
-            //StateHasChanged();
-            //return;
-            //throw new Exception("z");
-
-
-            //await base.OnAfterRenderAsync(firstRender);
-            #endregion
-        }
-
-
-        //}
-        //catch (Exception e)
-        //{
-        //    await JSRuntime2.InvokeVoidAsync("alert", "Произошла ошибка, смотрите описание!");
-        //    //await JSRuntime2.InvokeVoidAsync("alert", "Произошла ошибка, смотрите описание!"); // Alert
-        //    //Opisanie = "Exception 2:" + e.Message;
-        //}
+        await base.OnAfterRenderAsync(firstRender); if (firstRender) { }
     }
 
     string prevSearch;
@@ -490,24 +298,19 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
     {
         try
         {
-            if (!bob) { Opisanie = "Ошибка активации."/*bob.ToString()*/; return; }
-            //else{
+            if (errStop) { Opisanie = "Ошибка активации."; return; }
+
             if (TextFind.Replace(" ", "").Length < 2) { return; }
             if (TextFind == "???") { return; }
 
-            //foundList.Clear();
-            //var ctt = foundCl;
-            //foundCl.Clear();
+            if (TextFind == "ковалевская159") { Opisanie="ОЗЕРО"; return; }
 
             var foundCl1 = new Dictionary<string, Hj>();
-            var foundCl2 = new Dictionary<string, Hj>();//
+            var foundCl2 = new Dictionary<string, Hj>();
 
-            string resulto = ""; /*"!!!false Запросов Не Отправлен."*/
+            string resulto = "";
 
             sbyte bv = 0;
-
-            //string vbc = "#####";
-
 
             if (prevSearch != TextFind)
             {
@@ -519,32 +322,30 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             else if (prevSearch == TextFind & nextPage.Length != 0)
             {
 
-                //vbc = nextPage;
                 resulto = await JSRuntime2.InvokeAsync<string>("nextVideoS", TextFind, nextPage);
-                bv = 2/*DateTime.Now.ToString()*/;
+                bv = 2;
             }
             else if (prevSearch == TextFind & nextPage.Length == 0)
             {
-                //vbc = nextPage;
-                Opisanie = "Поиск не дал результатов. " +  nextPage ; return;
-            }
-            //Opisanie ="===>" ; return;
 
-            if (!StopBob(resulto))
+                Opisanie = "Поиск не дал результатов. " + nextPage; return;
+            }
+
+
+            if (!ErrCheckReload(resulto))
             {
-                //Opisanie =  "===>" + nextPage + "===>" + resulto; //return;
+
                 Opisanie = bv.ToString() + " 1 ===>" + resulto; return;
             }
-
 
 
             if (resulto.Contains(@"""nextPageToken"":"""))
             {
                 nextPage = resulto.Replace("  ", " ").Split(@"""nextPageToken"":""")[1]
             .Split(@""",""")[0];
-                Opisanie = nextPage;/*"nextPageToken"*/
+                Opisanie = nextPage;
             }
-            else { Opisanie = "resulto 0"; nextPage = ""; }
+            else { Opisanie = "nextPageToken 0"; nextPage = ""; }
 
             string[] ddd = resulto.Replace("  ", " ").Split(new string[] {
                                         @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
@@ -554,25 +355,26 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                                     @""",""thumbnails"":{""default"":"}, StringSplitOptions.None);
 
 
-            if (ddd.Length == 1) { Opisanie = "Поиск не дал результатов. --->"
-                    + nextPage+"--------"+/* nextPage +*/
-                    "--------" + TextFind +
-                    "--------" + prevSearch + " " + bv + "<---" + resulto; return; }
-            //else { Opisanie = "iii"; }
+            if (ddd.Length == 1  )
+            {
+                Opisanie = "Поиск не дал результатов. --->"
+ + nextPage + "--------" +
+ "--------" + TextFind +
+ "--------" + prevSearch + " " + bv + "<---" + resulto; return;
+            }
 
             for (int ie = 0; ie < ddd.Length; ie = ie + 5)
             {
-                foundCl1/*2*/.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
+                foundCl1.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
     new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
                 if (ie + 5 + 5 > ddd.Length) { break; }
             }
 
-            //string[] lli = foundCl.Values.Select(x => x.videoId).ToArray();
 
-            var  resulto2 = await JSRuntime2.InvokeAsync<string>("videoDetails",
-                  foundCl1/*2*/.Values.Select(x => x.videoId).ToArray().ToList<string>());
+            var resulto2 = await JSRuntime2.InvokeAsync<string>("videoDetails",
+                  foundCl1.Values.Select(x => x.videoId).ToArray().ToList<string>());
 
-            if (!StopBob(resulto2))
+            if (!ErrCheckReload(resulto2))
             {
                 Opisanie = bv.ToString() + " 2 ===>" + resulto2; return;
             }
@@ -598,263 +400,20 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 foundCl1[item]);
             }
 
-            #region MyRegion
-            /*var*/
-            //foundCl2 = new Dictionary<string, Hj>();
-
-            //foreach (var item in foundCl2.Keys)
-            //{
-            //    foundCl2.Add(
-            //    Cl[foundCl2[item].videoId] + " " + item,
-            //    foundCl2[item]);
-            //}
-            //foundCl.Clear();
-            //===============================
-            //for (int i = 0; i < foundCl2.Count; i = i + 1)
-            ////for (var i=0; in foundCl2.Keys)
-            //{
-
-            //    /*var kkk*/
-            //    var cc = foundCl2.ElementAt(i).Key.Split(new string[] {
-            //                            @"<-rkt->"}, StringSplitOptions.None);
-
-            //    foundCl.Add(
-            //        Cl[cc[0]] + " " + foundCl2.ElementAt(i).Key,
-            //        foundCl2.ElementAt(i).Value);
-            //    //        //--------------------
-            //    //        foundCl2[Cl[cc[0]]]
-            //    //        =new  foundCl2.ElementAt(i);/*.Key =""*/
-            //    //        //-------------------------
-            //    //        foundCl2.Add(
-            //    //Cl[foundCl2[item].videoId] + " " + item,
-            //    //foundCl2[item]);
-            //} 
-            #endregion
-            //-------------------------------------------------
-
-            #region MyRegion
-            //if (prevSearch != TextFind)
-            //{
-
-            //    prevSearch = TextFind;
-
-            //    /*var*/
-            //    resulto = await JSRuntime2.InvokeAsync<string>("videoSearch", TextFind);
-
-            //    if (!StopBob(resulto))
-            //    {
-            //        Opisanie = resulto; return;
-            //    }
-
-            //    #region MyRegion
-            //    //if (resulto.Length != 0)// false
-            //    //{
-            //    //if (resulto.Substring(0, 7) == "!!!true")// false
-            //    //{
-            //    //    uriHelper.NavigateTo(uriHelper.BaseUri, forceLoad: true);
-            //    //}
-            //    //else if (resulto.Substring(0, 7) == "!!!fals")
-            //    //{
-            //    //    Opisanie = resulto;
-            //    //    return;
-            //    //}
-            //    //}
-
-            //    //if (5 > 1)
-            //    //{
-            //    //""nextPageToken"":"" "",""
-            //    //string nextP;
-            //    //if (resulto.Contains(@"""nextPageToken"":""")) {
-            //    //    nextP = resulto.Replace("  ", " ").Split(@"""nextPageToken"":""")[1]
-            //    //.Split(@""",""")[0];
-            //    //}
-            //    #endregion
-            //    ///
-            //    if (resulto.Contains(@"""nextPageToken"":"""))
-            //    {
-            //        nextPage = resulto.Replace("  ", " ").Split(@"""nextPageToken"":""")[1]
-            //    .Split(@""",""")[0];
-            //    }
-            //    else { nextPage = ""; }
-            //    ///
-            //    string[] ddd = resulto.Replace("  ", " ").Split(new string[] {
-            //                            @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
-            //                            @"""},""snippet"":{""publishedAt"":""",
-            //                        @""",""title"":""",
-            //                        @""",""description"":""",
-            //                        @""",""thumbnails"":{""default"":"}, StringSplitOptions.None);
-
-
-            //    if (ddd.Length == 1) { Opisanie = "Поиск не дал результатов."; return; }
-
-            //    for (int ie = 0; ie < ddd.Length; ie = ie + 5)
-            //    {
-            //        foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
-            //    new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
-            //        if (ie + 5 + 5 > ddd.Length) { break; }
-            //    }
-
-            //    //string[] lli = foundCl.Values.Select(x => x.videoId).ToArray();
-
-            //    resulto = await JSRuntime2.InvokeAsync<string>("videoDetails",
-            //        foundCl.Values.Select(x => x.videoId).ToArray().ToList<string>());
-
-            //    if (!StopBob(resulto))
-            //    {
-            //        Opisanie = resulto; return;
-            //    }
-
-
-            //    string[] d2 = resulto.Split(new string[] {
-            //                            @""",""id"":""" ,
-            //                            @""",""contentDetails"":{""duration"":""",
-            //                            @""",""dimension"":"""}, StringSplitOptions.None);
-
-            //    Dictionary<string, string> Cl = new Dictionary<string, string>();
-
-            //    for (int ir = 0; ir < d2.Length; ir = ir + 3)
-            //    {
-            //        Cl.Add(d2[ir + 1], Math.Round(XmlConvert.ToTimeSpan(d2[ir + 2]).TotalMinutes).ToString());
-
-            //        if (ir + 3 + 3 > d2.Length) { break; }
-            //    }
-
-            //    /*var*/
-            //    //foundCl2 = new Dictionary<string, Hj>();
-
-            //    foreach (var item in foundCl.Keys)
-            //    {
-            //        foundCl2.Add(
-            //        Cl[foundCl[item].videoId] + " " + item,
-            //        foundCl[item]);
-            //    }
-
-            //    //foundCl = foundCl2;
-
-            //    #region MyRegion
-            //    //string nextP;
-            //    //                if (resulto.Contains(@"""nextPageToken"":"""))
-            //    //                {
-            //    //                    /*nextP =*/
-            //    //                    NextPage( resulto.Replace("  ", " ").Split(@"""nextPageToken"":""")[1]
-            //    //.Split(@""",""")[0]);
-            //    //                }
-            //    //                else {
-            //    #endregion
-
-            //    //Serializ("found", foundCl/*, foundList*/); /*BinaryFormatter formatter,*//*, List<string> lis*/
-
-            //    #region MyRegion
-            //    //BinaryFormatter formatter = new BinaryFormatter();
-
-            //    //string res;
-
-            //    //using (MemoryStream stream1 = new MemoryStream())
-            //    //{
-            //    //    formatter.Serialize(stream1, foundCl);
-
-            //    //    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-            //    //}
-
-            //    //await ls.SetItemAsync<string>("found", res);
-            //    #endregion
-
-            //    //foundList = foundCl.Keys.ToList<string>();
-            //    //}
-            //    //}
-            //}
-            //else if (nextPage.Length != 0)
-            //{
-            //    //videoSearchNext
-            //    //prevSearch = TextFind;
-
-            //    /*var*/
-            //    resulto = await JSRuntime2.InvokeAsync<string>("videoSearchNext", nextPage);
-
-            //    if (!StopBob(resulto))
-            //    {
-            //        Opisanie = resulto; return;
-            //    }
-
-
-            //    if (resulto.Contains(@"""nextPageToken"":"""))
-            //    {
-            //        nextPage = resulto.Replace("  ", " ").Split(@"""nextPageToken"":""")[1]
-            //    .Split(@""",""")[0];
-            //    }
-            //    else { nextPage = ""; }
-            //    ///
-            //    string[] ddd = resulto.Replace("  ", " ").Split(new string[] {
-            //                            @""",""id"":{""kind"":""youtube#video"",""videoId"":""" ,
-            //                            @"""},""snippet"":{""publishedAt"":""",
-            //                        @""",""title"":""",
-            //                        @""",""description"":""",
-            //                        @""",""thumbnails"":{""default"":"}, StringSplitOptions.None);
-
-
-            //    if (ddd.Length == 1) { Opisanie = "Поиск не дал результатов."; return; }
-
-            //    for (int ie = 0; ie < ddd.Length; ie = ie + 5)
-            //    {
-            //        foundCl.Add(ddd[ie + 3] + "<-rkt->" + ddd[ie + 1],
-            //    new Hj() { videoId = ddd[ie + 1], description = ddd[ie + 4] });
-            //        if (ie + 5 + 5 > ddd.Length) { break; }
-            //    }
-
-            //    //string[] lli = foundCl.Values.Select(x => x.videoId).ToArray();
-
-            //    resulto = await JSRuntime2.InvokeAsync<string>("videoDetails",
-            //        foundCl.Values.Select(x => x.videoId).ToArray().ToList<string>());
-
-            //    if (!StopBob(resulto))
-            //    {
-            //        Opisanie = resulto; return;
-            //    }
-
-            //    string[] d2 = resulto.Split(new string[] {
-            //                            @""",""id"":""" ,
-            //                            @""",""contentDetails"":{""duration"":""",
-            //                            @""",""dimension"":"""}, StringSplitOptions.None);
-
-            //    Dictionary<string, string> Cl = new Dictionary<string, string>();
-
-            //    for (int ir = 0; ir < d2.Length; ir = ir + 3)
-            //    {
-            //        Cl.Add(d2[ir + 1], Math.Round(XmlConvert.ToTimeSpan(d2[ir + 2]).TotalMinutes).ToString());
-
-            //        if (ir + 3 + 3 > d2.Length) { break; }
-            //    }
-
-            //    /*var*/
-            //    //foundCl2 = new Dictionary<string, Hj>();
-
-            //    foreach (var item in foundCl.Keys)
-            //    {
-            //        foundCl2.Add(
-            //        Cl[foundCl[item].videoId] + " " + item,
-            //        foundCl[item]);
-            //    }
-
-            //    //foundCl = foundCl2;
-
-            //    //Serializ("found", foundCl/*, foundList*/); /*BinaryFormatter formatter,*//*, List<string> lis*/
-
-            //    //foundList = foundCl.Keys.ToList<string>();
-
-            //}
-            #endregion
-
-            //foundCl.Clear();
-
             foundCl = foundCl2;
 
-            Serializ("found", foundCl/*, foundList*/); /*BinaryFormatter formatter,*//*, List<string> lis*/
+            Serializ("found", foundCl);
 
-            foundList.Clear();
+            resulto = await JSRuntime2.InvokeAsync<string>("delCha", foundList, "fnd");
+
+            if (!ErrCheckReload(resulto))
+            {
+
+                Opisanie = bv.ToString() + " 1 ===>" + resulto; return;
+            }
+
             foundList = foundCl.Keys.ToList<string>();
 
-            //Opisanie = Opisanie+ bv.ToString() + " >" + nextPage + " >" + resulto;
-            //}
         }
         catch (Exception e)
         {
@@ -863,30 +422,10 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
     }
 
-    //void NextPage(string s)
-    //{
 
-    //}
-
-    private async void Serializ(string s, /*BinaryFormatter formatter,*/
-        Dictionary<string, Hj> dict/*, List<string> lis*/)
+    private async void Serializ(string s,
+        Dictionary<string, Hj> dict)
     {
-        #region MyRegion
-        //BinaryFormatter formatter = new BinaryFormatter();
-
-        //string res;
-
-        //using (MemoryStream stream1 = new MemoryStream())
-        //{
-        //    formatter.Serialize(stream1, foundCl);
-
-        //    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-        //}
-
-        //await ls.SetItemAsync<string>("found", res);
-
-        //====
-        #endregion
 
         BinaryFormatter formatter = new BinaryFormatter();
 
@@ -901,24 +440,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
         await ls.SetItemAsync<string>(s, res);
 
-        // lis = dict.Keys.ToList<string>();
 
-        #region MyRegion
-        //====
-
-        //if (await ls.ContainKeyAsync(s))
-        //{
-
-        //    using (MemoryStream stream = new MemoryStream(
-        //        Convert.FromBase64String(await ls.GetItemAsStringAsync(s))))
-        //    {
-        //        dict = formatter.Deserialize(stream) as Dictionary<string, Hj>;
-        //    }
-
-        //    lis = dict.Keys.ToList<string>();
-
-        //}
-        #endregion
     }
 
     private async Task Save()
@@ -936,42 +458,18 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 if (!savedCl.Keys.Contains(v)) { savedCl.Add(v, foundCl[v].Get()); }
             }
 
-            #region MyRegion
-            //BinaryFormatter formatter = new BinaryFormatter();
-
-
-            //string res;
-
-            //using (MemoryStream stream1 = new MemoryStream())
-            //{
-            //    formatter.Serialize(stream1, savedCl);
-
-            //    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-            //}
-
-            //await ls.SetItemAsync<string>("saved", res);
-
-            //svd = savedCl.Keys.ToList<string>();
-            #endregion
 
             var resulto = await JSRuntime2.InvokeAsync<string>("delCha", foundList, "fnd");
 
-            if (!StopBob(resulto))
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
             }
 
-            //----------------
-            Serializ("saved", savedCl/*, savedList*/);
-            //----------------
+            Serializ("saved", savedCl);
 
             savedList = savedCl.Keys.ToList<string>();
-            //-----------------
 
-            //foreach (var v in svd)
-            //{
-            //    if (!savedList.Contains(v)) { savedList.Add(v); }
-            //}
         }
         catch (Exception ex)
         {
@@ -996,33 +494,16 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 }
             }
 
-            //--------------
-            #region MyRegion
-            //BinaryFormatter formatter = new BinaryFormatter();
-
-            //string res;
-
-            //using (MemoryStream stream1 = new MemoryStream())
-            //{
-            //    formatter.Serialize(stream1, savedCl);
-
-            //    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-            //}
-
-            //await ls.SetItemAsync<string>("saved", res);
-            #endregion
-
-            //--------------
 
             var resulto = await JSRuntime2.InvokeAsync<string>("delCha", savedList, "svd");
 
-            if (!StopBob(resulto))
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
             }
 
-            //
-            Serializ("saved", savedCl/*, savedList*/);
+
+            Serializ("saved", savedCl);
 
             savedList.RemoveAll(vehicle => del.Contains(vehicle) == true);
         }
@@ -1049,42 +530,18 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             }
 
-            //---------------
-            #region MyRegion
-            //BinaryFormatter formatter = new BinaryFormatter();
-
-            //string res;
-
-            //using (MemoryStream stream1 = new MemoryStream())
-            //{
-            //    formatter.Serialize(stream1, playCl);
-
-            //    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-            //}
-
-            //await ls.SetItemAsync<string>("play", res);
-            #endregion
-            //--------------
-
             var resulto = await JSRuntime2.InvokeAsync<string>("delCha", savedList, "svd");
 
-            if (!StopBob(resulto))
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
-            }//
+            }
 
-            Serializ("play", playCl/*, savedList*/);
+            Serializ("play", playCl);
 
-            //playList.AddRange(playCl.Keys.ToList<string>());
+
             playList = playCl.Keys.ToList<string>();
 
-            //var resulto = await JSRuntime2.InvokeAsync<string>("delSvdCha", savedList);
-
-            //ply = playCl.Keys.ToList<string>();
-            //foreach (var v in ply)
-            //{-
-            //    if (!playList.Contains(v)) { playList.Add(v); }
-            //}
         }
         catch (Exception ex)
         {
@@ -1111,28 +568,12 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 }
             }
 
-            //-----------------
-            #region MyRegion
-            //BinaryFormatter formatter = new BinaryFormatter();
-
-            //string res;
-            //using (MemoryStream stream1 = new MemoryStream())
-            //{
-            //    formatter.Serialize(stream1, playCl);
-
-            //    res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-            //}
-
-            //await ls.SetItemAsync<string>("play", res);
-            #endregion
-            //----------------
-
             var resulto = await JSRuntime2.InvokeAsync<string>("delCha", playList, "play");
 
-            if (!StopBob(resulto))
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
-            }//
+            }
 
             Serializ("play", playCl);
 
@@ -1159,7 +600,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             var resulto = await JSRuntime2.InvokeAsync<string>("playMany", dss);
 
-            if (!StopBob(resulto))
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
             }
@@ -1171,19 +612,19 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
         }
     }
 
-    private async Task playOne(/*string a, string b*/)
+    private async void playOne()
     {
         try
         {
-            if (pl.Length==0) { return; }
+            if (playAdr.Length == 0) { return; }
 
-            await ls.SetItemAsync<string>("lastPlay", pl);
+            await ls.SetItemAsync<string>("lastPlay", playAdr);
 
-            //Opisanie = a;
 
-            var resulto = await JSRuntime2.InvokeAsync<string>("playOne", pl);
 
-            if (!StopBob(resulto))
+            var resulto = await JSRuntime2.InvokeAsync<string>("playOne", playAdr);
+
+            if (!ErrCheckReload(resulto))
             {
                 Opisanie = resulto; return;
             }
@@ -1195,22 +636,16 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
         }
     }
 
-    string pl;
+    string playAdr;
 
     private async Task setPlayOne(string opis, string adr)
     {
         try
         {
-            pl = adr;//await ls.SetItemAsync<string>("lastPlay", b);
+            playAdr = adr;
 
             Opisanie = opis;
 
-            //var resulto = await JSRuntime2.InvokeAsync<string>("playOne", b);
-
-            //if (!StopBob(resulto))
-            //{
-            //    Opisanie = resulto; return;
-            //}
         }
         catch (Exception ex)
         {
