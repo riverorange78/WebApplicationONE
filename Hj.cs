@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace WebApplicationONE
 {
+    //public class Myexx:Exception
+    //      {
+    //   public string Sss = "myexx777";
+    //}
+
     [Serializable]
     class Hj
     {

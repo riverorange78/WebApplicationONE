@@ -36,7 +36,7 @@
         }
 
         var lastPl;
-        
+
         function loadErrBig(st, ex) {
             return confirm(st + " Перезагрузить ?" + "\n" + "--->" + JSON.stringify(ex));
         }
@@ -47,7 +47,7 @@
         function loadClient(f) {
 
             lastPl = 'G2CHyuF74R0';
-            
+
             try {
                 gapi.client.setApiKey(f);
                 /*throw new Error('something went wrong');*/
@@ -62,12 +62,12 @@
                             //https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md
                             console.error("Error loading GAPI client for API 1", err);
                             return loadErr("Отсутствие связи 1.", err);
-                            
+
                         });
             } catch (err) {
                 console.error("Error loading GAPI client for API 0", err);
                 return loadErr("Отсутствие связи 2.", err);
-                
+
             }
         }
 
@@ -149,6 +149,7 @@
                 },
                     function (err) {
                         console.error("Error loading videoDetails", err);
+
                         return loadErr("Детализация поиска выдала ошибку.", err);
                     });
         }
@@ -160,6 +161,13 @@
     </script>
 
     <script>
+        function UserException(message) {
+            this.message = message;
+            this.name = "Исключение, определённое пользователем";
+        };
+    </script>
+
+    <script>
 
         function delCha(cha, opis) {
             n = 0;
@@ -167,15 +175,21 @@
                 for (i = n; i < cha.length; i++) {
                     document.getElementById(opis + cha[i]).checked = false;
                 }
+
+                /*throw new UserException("Неверно указан номер месяца1");*/
+
                 return "";
             } catch (err) {
-                console.error("Error loading del" + opis + "Cha: " + n,  err);
+
+                /*throw new UserException("Неверно указан номер месяца2");*/
+
+                console.error("Error loading del" + opis + "Cha: " + n, err);
                 return loadErr("Программа не исправна 2-a " + opis + " . Обратитесь к разработчику. " + n, err);
             }
 
         };
 
-        function delSvdCha(cha) {  
+        function delSvdCha(cha) {
             n = 0;
             try {
                 for (i = n; i < cha.length; i++) {
@@ -183,7 +197,7 @@
                 }
                 return "";
             } catch (err) {
-                console.error("Error loading delSvdCha: " + n,  err);
+                console.error("Error loading delSvdCha: " + n, err);
                 return loadErr("Программа не исправна 1. Обратитесь к разработчику. " + n, err);
             }
         };
@@ -196,7 +210,7 @@
                 }
                 return "";
             } catch (err) {
-                console.error("Error loading delPlyCha: " + n,  err);
+                console.error("Error loading delPlyCha: " + n, err);
                 return loadErr("Программа не исправна 2-b. Обратитесь к разработчику. " + n, err);
             }
 
@@ -215,16 +229,16 @@
                 var firstScriptTag = document.getElementsByTagName('script')[0];
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
                 console.log("mkYouTubeIframeAPIReadyLast");
-                return ""; 
+                return "";
             }
             catch (err) {
                 console.error("Error loading mkYouTubeIframeAPIReadyLast", err);
                 return loadErr("Отсутствие связи 3.", err);
-                
+
             };
         };
 
-        
+
         function mkYouTubeIframeAPIReady() {
             try {
                 var tag = document.createElement('script');
@@ -233,12 +247,12 @@
                 var firstScriptTag = document.getElementsByTagName('script')[0];
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
                 console.log("mkYouTubeIframeAPIReady");
-                return ""; 
+                return "";
             }
             catch (err) {
                 console.error("Error loading mkYouTubeIframeAPIReady", err);
                 return loadErr("Отсутствие связи 4.", err);
-                
+
             };
         };
 
@@ -283,7 +297,7 @@
             }
         }
 
-      
+
 
         var player;
 
@@ -300,7 +314,7 @@
                 });
                 console.log("onYouTubeIframeAPIReady");
 
-                
+
             }
             catch (err) {
 
@@ -313,7 +327,7 @@
         function onPlayerReady(event) {
             try {
                 event.target.playVideo();
-                
+
             }
             catch (err) {
 
@@ -322,7 +336,7 @@
             }
         }
 
-       
+
 
         function onPlayerStateChange(event) {
             try {
@@ -348,7 +362,7 @@
             }
         }
 
-        window.bigErr = function (er, number,  name) {
+        window.bigErr = function (er, number, name) {
 
             console.error("Error loading " + name, er);
 
@@ -356,12 +370,12 @@
 
             try { eerStr = JSON.stringify(er.error.message); } catch { }
 
-            if (loadErrBig("Обрыв связи " + number + ". " , er)) {
+            if (loadErrBig("Обрыв связи " + number + ". ", er)) {
                 DotNet.invokeMethodAsync('WebApplicationONE', 'ReloadApp');
             }
             else {
                 DotNet.invokeMethodAsync('WebApplicationONE',
-                    'NoReloadAppSetErrOpis', "Отсутствие связи " + number + ". "  + "--->" + JSON.stringify(er) + "--->" + eerStr);
+                    'NoReloadAppSetErrOpis', "Отсутствие связи " + number + ". " + "--->" + JSON.stringify(er) + "--->" + eerStr);
             };
         }
 

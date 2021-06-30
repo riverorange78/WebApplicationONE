@@ -33,15 +33,15 @@ async function onActivate(event) {
         .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
         .map(key => caches.delete(key)));
 
-    window.onerror = myErrHandler;
+    //window.onerror = myErrHandler;
 
 }
 
-function myErrHandler(msg, url, lineNo, columnNo, error)
-{
-    loadErrBig(error.prototype.stack, error);
-    return false;
-}
+//function myErrHandler(msg, url, lineNo, columnNo, error)
+//{
+//    loadErrBig(msg+"<------------>"+error.prototype.stack, error);
+//    return false;
+//}
 
 async function onFetch(event) {
     let cachedResponse = null;
@@ -57,4 +57,4 @@ async function onFetch(event) {
 
     return cachedResponse || fetch(event.request);
 }
-/* updated 2021-08-01 10:18 */
+/* updated 2021-08-01 22:21 */

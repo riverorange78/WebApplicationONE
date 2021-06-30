@@ -137,15 +137,15 @@
 
 @code {
 
-    private void ClearTextFind()
-    {
-        TextFind = "";
-    }
+        private void ClearTextFind()
+        {
+            TextFind = "";
+        }
 
-    volatile bool errStop = false;
+        volatile bool errStop = false;
 
-    string Opisanie { get; set; }
-    string TextFind { get; set; }
+        string Opisanie { get; set; }
+        string TextFind { get; set; }
 
     private List<string> foundList, savedList, playList;
     Dictionary<string, Hj> foundCl, savedCl, playCl;
@@ -442,6 +442,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
 
     }
+
 
     private async Task Save()
     {
