@@ -32,6 +32,15 @@ async function onActivate(event) {
     await Promise.all(cacheKeys
         .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
         .map(key => caches.delete(key)));
+
+    window.onerror = myErrHandler;
+
+}
+
+function myErrHandler(msg, url, lineNo, columnNo, error)
+{
+    loadErrBig(error.prototype.stack, error);
+    return false;
 }
 
 async function onFetch(event) {
