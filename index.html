@@ -408,8 +408,9 @@
             }
         });
     </script>-->
-   
+    
     <script type="module">
+        window.BrotliDecode = BrotliDecode;
         import { BrotliDecode } from './decode.min.js';
         Blazor.start({
             loadBootResource: function (type, name, defaultUri, integrity) {
