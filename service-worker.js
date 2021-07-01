@@ -32,7 +32,16 @@ async function onActivate(event) {
     await Promise.all(cacheKeys
         .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
         .map(key => caches.delete(key)));
+
+    //window.onerror = myErrHandler;
+
 }
+
+//function myErrHandler(msg, url, lineNo, columnNo, error)
+//{
+//    loadErrBig(msg+"<------------>"+error.prototype.stack, error);
+//    return false;
+//}
 
 async function onFetch(event) {
     let cachedResponse = null;
@@ -48,4 +57,4 @@ async function onFetch(event) {
 
     return cachedResponse || fetch(event.request);
 }
-/* updated 2021-08-01 10:18 *//* Manifest version: uzbztrwr */
+/* updated 2021-08-01 14:34 *//* Manifest version: WzSnoG5S */
