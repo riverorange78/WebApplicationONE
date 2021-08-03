@@ -17,7 +17,7 @@
     <div class="first">
 
         <div class="searchtxt">
-            <input id="Text1" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind" />
+            <input id="mainsearchtxt" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind" />
         </div>
 
         <div class="foundops">
@@ -137,15 +137,15 @@
 
 @code {
 
-        private void ClearTextFind()
-        {
-            TextFind = "";
-        }
+    private void ClearTextFind()
+    {
+        TextFind = "";
+    }
 
-        volatile bool errStop = false;
+    volatile bool errStop = false;
 
-        string Opisanie { get; set; }
-        string TextFind { get; set; }
+    string Opisanie { get; set; }
+    string TextFind { get; set; }
 
     private List<string> foundList, savedList, playList;
     Dictionary<string, Hj> foundCl, savedCl, playCl;
@@ -303,7 +303,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             if (TextFind.Replace(" ", "").Length < 2) { return; }
             if (TextFind == "???") { return; }
 
-            if (TextFind == "ковалевская159") { Opisanie="ОЗЕРО"; return; }
+            if (TextFind == "ангелина") { Opisanie= "ангелина ковалевская"; return; }
 
             var foundCl1 = new Dictionary<string, Hj>();
             var foundCl2 = new Dictionary<string, Hj>();
