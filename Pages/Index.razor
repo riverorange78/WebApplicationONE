@@ -303,7 +303,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             if (TextFind.Replace(" ", "").Length < 2) { return; }
             if (TextFind == "???") { return; }
 
-            if (TextFind == "ангелина") { Opisanie= "ангелина ковалевская"; return; }
+            if (TextFind == "ангелина") { TextFind = "ангелина ковалевская"; Opisanie = "ангелина ковалевская"; return; }
 
             var foundCl1 = new Dictionary<string, Hj>();
             var foundCl2 = new Dictionary<string, Hj>();
