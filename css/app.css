@@ -180,13 +180,13 @@ app {
 
     .main .top-row a, .main .top-row .btn-link {
         margin-left: 0;
-    }
+    }1359
 }*/
 
 @media (min-width: 1360px) {
     .grid-container {
         display: grid;
-        grid-template-columns: repeat(6, 1fr) ;
+        grid-template-columns: repeat(6, 1fr);
         grid-template-rows: 1fr;
         gap: 0px 0px;
         grid-template-areas:
@@ -259,7 +259,7 @@ app {
     .second {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(9, 1fr) ;
+        grid-template-rows: repeat(9, 1fr);
         gap: 1px 1px;
         grid-template-areas:
             "find"
