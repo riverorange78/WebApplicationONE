@@ -17,7 +17,7 @@
     <div class="first">
 
         <div class="searchtxt">
-            <input id="mainsearchtxt" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind" />
+            <input id="mainsearchtxt" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind"  @onkeydown="@Enter" />
         </div>
 
         <div class="foundops">
@@ -136,6 +136,14 @@
 </div>
 
 @code {
+
+    public void Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            Find();
+        }
+    }
 
     private void ClearTextFind()
     {
