@@ -17,7 +17,7 @@
     <div class="first">
 
         <div class="searchtxt">
-            <input id="mainsearchtxt" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind"  @onkeydown="@Enter" />
+            <input id="mainsearchtxt" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind" />@*onkeydown*@ @*@onkeypress="Enter_"*@
         </div>
 
         <div class="foundops">
@@ -116,11 +116,11 @@
     </div>
     <div class="second">
         <div class="find">
-            <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;" value="Поиск" @onclick=Find />
+            <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;" value="Поиск" @onclick="Find_" />
         </div>
 
         <div class="play">
-            <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink;" @onclick=Start value="Старт (Списка воспроизведения)" />
+            <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink;" @onclick="Start" value="Старт (Списка воспроизведения)" />
         </div>
 
         <div class="you">
@@ -137,13 +137,14 @@
 
 @code {
 
-    public void Enter(KeyboardEventArgs e)
-    {
-        if (e.Code == "Enter" || e.Code == "NumpadEnter")
-        {
-            Find();
-        }
-    }
+    //public /*static*/ async void Enter_(/*KeyboardEventArgs e*/)
+    //{
+    //    //if (e.Code == "Enter" || e.Code == "NumpadEnter")
+    //    //{
+    //    /**/
+    //    await Find_();//
+    //                  //}
+    //}
 
     private void ClearTextFind()
     {
@@ -302,7 +303,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
     string prevSearch;
     string nextPage;
 
-    private async Task Find()
+    private async Task Find_()
     {
         try
         {

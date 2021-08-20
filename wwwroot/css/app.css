@@ -191,6 +191,7 @@ app {
         gap: 0px 0px;
         grid-template-areas:
             "first first first first second second";
+        height: 100vh;
     }
 
     .first {
