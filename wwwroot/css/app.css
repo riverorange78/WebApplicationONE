@@ -192,7 +192,25 @@ app {
         grid-template-areas:
             "first first first first second second";
         height: 100vh;
+        overflow-y: scroll;
     }
+
+        /*Размеры скроллбара */
+        .grid-container::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        /*Трек поле скроллбара*/
+        .grid-container::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px blue;
+            background: white;
+        }
+
+        /*Ползунок скроллбара */
+        .grid-container::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px green;
+            background: rgb(255, 255, 224);
+        }
 
     .first {
         display: grid;
@@ -225,6 +243,23 @@ app {
         grid-area: foundlst;
     }
 
+    /*Размеры скроллбара */
+    .grid-container::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    /*Трек поле скроллбара*/
+    .grid-container::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px blue;
+        background: white;
+    }
+
+    /*Ползунок скроллбара */
+    .grid-container::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px green;
+        background: rgb(255, 255, 224);
+    }
+
     .savefnd {
         grid-area: savefnd;
     }
@@ -239,6 +274,23 @@ app {
 
     .savedlst {
         grid-area: savedlst;
+    }
+
+    /*Размеры скроллбара */
+    .grid-container::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    /*Трек поле скроллбара*/
+    .grid-container::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px blue;
+        background: white;
+    }
+
+    /*Ползунок скроллбара */
+    .grid-container::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px green;
+        background: rgb(255, 255, 224);
     }
 
     .savesvd {
@@ -257,6 +309,23 @@ app {
         grid-area: playlst;
     }
 
+    /*Размеры скроллбара */
+    .grid-container::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    /*Трек поле скроллбара*/
+    .grid-container::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px blue;
+        background: white;
+    }
+
+    /*Ползунок скроллбара */
+    .grid-container::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px green;
+        background: rgb(255, 255, 224);
+    }
+
     .second {
         display: grid;
         grid-template-columns: 1fr;
@@ -269,6 +338,23 @@ app {
             "opis";
         grid-area: second;
         height: 100vh;
+    }
+
+    /*Размеры скроллбара */
+    .grid-container::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    /*Трек поле скроллбара*/
+    .grid-container::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px blue;
+        background: white;
+    }
+
+    /*Ползунок скроллбара */
+    .grid-container::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px green;
+        background: rgb(255, 255, 224);
     }
 
     .find {
