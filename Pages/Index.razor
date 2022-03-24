@@ -233,17 +233,41 @@
 
             BinaryFormatter formatter = new BinaryFormatter();
 
-            foundCl = await Deserial("found", formatter);
-            foundList = foundCl.Count == 0 ? new List<string>() : foundCl.Keys.ToList<string>();
+            try
+            {
+                foundCl = await Deserial("found", formatter);
+                foundList = foundCl.Count == 0 ? new List<string>() : foundCl.Keys.ToList<string>();
+            }
+            catch (Exception e)
+            {
+
+                Opisanie = "Exception 11found: " + e.Message;return;
+            }
 
 
 
-            savedCl = await Deserial("saved", formatter);
-            savedList = savedCl.Count == 0 ? new List<string>() : savedCl.Keys.ToList<string>();
+            try
+            {
+                savedCl = await Deserial("saved", formatter);
+                savedList = savedCl.Count == 0 ? new List<string>() : savedCl.Keys.ToList<string>();
+            }
+            catch (Exception e)
+            {
+
+                Opisanie = "Exception 11saved: " + e.Message; return;
+            }
 
 
-            playCl = await Deserial("play", formatter);
-            playList = playCl.Count == 0 ? new List<string>() : playCl.Keys.ToList<string>();
+            try
+            {
+                playCl = await Deserial("play", formatter);
+                playList = playCl.Count == 0 ? new List<string>() : playCl.Keys.ToList<string>();
+            }
+            catch (Exception e)
+            {
+
+                Opisanie = "Exception 11play: " + e.Message; return;
+            }
 
             var resulto = await JSRuntime2.InvokeAsync<string>("loadClient",
 GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
