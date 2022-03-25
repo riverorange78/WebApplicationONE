@@ -244,7 +244,7 @@
             catch (Exception e)
             {
 
-                Opisanie = "Exception 11found: " + e.Message; return;
+                Opisanie = Opisanie+ " "+"Exception 11found: " + e.Message; return;
             }
 
 
@@ -257,7 +257,7 @@
             catch (Exception e)
             {
 
-                Opisanie = "Exception 11saved: " + e.Message; return;
+                Opisanie = Opisanie + " " + "Exception 11saved: " + e.Message; return;
             }
 
 
@@ -269,7 +269,7 @@
             catch (Exception e)
             {
 
-                Opisanie = "Exception 11play: " + e.Message; return;
+                Opisanie = Opisanie + " " + "Exception 11play: " + e.Message; return;
             }
 
             var resulto = await JSRuntime2.InvokeAsync<string>("loadClient",
@@ -327,9 +327,10 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             formatter.Serialize(stream1, dict);
 
             res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+            if (s== "found") { Opisanie = s + "  " + res; }
         }
 
-        await ls.SetItemAsync<string>(s, res);
+        await ls.SetItemAsStringAsync/*SetItemAsync<string>*/(s, res);
 
 
     }
@@ -341,16 +342,32 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             try
             {
+                var vvcc = await ls.GetItemAsStringAsync(s);
+
+                //Opisanie = s + "  "+ vvcc;
+                vvcc = vvcc.Replace("\"", "");
+                if (s == "found") { Opisanie = s + "  " + vvcc; }
+                //Opisanie = s + "  " + vvcc;
+                //serverResponse = serverResponse.Replace("\"", "");
+
+                //using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(serverResponse)))
+                //{
+                //    return Serializer.Deserialize<User>(ms);
+                //}
+
                 using (MemoryStream stream = new MemoryStream(
-                       Convert.FromBase64String(await ls.GetItemAsStringAsync(s))))
+       Convert.FromBase64String(vvcc/*await ls.GetItemAsStringAsync(s)*/)))
                 {
+                    //await JSRuntime2.InvokeAsync<string>("BigBigBig", s, await ls.GetItemAsStringAsync(s)/*(formatter.Deserialize(stream) is Dictionary<string, Hj>).ToString()*/);
 
                     return formatter.Deserialize(stream) as Dictionary<string, Hj>;
                 }
             }
-            catch (Exception)
+            catch (Exception ee3)
             {
+                //await JSRuntime2.InvokeAsync<string>("BigBigBig", s, await ls.GetItemAsStringAsync(s)/*(formatter.Deserialize(stream) is Dictionary<string, Hj>).ToString()*/);
 
+                await JSRuntime2.InvokeAsync<string>("BigBigBig", s, ee3.Message/*(formatter.Deserialize(stream) is Dictionary<string, Hj>).ToString()*/);
                 /*return*/
                 await ls.RemoveItemAsync(s);
                 return new Dictionary<string, Hj>();
