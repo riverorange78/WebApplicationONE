@@ -40,7 +40,8 @@
                             @foundList[localVar]
                         </label>
                     </li>
-                    <br><br />
+                    <br>
+                    <br />
                 }@**@
             </ul>
         </div>
@@ -76,7 +77,8 @@
                             @savedList[localVar]
                         </label>
                     </li>
-                    <br><br />
+                    <br>
+                    <br />
                 }
             </ul>
         </div>
@@ -108,7 +110,8 @@
                             @playList[localVar]
                         </label>
                     </li>
-                    <br><br />
+                    <br>
+                    <br />
                 }
             </ul>
         </div>
@@ -241,7 +244,7 @@
             catch (Exception e)
             {
 
-                Opisanie = "Exception 11found: " + e.Message;return;
+                Opisanie = "Exception 11found: " + e.Message; return;
             }
 
 
@@ -297,9 +300,38 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
         }
         catch (Exception e)
         {
-            Opisanie = "Exception 11: " + e.Message;
+            Opisanie = "Exception 111: " + e.Message;
         }
         //}
+    }
+
+    private async void Serializ(string s,
+        Dictionary<string, Hj> dict)
+    {
+
+        if (dict == null || dict.Count == 0)
+        {
+
+            if (await ls.ContainKeyAsync(s))
+            { await ls.RemoveItemAsync(s); }
+            return; ;
+
+        }
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        string res;
+
+        using (MemoryStream stream1 = new MemoryStream())
+        {
+            formatter.Serialize(stream1, dict);
+
+            res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
+        }
+
+        await ls.SetItemAsync<string>(s, res);
+
+
     }
 
     private async Task<Dictionary<string, Hj>> Deserial(string s, BinaryFormatter formatter)
@@ -388,7 +420,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                                     @""",""thumbnails"":{""default"":"}, StringSplitOptions.None);
 
 
-            if (ddd.Length == 1  )
+            if (ddd.Length == 1)
             {
                 Opisanie = "Поиск не дал результатов. --->"
  + nextPage + "--------" +
@@ -455,26 +487,6 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
     }
 
-
-    private async void Serializ(string s,
-        Dictionary<string, Hj> dict)
-    {
-
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        string res;
-
-        using (MemoryStream stream1 = new MemoryStream())
-        {
-            formatter.Serialize(stream1, dict);
-
-            res = Convert.ToBase64String(stream1.GetBuffer(), 0, (int)stream1.Length);
-        }
-
-        await ls.SetItemAsync<string>(s, res);
-
-
-    }
 
 
     private async Task Save()
