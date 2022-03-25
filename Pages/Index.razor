@@ -339,11 +339,21 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
         if (await ls.ContainKeyAsync(s))
         {
 
-            using (MemoryStream stream = new MemoryStream(
-                Convert.FromBase64String(await ls.GetItemAsStringAsync(s))))
+            try
+            {
+                using (MemoryStream stream = new MemoryStream(
+                       Convert.FromBase64String(await ls.GetItemAsStringAsync(s))))
+                {
+
+                    return formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                }
+            }
+            catch (Exception)
             {
 
-                return formatter.Deserialize(stream) as Dictionary<string, Hj>;
+                /*return*/
+                await ls.RemoveItemAsync(s);
+                return new Dictionary<string, Hj>();
             }
         }
         return new Dictionary<string, Hj>();
