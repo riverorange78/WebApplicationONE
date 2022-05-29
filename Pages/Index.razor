@@ -34,9 +34,9 @@
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
                             <input type="checkbox" name=@yyy id=@yyy
-                                   @onchange="@((args) => {
+                               @onchange="@((args) => {
                                       foundCl[foundList[localVar]].CheckedA=(bool)args.Value;} )"
-                                   @onclick="@(async () => await setPlayOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
+                               @onclick="@(async () => await setPlayOne(foundCl[foundList[localVar]].description, foundCl[foundList[localVar]].videoId))">
                             @foundList[localVar]
                         </label>
                     </li>
@@ -71,9 +71,9 @@
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
                             <input type="checkbox" name=@yyy id=@yyy
-                                   @onchange="@((args) => {
+                               @onchange="@((args) => {
                                               savedCl[savedList[localVar]].CheckedA=(bool)args.Value;} )"
-                                   @onclick="@(async () => await setPlayOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
+                               @onclick="@(async () => await setPlayOne(savedCl[savedList[localVar]].description, savedCl[savedList[localVar]].videoId))">
                             @savedList[localVar]
                         </label>
                     </li>
@@ -104,9 +104,9 @@
                     <li class="lstli">
                         <label class="lstlabel" for=@yyy>
                             <input type="checkbox" name=@yyy id=@yyy
-                                   @onchange="@((args) => {
+                               @onchange="@((args) => {
                                               playCl[playList[localVar]].CheckedA=(bool)args.Value;} )"
-                                   @onclick="@(async () => await setPlayOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
+                               @onclick="@(async () => await setPlayOne(playCl[playList[localVar]].description, playCl[playList[localVar]].videoId))">
                             @playList[localVar]
                         </label>
                     </li>
@@ -116,7 +116,7 @@
             </ul>
         </div>
 
-    </div>
+    </div>@*@ref=ReferenceToInputControl*@
     <div class="second">
         <div class="find">
             <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;" value="Поиск" @onclick="Find_" />
@@ -244,7 +244,7 @@
             catch (Exception e)
             {
 
-                Opisanie = " " + Opisanie + " "+"Exception 11found: " + e.Message; return;
+                Opisanie = " " + Opisanie + " " + "Exception 11found: " + e.Message; return;
             }
 
 
@@ -273,7 +273,7 @@
             }
 
             var resulto = await JSRuntime2.InvokeAsync<string>("loadClient",
-GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
+    GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io", GrinFc.GenerateAPassKey("Pass$#2++ss1.Ge4Key!1238")));
 
 
             if (!ErrCheckReload(resulto))
@@ -371,7 +371,7 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
                 //await JSRuntime2.InvokeAsync<string>("BigBigBig", s, ee3.Message/*(formatter.Deserialize(stream) is Dictionary<string, Hj>).ToString()*/);
                 /*return*/
                 await ls.RemoveItemAsync(s);
-                Opisanie =s+"  "+ ee3.Message;
+                Opisanie = s + "  " + ee3.Message;
                 return new Dictionary<string, Hj>();
             }
         }
@@ -388,8 +388,14 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
     string prevSearch;
     string nextPage;
 
+    //ElementReference ReferenceToInputControl;
+
     private async Task Find_()
     {
+
+        //await JSRuntime2.InvokeVoidAsync("hdn");
+        //return;
+
         try
         {
             if (errStop) { Opisanie = "Ошибка активации."; return; }
@@ -408,16 +414,23 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
 
             if (prevSearch != TextFind)
             {
+                await JSRuntime2.InvokeVoidAsync("hide_");
+
                 prevSearch = TextFind; nextPage = "";
 
                 resulto = await JSRuntime2.InvokeAsync<string>("videoSearch", TextFind);
                 bv = 1;
+
+                await JSRuntime2.InvokeVoidAsync("show_");
             }
             else if (prevSearch == TextFind & nextPage.Length != 0)
             {
+                await JSRuntime2.InvokeVoidAsync("hide_");
 
                 resulto = await JSRuntime2.InvokeAsync<string>("nextVideoS", TextFind, nextPage);
                 bv = 2;
+
+                await JSRuntime2.InvokeVoidAsync("show_");
             }
             else if (prevSearch == TextFind & nextPage.Length == 0)
             {
@@ -452,9 +465,9 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
             if (ddd.Length == 1)
             {
                 Opisanie = "Поиск не дал результатов. --->"
- + nextPage + "--------" +
- "--------" + TextFind +
- "--------" + prevSearch + " " + bv + "<---" + resulto; return;
+     + nextPage + "--------" +
+     "--------" + TextFind +
+     "--------" + prevSearch + " " + bv + "<---" + resulto; return;
             }
 
             for (int ie = 0; ie < ddd.Length; ie = ie + 5)
@@ -512,6 +525,8 @@ GrinFc.Decrypt("b56mGFd6qA4itLpSAHafbrpslTS+ueSKBmC3vwLmRh4dA70L3So667jT7ToCv0io
         catch (Exception e)
         {
             Opisanie = "Exception 2 " + e.Message;
+
+            await JSRuntime2.InvokeVoidAsync("show_");
         }
 
     }

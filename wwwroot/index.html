@@ -389,8 +389,20 @@
             };
         }
 
+
+        function hide_() {
+            //document.addEventListener("mousedown", function () {
+            //document.getElementsByTagName("BODY")[0].style.display = "none";   //var v = 12;
+            document.getElementById("Button17").style.display = "none";
+            //}, false);//var notification = new Notification("Hi there!", { body: "some text" });
+        }
+
+        function show_() {
+            document.getElementById("Button17").style.display = "";
+        }
+
     </script>
-    
+
     <script type="module">
         window.BrotliDecode = BrotliDecode;
         import { BrotliDecode } from './decode.min.js';
