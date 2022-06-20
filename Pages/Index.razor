@@ -17,8 +17,9 @@
     <div class="first">
 
         <div class="searchtxt">
-            <input id="mainsearchtxt" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind" />@*onkeydown*@ @*@onkeypress="Enter_"*@
-        </div>
+            <input id="mainsearchtxt" type="search" border="5" bordercolor="#FF0099" style=" width: 100%;border: 3px solid red;" @bind="@TextFind" @ondblclick="ClearTextFind"
+                   @onkeydown="miniEnter" />@*onkeydown*@ @*@onkeypress="Enter_"*@
+        </div>@*event.keyCode*@@*@onkeypress="ggg0"*@
 
         <div class="foundops">
 
@@ -42,7 +43,8 @@
                     </li>
                     <br>
                     <br />
-                }@**@
+                }
+                @**@
             </ul>
         </div>
 
@@ -119,7 +121,7 @@
     </div>@*@ref=ReferenceToInputControl*@
     <div class="second">
         <div class="find">
-            <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;" value="Поиск" @onclick="Find_" />
+            <input type="button" id="Button17" style="color: black;background-color: lightpink;width:  100%;" value="Поиск" @onclick="Find_" /> @*@ref="MyElementReference" *@
         </div>
 
         <div class="play">
@@ -139,7 +141,6 @@
 </div>
 
 @code {
-
     //public /*static*/ async void Enter_(/*KeyboardEventArgs e*/)
     //{
     //    //if (e.Code == "Enter" || e.Code == "NumpadEnter")
@@ -148,8 +149,21 @@
     //    await Find_();//
     //                  //}
     //}
+    //ElementReference MyElementReference;
 
-    private void ClearTextFind()
+    private /*void*/ async Task miniEnter(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            Opisanie = "Enter"; //MyElementReference.
+            await JSRuntime2.InvokeVoidAsync("focusClient");
+
+            //await  Find_();
+        }
+        //Opisanie = e.Key;
+    }
+
+    private async Task ClearTextFind()
     {
         TextFind = "";
     }
@@ -519,7 +533,12 @@
                 Opisanie = bv.ToString() + " 1 ===>" + resulto; return;
             }
 
+            //=====================================
+            BigSort(TextFind);
+            //=====================================
+
             foundList = foundCl.Keys.ToList<string>();
+
 
         }
         catch (Exception e)
@@ -531,7 +550,38 @@
 
     }
 
+    private void BigSort(string s)
+    {
+        List<string> sortSavedListA = new List<string>();
+        List<string> sortSavedListB = new List<string>();
 
+        for (var i = 0; i < savedList.Count; i++)
+        {
+            if (savedList[i].ToUpper().Contains(s.ToUpper()))
+            { sortSavedListA.Add(savedList[i]); }
+            else { sortSavedListB.Add(savedList[i]); }
+        }
+
+        savedList.Clear();
+        savedList.AddRange(sortSavedListA);
+        savedList.AddRange(sortSavedListB);
+        //-------------------------
+
+        //sortSavedListA.Clear();
+        //sortSavedListB.Clear();
+
+        //for (var i = 0; i < playList.Count; i++)
+        //{
+        //    if (playList[i].ToUpper().Contains(s.ToUpper()))
+        //    { sortSavedListA.Add(playList[i]); }
+        //    else { sortSavedListB.Add(playList[i]); }
+        //}
+
+        //playList.Clear();
+        //playList.AddRange(sortSavedListA);
+        //playList.AddRange(sortSavedListB);
+
+    }
 
     private async Task Save()
     {
