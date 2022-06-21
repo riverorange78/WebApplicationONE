@@ -182,7 +182,28 @@
         function focusClient() {
             //document.getElementById('Button17').focus();
             document.getElementById('Button17').click();
-        }
+        } 
+
+        function setCha(cha) {
+            n = 0;
+            try {
+                for (i = n; i < cha.length; i++) {
+
+                    document.getElementById("svd" + cha[i]).checked = true;
+                }
+
+                /*throw new UserException("Неверно указан номер месяца1");*/
+
+                return "";
+            } catch (err) {
+
+                /*throw new UserException("Неверно указан номер месяца2");*/
+
+                console.error("Error loading del" + opis + "Cha: " + n, err);
+                return loadErr("Программа не исправна 2-a " + opis + " . Обратитесь к разработчику. " + n, err);
+            }
+
+        };
 
         function delCha(cha, opis) {
             n = 0;
