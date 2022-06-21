@@ -117,6 +117,8 @@
                     });
         }
 
+       
+
         function videoSearch(more) {
             return gapi.client.youtube.search.list({
                 "part": [
@@ -199,8 +201,8 @@
 
                 /*throw new UserException("Неверно указан номер месяца2");*/
 
-                console.error("Error loading del" + opis + "Cha: " + n, err);
-                return loadErr("Программа не исправна 2-a " + opis + " . Обратитесь к разработчику. " + n, err);
+                console.error("Error loading del" + "setCha" + "Cha: " + n, err);
+                return loadErr("Программа не исправна 2-a " + "setCha" + " . Обратитесь к разработчику. " + n, err);
             }
 
         };
