@@ -450,6 +450,9 @@
                 prevSearch = TextFind; nextPage = "";
 
                 resulto = await JSRuntime2.InvokeAsync<string>("videoSearch", TextFind);
+
+                //Opisanie = resulto; return;
+
                 bv = 1;
 
                 await JSRuntime2.InvokeVoidAsync("show_");
@@ -569,34 +572,67 @@
 
     private async Task BigSort(string s)
     {
-        var svd_ss = (from ss in savedCl
-                      where ss.Value.CheckedA == true
-                      select ss.Key).ToList<string>();
-
-        //убрать флажки
-        var resulto = await JSRuntime2.InvokeAsync<string>("delCha", savedList, "svd");
-
-
-        List<string> sortSavedListA = new List<string>();
-        List<string> sortSavedListB = new List<string>();
-
-        for (var i = 0; i < savedList.Count; i++)
+        try
         {
-            if (savedList[i].ToUpper().Contains(s.ToUpper()))
-            { sortSavedListA.Add(savedList[i]); }
-            else { sortSavedListB.Add(savedList[i]); }
+            if (savedCl.Count == 0) { return; }
+
+            var svd_ss = (from ss in savedCl
+                          where ss.Value.CheckedA == true
+                          select ss.Key).ToList<string>();
+
+            //убрать флажки
+            var resulto = await JSRuntime2.InvokeAsync<string>("delCha", savedList, "svd");
+
+
+            List<string> sortSavedListA = new List<string>();
+            List<string> sortSavedListB = new List<string>();
+
+            List<string> sortSavedListC = new List<string>();
+            List<string> sortSavedListD = new List<string>();
+
+            for (var i = 0; i < savedList.Count; i++)
+            {
+                if (savedList[i].ToUpper().Contains(s.ToUpper()))
+                { sortSavedListA.Add(savedList[i]); }
+                else { sortSavedListB.Add(savedList[i]); }
+            }
+
+            foreach (var item in sortSavedListB)
+            {
+                if (
+                    savedCl[item].description.ToUpper().Contains(s.ToUpper())
+                )
+                { sortSavedListC.Add(item); }
+                else { sortSavedListD.Add(item); }
+            }
+
+
+            sortSavedListA.AddRange(sortSavedListC);
+            sortSavedListA.AddRange(sortSavedListD);
+
+            Dictionary<string, Hj> savedClDop = new Dictionary<string, Hj>();
+
+            foreach (var v in sortSavedListA)
+            {
+                savedClDop.Add(v, savedCl[v]);  /*savedCl*/
+            }
+
+            savedCl = savedClDop;
+
+            savedList = savedCl.Keys.ToList<string>();
+
+            StateHasChanged();
+
+            resulto = await JSRuntime2.InvokeAsync<string>("setCha", svd_ss);
+
+            StateHasChanged();
         }
+        catch (Exception e)
+        {
+            Opisanie = "Exception 2 Big " + e.Message;
 
-        savedList.Clear();
-        savedList.AddRange(sortSavedListA);
-        savedList.AddRange(sortSavedListB);
-        
-        StateHasChanged();
-
-        resulto = await JSRuntime2.InvokeAsync<string>("setCha", svd_ss);
-
-        StateHasChanged();
-
+            await JSRuntime2.InvokeVoidAsync("show_");
+        }
         //-------------------------
         //await SetCheck(svd_ss);
         //sortSavedListA.Clear();
@@ -615,7 +651,7 @@
 
     }
 
-    
+
     //private async Task SetCheck(List<string> svd_ss)
     //{
     //    //List<string> lstInt = new List<string>();
