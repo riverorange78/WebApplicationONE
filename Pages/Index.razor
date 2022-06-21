@@ -254,6 +254,12 @@
             {
                 foundCl = await Deserial("found", formatter);
                 foundList = foundCl.Count == 0 ? new List<string>() : foundCl.Keys.ToList<string>();
+
+                for (var i = 0; i < foundCl.Count; i++)
+                {
+                    foundCl.ElementAt(i).Value.CheckedA = false;
+                }
+
             }
             catch (Exception e)
             {
@@ -267,6 +273,12 @@
             {
                 savedCl = await Deserial("saved", formatter);
                 savedList = savedCl.Count == 0 ? new List<string>() : savedCl.Keys.ToList<string>();
+
+                for (var i = 0; i < savedCl.Count; i++)
+                {
+                    savedCl.ElementAt(i).Value.CheckedA = false;
+                }
+
             }
             catch (Exception e)
             {
@@ -279,6 +291,11 @@
             {
                 playCl = await Deserial("play", formatter);
                 playList = playCl.Count == 0 ? new List<string>() : playCl.Keys.ToList<string>();
+
+                for (var i = 0; i < playCl.Count; i++)
+                {
+                    playCl.ElementAt(i).Value.CheckedA = false;
+                }
             }
             catch (Exception e)
             {
@@ -534,7 +551,7 @@
             }
 
             //=====================================
-            //BigSort(TextFind);
+            BigSort(TextFind);
             //=====================================
 
             foundList = foundCl.Keys.ToList<string>();
@@ -550,8 +567,16 @@
 
     }
 
-    private void BigSort(string s)
+    private async Task BigSort(string s)
     {
+        var svd_ss = (from ss in savedCl
+                      where ss.Value.CheckedA == true
+                      select ss.Key).ToList<string>();
+
+        //убрать флажки
+        var resulto = await JSRuntime2.InvokeAsync<string>("delCha", savedList, "svd");
+
+
         List<string> sortSavedListA = new List<string>();
         List<string> sortSavedListB = new List<string>();
 
@@ -565,8 +590,15 @@
         savedList.Clear();
         savedList.AddRange(sortSavedListA);
         savedList.AddRange(sortSavedListB);
-        //-------------------------
+        
+        StateHasChanged();
 
+        resulto = await JSRuntime2.InvokeAsync<string>("setCha", svd_ss);
+
+        StateHasChanged();
+
+        //-------------------------
+        //await SetCheck(svd_ss);
         //sortSavedListA.Clear();
         //sortSavedListB.Clear();
 
@@ -582,6 +614,34 @@
         //playList.AddRange(sortSavedListB);
 
     }
+
+    
+    //private async Task SetCheck(List<string> svd_ss)
+    //{
+    //    //List<string> lstInt = new List<string>();
+
+    //    //for (var i = 0; i < savedList.Count; i++)
+    //    //{
+    //    //    if (svd_ss.Contains(savedList[i]))
+    //    //    {
+    //    //        lstInt.Add(i);
+    //    //    }
+    //    //}lstInt.ToArray()
+
+    //    var resulto = await JSRuntime2.InvokeAsync<string>("setCha", svd_ss);
+
+    //    //selectAll.where(x => idList.contains(x.id))
+
+    //    //var xxcc = foundCl.Where(x => svd_ss.Contains(x.Value.videoId));
+
+    //    //var svd = (from ss in foundCl.Where(x => svd_ss.Contains(x.Value.videoId))
+    //    //           where ss.Value
+    //    //           select ss.Key).ToList<string>();
+    //    //var svd = (from s in foundCl
+    //    //                where s.Value.CheckedA == true
+    //    //                select s.Key).ToList<string>();
+
+    //}
 
     private async Task Save()
     {
