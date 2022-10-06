@@ -127,7 +127,9 @@
         <div class="play">
             <input id="Button11" type="button" style=" width: 100%;color: white;background-color: DeepPink;" @onclick="Start" value="Старт (Списка воспроизведения)" />
         </div>
-
+        @*<iframe id="player" type="text/html" width="640" height="360"
+        src="https://duckduckgo.com/"
+        frameborder="0"></iframe>*@
         <div class="you">
             <div id="player" style="width: 100%;"></div>
         </div>
@@ -434,7 +436,7 @@
             if (TextFind.Replace(" ", "").Length < 2) { return; }
             if (TextFind == "???") { return; }
 
-            if (TextFind == "ангелина") { TextFind = "ангелина ковалевская"; Opisanie = "ангелина ковалевская"; return; }
+            if (TextFind == "Дунин.46+Баня6") { TextFind = "Ковалевская6"; Opisanie = "Ковалевская6"; return; }
 
             var foundCl1 = new Dictionary<string, Hj>();
             var foundCl2 = new Dictionary<string, Hj>();
